@@ -1,0 +1,410 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Insights API</title>
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css"/>
+    <link type="text/css" rel="stylesheet" href="styles/insights-doc.css"/>
+    <script src="/insights/js/lib/jquery.min.js"> </script>
+    <link type="text/css" rel="stylesheet" href="/insights/icons/css/font-awesome.min.css"/>
+  </head>
+  <body>
+    <script type="text/javascript">
+			document.getElementsByTagName("body")[0].style.display = "none";
+
+			function loadFunc() {
+
+			$(".navbar .search input").keyup(function() {
+				expandAll();
+				var val = $(this).val().toLowerCase();
+				$(".navbar li>a").each(function() {
+					var link = $(this).text().toLowerCase();
+					if (link.indexOf(val) >= 0) {
+						$(this).show();
+					} else {
+						$(this).hide();
+					}
+				});
+			});
+			$("nav h3").click(function(){
+				$(this).next().animate({ height: "toggle" });
+				if ($(this).find(".toggleList").hasClass("collapse")) {
+					$(this).find(".toggleList").removeClass("collapse");
+					$(this).find(".toggleList").text("+");
+				} else {
+					$(this).find(".toggleList").addClass("collapse");
+					$(this).find(".toggleList").text("-");
+				}
+			});
+
+			function collapseAll() {
+				$(".toggleList").text("+").removeClass("collapse").parent().next().animate({height: "hide"});
+			}
+
+			function expandAll() {
+				$(".toggleList").text("-").addClass("collapse").parent().next().animate({height: "show"});
+			}
+
+			document.getElementsByTagName("body")[0].style.display = "block";
+}
+
+window.onload = loadFunc;</script>
+    <div id="main">
+      <div class="header-banner">
+        <h1 class="page-title">Class: BITable</h1>
+        <a class="homeBtn" href="/insights/docs">
+          <i class="fa fa-home"> </i>
+        </a>
+      </div>
+      <section>
+        <header>
+          <h2><span class="ancestors"><a href="module-obiee.html">obiee</a>.</span>BITable</h2>
+          <div class="class-description">
+            <p>OBIEE presentation table object.</p>
+          </div>
+        </header>
+        <article>
+          <div class="container-overview">
+            <h2>Constructor</h2>
+            <hr/>
+            <h4 class="name" id="BITable"><span class="type-signature"/>new BITable<span class="signature">(code, name, columns, parent<span class="signature-attributes">opt</span>, children<span class="signature-attributes">opt</span>)</span><span class="type-signature"/></h4>
+            <h5>Parameters:</h5>
+            <table class="params">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Type</th>
+                  <th>Attributes</th>
+                  <th class="last">Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="name">
+                    <code>code</code>
+                  </td>
+                  <td class="type">
+                    <span class="param-type">string</span>
+                  </td>
+                  <td class="attributes">
+                
+
+                
+
+                
+                </td>
+                  <td class="description last">
+                    <p>Code for the presentation table, usually the same as the name.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="name">
+                    <code>name</code>
+                  </td>
+                  <td class="type">
+                    <span class="param-type">string</span>
+                  </td>
+                  <td class="attributes">
+                
+
+                
+
+                
+                </td>
+                  <td class="description last">
+                    <p>Name for the presentation table, usually the same as the code.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="name">
+                    <code>columns</code>
+                  </td>
+                  <td class="type">
+                    <span class="param-type">Array.&lt;Array.BIColumn></span>
+                  </td>
+                  <td class="attributes">
+                
+
+                
+
+                
+                </td>
+                  <td class="description last">
+                    <p>Array of <code>BIColumn</code> objects belonging to this table.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="name">
+                    <code>parent</code>
+                  </td>
+                  <td class="type">
+                    <span class="param-type">string</span>
+                  </td>
+                  <td class="attributes">
+                
+                    &lt;optional><br/>
+                
+
+                
+
+                
+                </td>
+                  <td class="description last">
+                    <p>Code of the parent table if it exists.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="name">
+                    <code>children</code>
+                  </td>
+                  <td class="type">
+                    <span class="param-type">Array.&lt;Array.BITable></span>
+                  </td>
+                  <td class="attributes">
+                
+                    &lt;optional><br/>
+                
+
+                
+
+                
+                </td>
+                  <td class="description last">
+                    <p>Array of <code>BITable</code> objects indicating the child tables belonging to this table.</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <dl class="details">
+              <dt class="tag-source">Source:</dt>
+              <dd class="tag-source">
+                <ul class="dummy">
+                  <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3109">line 3109</a></li>
+                </ul>
+              </dd>
+            </dl>
+          </div>
+          <h3 class="subsection-title">Members</h3>
+          <hr/>
+          <h4 class="name" id="Children"><span class="type-signature"/>Children<span class="type-signature"/></h4>
+          <div class="description">
+            <p>Array of <code>BITable</code> objects indicating the child tables belonging to this table.</p>
+          </div>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3126">line 3126</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id="Code"><span class="type-signature"/>Code<span class="type-signature"/></h4>
+          <div class="description">
+            <p>Code for the presentation table, usually the same as the name.</p>
+          </div>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3111">line 3111</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id="Columns"><span class="type-signature"/>Columns<span class="type-signature"/></h4>
+          <div class="description">
+            <p>columns Array of <code>BIColumn</code> objects belonging to this table.</p>
+          </div>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3120">line 3120</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id="Description"><span class="type-signature"/>Description<span class="type-signature"/></h4>
+          <div class="description">
+            <p>Description for the presentation table.</p>
+          </div>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3117">line 3117</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id="Name"><span class="type-signature"/>Name<span class="type-signature"/></h4>
+          <div class="description">
+            <p>Name for the presentation table, usually the same as the code.</p>
+          </div>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3114">line 3114</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id="Parent"><span class="type-signature"/>Parent<span class="type-signature"/></h4>
+          <div class="description">
+            <p>Code of the parent table if it exists.</p>
+          </div>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3123">line 3123</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id="Type"><span class="type-signature"/>Type<span class="type-signature"/></h4>
+          <div class="description">
+            <p>Hardcoded type identifier for the object: <code>Table</code>.</p>
+          </div>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3129">line 3129</a></li>
+              </ul>
+            </dd>
+          </dl>
+        </article>
+      </section>
+    </div>
+    <nav>
+      <div class="navbar">
+        <h2>
+          <a href="index.html">Home</a>
+        </h2>
+        <div class="search">
+          <span>Search</span>
+          <input/>
+        </div>
+        <h3>Modules<span class="toggleList collapse">-</span></h3>
+        <ul>
+          <li>
+            <a href="module-insights.html">insights</a>
+          </li>
+          <li>
+            <a href="module-InsightsConfig.html">InsightsConfig</a>
+          </li>
+          <li>
+            <a href="module-obiee.html">obiee</a>
+          </li>
+          <li>
+            <a href="module-rmvpp.html">rmvpp</a>
+          </li>
+        </ul>
+        <h3>Classes<span class="toggleList collapse">-</span></h3>
+        <ul>
+          <li>
+            <a href="module-obiee.BIBreadcrumb.html">BIBreadcrumb</a>
+          </li>
+          <li>
+            <a href="module-obiee.BICanvas.html">BICanvas</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIColumn.html">BIColumn</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIColumnSelector.html">BIColumnSelector</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIConditionalFormat.html">BIConditionalFormat</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIDashboardPage.html">BIDashboardPage</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIDrilldown.html">BIDrilldown</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIFilter.html">BIFilter</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIFilterGroup.html">BIFilterGroup</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIInteraction.html">BIInteraction</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIPermission.html">BIPermission</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIPres.html">BIPres</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIPrompt.html">BIPrompt</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIQuery.html">BIQuery</a>
+          </li>
+          <li>
+            <a href="module-obiee.BISort.html">BISort</a>
+          </li>
+          <li>
+            <a href="module-obiee.BITable.html">BITable</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIVariable.html">BIVariable</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIVisual.html">BIVisual</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIVisualSelector.html">BIVisualSelector</a>
+          </li>
+          <li>
+            <a href="module-rmvpp.Chart.html">Chart</a>
+          </li>
+          <li>
+            <a href="module-rmvpp.Legend.html">Legend</a>
+          </li>
+          <li>
+            <a href="module-rmvpp.Tooltip.html">Tooltip</a>
+          </li>
+        </ul>
+        <h3>Members<span class="toggleList collapse">-</span></h3>
+        <ul>
+          <li>
+            <a href="#Children">Children</a>
+          </li>
+          <li>
+            <a href="#Code">Code</a>
+          </li>
+          <li>
+            <a href="#Columns">Columns</a>
+          </li>
+          <li>
+            <a href="#Description">Description</a>
+          </li>
+          <li>
+            <a href="#Name">Name</a>
+          </li>
+          <li>
+            <a href="#Parent">Parent</a>
+          </li>
+          <li>
+            <a href="#Type">Type</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <br class="clear"/>
+    <script> prettyPrint(); </script>
+    <script src="scripts/linenumber.js"> </script>
+  </body>
+</html>
+

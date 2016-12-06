@@ -1,0 +1,25 @@
+<div class="modal mapPicker">
+	<div class="overlay" ng-click="cancel()"></div>
+	<div class="contents" style="width: 88%; left: 4%; text-align:center;">
+		<div class="header">{{ msg }}</div>
+		<section class="shuttle">
+			<div class="dark panel">
+				<ul>
+					<li selection-model
+						ng-repeat="mapObj in allMaps"
+						ng-click="update()">{{ mapObj.name }}</li>
+				</ul>
+			</div>
+			<div class="dark panel mapPreview">
+				<div ng-show="loading" style="margin-left: calc(50% - 25px); margin-top: 10%;">
+					<md-progress-circular md-mode="indeterminate"></md-progress-circular>
+				</div>
+			</div>
+		</section>
+
+		<div style="text-align: center;">
+			<mat-button type="accent" size="mini" icon="check" ng-click="accept()" label="Confirm" label-pos="bottom"></mat-button>
+			<mat-button type="warn" size="mini" icon="remove" ng-click="cancel()" label="Cancel" label-pos="bottom"></mat-button>
+		</div>
+	</div>
+</div>

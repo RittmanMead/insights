@@ -1,0 +1,14 @@
+<div class="modal">
+	<div class="overlay" ng-click="close()"></div>
+	<div class="contents" style="width: 30%; left: 35%;">
+		<i icon-button icon="'times'" fn="close" colour="negativeColour" class="closeBtn"></i>
+		<div class="header">Pick Date</div>
+		<datepicker date-set="{{ date }}" date-format="yyyy-MM-dd"
+					style="text-align: center"
+					button-prev="<i class='fa fa-chevron-left'></i>"
+					button-next="<i class='fa fa-chevron-right'></i>">
+			<input type="text" class="dateInput" ng-model="date" ng-change="close()"></input>
+			<i style="cursor: default" class="fa fa-calendar"></i>
+		</datepicker>
+	</div>
+</div>

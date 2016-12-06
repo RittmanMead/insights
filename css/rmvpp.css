@@ -1,0 +1,115 @@
+/* CSS to be shared across plugins. This can be used with rmvpp.js or rmvpp-ext.js Should contain only general plugin styles, no styling for interfaces */
+
+/* Text styles */
+.chartTitle {
+	font-weight: bold;
+	font-size: 16px;
+	margin-bottom: 10px;
+}
+
+text {
+	fill: #333;
+	font: 10px sans-serif;
+}
+
+/* Axes styles */
+.axis .label {
+	font-family: 'Open Sans', Arial;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.axis path, .axis line {
+	fill: none;
+	stroke: #666;
+	shape-rendering: crispEdges;
+}
+
+/* Tooltip styles */
+.tooltip {
+	position: absolute;
+	font-family: 'Open Sans', Arial;
+	font-size: 11px;
+	padding: 5px;
+	border-radius: 8px;
+	text-align: center;
+	vertical-align: middle;
+	display: table-cell;
+	z-index: 1001;
+	text-align: left;
+	white-space: nowrap;
+	pointer-events: none;
+	color: white;
+
+}
+
+.tooltip:before {
+	content: " ";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border-radius: 8px;
+	opacity: 0.75;
+	z-index: -1;
+	background: #212121;;
+}
+
+.tooltip ul {
+	padding: 0px;
+	margin: 0px;
+	list-style-type: none;
+}
+
+.tooltip .legend {
+	display: inline-block;
+	width: 1em;
+	height: 1em;
+	margin-top: 2px;
+	margin-right: 3px;
+}
+
+/* Drag selection styles */
+.selectionBox {
+	fill: #CCC;
+	opacity: 0.5;
+	stroke: #666;
+	stroke-weight: 1px;
+	shape-rendering: crispEdges;
+}
+
+/* Navigator styles */
+.navigator .bar{
+    fill: lightgrey;
+	stroke: grey;
+}
+
+.viewport {
+    stroke: grey;
+    fill: black;
+    fill-opacity: 0.2;
+}
+
+/* Disable text selection across browsers */
+.visualisation svg *::selection {
+    background : transparent;
+}
+
+.visualisation svg *::-moz-selection {
+    background:transparent;
+}
+
+.visualisation svg *::-webkit-selection {
+    background:transparent;
+}
+
+/* Animation styles */
+
+.fillTransition {
+	transition: fill 0.3s ease-in;
+}
+
+.sortBar i.selected {
+	color: #0EBF0E;
+}

@@ -1,0 +1,699 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400italic,700italic,700">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,700italic,700">
+  <title>Developing Plugins</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #0000ff; } /* Keyword */
+code > span.ch { color: #008080; } /* Char */
+code > span.st { color: #008080; } /* String */
+code > span.co { color: #008000; } /* Comment */
+code > span.ot { color: #ff4000; } /* Other */
+code > span.al { color: #ff0000; } /* Alert */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #008000; font-weight: bold; } /* Warning */
+code > span.cn { } /* Constant */
+code > span.sc { color: #008080; } /* SpecialChar */
+code > span.vs { color: #008080; } /* VerbatimString */
+code > span.ss { color: #008080; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { } /* Variable */
+code > span.cf { color: #0000ff; } /* ControlFlow */
+code > span.op { } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #ff4000; } /* Preprocessor */
+code > span.do { color: #008000; } /* Documentation */
+code > span.an { color: #008000; } /* Annotation */
+code > span.cv { color: #008000; } /* CommentVar */
+code > span.at { } /* Attribute */
+code > span.in { color: #008000; } /* Information */
+  </style>
+  <link href="data:text/css;charset=utf-8,%0A%0Ahtml%2C%20body%2C%20div%2C%20span%2C%20applet%2C%20object%2C%20iframe%2C%20h1%2C%20h2%2C%20h3%2C%20h4%2C%20h5%2C%20h6%2C%20p%2C%20blockquote%2C%20pre%2C%20a%2C%20abbr%2C%20acronym%2C%20address%2C%20big%2C%20cite%2C%20code%2C%20del%2C%20dfn%2C%20em%2C%20img%2C%20ins%2C%20kbd%2C%20q%2C%20s%2C%20samp%2C%20small%2C%20strike%2C%20strong%2C%20sub%2C%20sup%2C%20tt%2C%20var%2C%20b%2C%20u%2C%20i%2C%20center%2C%20dl%2C%20dt%2C%20dd%2C%20ol%2C%20ul%2C%20li%2C%20fieldset%2C%20form%2C%20label%2C%20legend%2C%20table%2C%20caption%2C%20tbody%2C%20tfoot%2C%20thead%2C%20tr%2C%20th%2C%20td%2C%20article%2C%20aside%2C%20canvas%2C%20details%2C%20embed%2C%20figure%2C%20figcaption%2C%20footer%2C%20header%2C%20hgroup%2C%20menu%2C%20nav%2C%20output%2C%20ruby%2C%20section%2C%20summary%2C%20time%2C%20mark%2C%20audio%2C%20video%20%7B%0Amargin%3A%200%3B%0Apadding%3A%200%3B%0Aborder%3A%200%3B%0A%7D%0A%0A%23header%20%7B%0Aposition%3A%20relative%3B%0A%7D%0A%2Eheader%5Fbanner%20%7B%0Abox%2Dshadow%3A%200px%200px%205px%20black%3B%0Abackground%3A%20%23333439%3B%0Aposition%3A%20absolute%3B%0Awidth%3A100%25%3B%0Aheight%3A%2090px%3B%0Aleft%3A%200%3B%0Atop%3A%200%3B%0A%7D%0A%2Eheader%5Fbanner%3Ediv%20%7B%0Awidth%3A%20100%25%3B%0Adisplay%3A%20inline%2Dblock%3B%0A%7D%0A%2Elogo%20%7B%0Aheight%3A%2090px%3B%0Afloat%3A%20right%3B%0Abox%2Dshadow%3A%20none%3B%0Amargin%3A%200%3B%0A%7D%0A%2Eheader%5Ftitle%20%7B%0Acolor%3A%20%23FFF%3B%0Amargin%2Dleft%3A%2030px%3B%0Amargin%2Dtop%3A11px%3B%0Afont%2Dsize%3A%2042px%3B%0Afont%2Dfamily%3A%20Open%20Sans%3B%0Afont%2Dweight%3A%20300%3B%0Awhite%2Dspace%3A%20nowrap%3B%0Aoverflow%3A%20hidden%3B%0A%7D%0A%0Abody%20%7B%0Afont%2Dfamily%3A%20Source%20Sans%20Pro%2C%20Open%20Sans%2C%20Helvetica%2C%20Arial%2C%20freesans%2C%20clean%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2015px%3B%0Aline%2Dheight%3A%201%2E6%3B%0Acolor%3A%20%23000%3B%0Abackground%2Dcolor%3A%20%23fff%3B%0Apadding%3A%2020px%3B%0Apadding%2Dtop%3A%20120px%3B%0Amax%2Dwidth%3A%2080%25%3B%0Amargin%3A%200%20auto%3B%0A%7D%0Abody%3E%2A%3Afirst%2Dchild%20%7B%0Amargin%2Dtop%3A%200%20%21important%3B%0A%7D%0Abody%3E%2A%3Alast%2Dchild%20%7B%0Amargin%2Dbottom%3A%200%20%21important%3B%0A%7D%0A%0Ap%2C%20blockquote%2C%20ul%2C%20ol%2C%20dl%2C%20table%2C%20pre%20%7B%0Amargin%3A%2015px%200%3B%0A%7D%0A%0Aul%20%7B%0Alist%2Dstyle%2Dtype%3A%20disc%3B%0A%7D%0A%2Enavbar%20ul%20%7B%0Alist%2Dstyle%2Dtype%3A%20none%3B%0A%7D%0A%23TOC%3Eul%20%7B%0Afont%2Dsize%3A%2016px%3B%0Afont%2Dweight%3A%20lighter%3B%0A%7D%0A%23TOC%3Eul%3Eli%3Eul%20%7B%0Afont%2Dsize%3A%2015px%3B%0A%7D%0A%23TOC%3Eul%3Eli%3Eul%3Eli%3Eul%20%7B%0Afont%2Dsize%3A%2013px%3B%0A%7D%0Ah2%20%3E%20%2EtoggleAll%20%7B%0Amargin%2Dleft%3A%2010px%3B%0Acursor%3A%20pointer%3B%0Acolor%3A%20%235484F1%3B%0A%7D%0Aul%20%2EtoggleList%20%7B%0Afont%2Dweight%3A%20bold%3B%0Amargin%2Dright%3A%205px%3B%0Acursor%3A%20pointer%3B%0Acolor%3A%20%235484F1%3B%0A%7D%0Aul%20%2EhiddenToggle%20%7B%0Avisibility%3A%20hidden%3B%0Amargin%2Dright%3A%205px%3B%0A%7D%0A%2A%20%7Bmargin%3A%200%3B%20padding%3A%200%3B%7D%0A%2Ebody%20%7Bheight%3A%20100%25%3B%20width%3A%20100%25%3B%7D%0A%2Ecanvas%20%7B%0Aposition%3A%20relative%3B%0Aleft%200px%3B%0A%7D%0A%2Enavbar%20%7B%0Aheight%3A%20100%25%3B%0Awidth%3A%200px%3B%0Awhite%2Dspace%3A%20nowrap%3B%0Abackground%3A%20%23333439%3B%0Afloat%3A%20left%3B%0Aoverflow%3A%20auto%3B%0Az%2Dindex%3A%201%3B%0Aposition%3A%20fixed%3B%0Atop%3A%200%3B%0Aleft%3A%200%3B%0Abox%2Dshadow%3A%200px%200px%205px%3B%0A%7D%0A%2Enavbar%20%2Esearch%20%7B%0Amargin%2Dleft%3A%2010px%3B%0A%7D%0A%2Enavbar%20%2Esearch%20span%7B%0Acolor%3A%20white%3B%0Adisplay%3A%20none%3B%0A%7D%0A%2Enavbar%20%2Esearch%20input%20%7B%0Amargin%2Dleft%3A%205px%3B%0Aborder%3A%201px%20solid%20%237E8391%3B%0Aborder%2Dradius%3A%2020px%3B%0Apadding%3A%203px%3B%0Apadding%2Dleft%3A%2015px%3B%0Abackground%2Dcolor%3A%20%232B2B2B%3B%0Acolor%3A%20white%3B%0Afont%2Dfamily%3A%20Open%20Sans%3B%0Awidth%3A%20265px%3B%0A%7D%0A%2Enavbar%20%2Esearch%20input%3Afocus%20%7B%0Aborder%2Dcolor%3A%20%237E8391%3B%0Aoutline%3A%200%3B%0A%2Dwebkit%2Dbox%2Dshadow%3A%20inset%200%201px%201px%20rgba%280%2C0%2C0%2C%2E075%29%2C%200%200%208px%20rgba%28184%2C%20197%2C%20228%2C%200%2E6%29%3B%0Abox%2Dshadow%3A%20inset%200%201px%201px%20rgba%280%2C0%2C0%2C%2E075%29%2C%200%200%208px%20rgba%28184%2C%20197%2C%20228%2C%200%2E6%29%3B%0A%7D%0A%2Enavbar%20a%20%7B%0Acolor%3A%20%23FFFFFF%3B%0A%7D%0A%2Enavbar%20a%20code%20%7B%0Abackground%2Dcolor%3A%20%23333439%3B%0Aborder%3A%20none%3B%0A%7D%0A%2Enavbar%20h2%20%7B%0Amargin%3A%2010px%3B%0Acolor%3A%20%23FFFFFF%3B%0Afont%2Dweight%3A%20300%3B%0A%7D%0A%2Econtent%5Fbutton%20%7B%0Aheight%3A%2030px%3B%0Awidth%3A%2030px%3B%0Abackground%3A%20%23333439%3B%0Atop%3A%2050%25%3B%0Aposition%3A%20fixed%3B%0Aleft%3A%200%3B%0Aborder%2Dtop%3A%201px%20white%20solid%3B%0Aborder%2Dbottom%3A%201px%20white%20solid%3B%0Aborder%2Dradius%3A%200px%205px%205px%200px%3B%0A%7D%0A%2Econtent%5Fbutton%20%2Echevron%20%7B%0Afont%2Dsize%3A%2020px%3B%0Acolor%3A%20white%3B%0Amargin%2Dleft%3A%208px%3B%0A%7D%0A%0Ah1%2C%20h2%2C%20h3%2C%20h4%2C%20h5%2C%20h6%20%7B%0Amargin%3A%2030px%200%2010px%3B%0Afont%2Dweight%3A%20normal%3B%0Apadding%3A%200%3B%0A%2Dwebkit%2Dfont%2Dsmoothing%3A%20antialiased%3B%0Afont%2Dfamily%3A%20Open%20Sans%2C%20Helvetica%2C%20Arial%3B%0A%7D%0Ah1%20tt%2C%20h1%20code%2C%20h2%20tt%2C%20h2%20code%2C%20h3%20tt%2C%20h3%20code%2C%20h4%20tt%2C%20h4%20code%2C%20h5%20tt%2C%20h5%20code%2C%20h6%20tt%2C%20h6%20code%20%7B%0Afont%2Dsize%3A%20inherit%3B%0A%7D%0Ah1%20%7B%0Afont%2Dsize%3A%2036px%3B%0Acolor%3A%20%235484F1%3B%0Afont%2Dweight%3A%20300%3B%0Aborder%2Dbottom%3A%202px%20solid%20%23EAEAEA%3B%0Amargin%2Dbottom%3A%2030px%3B%0A%7D%0Ah2%20%7B%0Afont%2Dsize%3A%2028px%3B%0Acolor%3A%20%23333439%3B%0Aletter%2Dspacing%3A%20%2D1px%3B%0A%7D%0Ah3%20%7B%0Afont%2Dsize%3A%2022px%3B%0Acolor%3A%20%23333%3B%0A%7D%0Ah4%20%7B%0Afont%2Dsize%3A%2018px%3B%0Acolor%3A%20%23333%3B%0A%7D%0Ah5%20%7B%0Acolor%3A%20%23000%3B%0Afont%2Dweight%3A%20normal%3B%0Afont%2Dsize%3A%2016px%3B%0A%7D%0Ah6%20%7B%0Acolor%3A%20%23000%3B%0Afont%2Dweight%3A%20normal%3B%0Afont%2Dsize%3A%2015px%3B%0A%7D%0Abody%3Eh2%3Afirst%2Dchild%2C%20body%3Eh1%3Afirst%2Dchild%2C%20body%3Eh1%3Afirst%2Dchild%2Bh2%2C%20body%3Eh3%3Afirst%2Dchild%2C%20body%3Eh4%3Afirst%2Dchild%2C%20body%3Eh5%3Afirst%2Dchild%2C%20body%3Eh6%3Afirst%2Dchild%20%7B%0Amargin%2Dtop%3A%200%3B%0Apadding%2Dtop%3A%200%3B%0A%7D%0Aa%3Afirst%2Dchild%20h1%2C%20a%3Afirst%2Dchild%20h2%2C%20a%3Afirst%2Dchild%20h3%2C%20a%3Afirst%2Dchild%20h4%2C%20a%3Afirst%2Dchild%20h5%2C%20a%3Afirst%2Dchild%20h6%20%7B%0Amargin%2Dtop%3A%200%3B%0Apadding%2Dtop%3A%200%3B%0A%7D%0Ah1%2Bp%2C%20h2%2Bp%2C%20h3%2Bp%2C%20h4%2Bp%2C%20h5%2Bp%2C%20h6%2Bp%20%7B%0Amargin%2Dtop%3A%2010px%3B%0A%7D%0A%0Aa%20%7B%0Acolor%3A%20%235484F1%3B%0Atext%2Ddecoration%3A%20none%3B%0A%2Dwebkit%2Dtransition%3A%20all%20200ms%20ease%2Din%3B%0A%2Do%2Dtransition%3A%20all%20200ms%20ease%2Din%3B%0A%2Dmoz%2Dtransition%3A%20all%20200ms%20ease%2Din%3B%0Afont%2Dsize%3A%20100%25%3B%0Atransition%3A%20all%200%2E2s%20ease%2Din%3B%0Atransition%2Dproperty%3A%20font%2Dsize%2C%20color%3B%0A%7D%0Aa%3Ahover%20%7B%0A%2Dwebkit%2Dtransition%3A%20all%20200ms%20ease%2Din%3B%0A%2Do%2Dtransition%3A%20all%20200ms%20ease%2Din%3B%0A%2Dmoz%2Dtransition%3A%20all%20200ms%20ease%2Din%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20black%3B%0A%7D%0A%2Enavbar%20a%3Ahover%20%7B%0Acolor%3A%20white%3B%0Afont%2Dsize%3A%20120%25%3B%0Atransition%3A%20font%2Dsize%200%2E2s%20ease%2Din%3B%0A%7D%0A%0Aul%2C%20ol%20%7B%0Apadding%2Dleft%3A%2030px%3B%0A%7D%0A%2Enavbar%20ul%20%7B%0Apadding%2Dleft%3A%2010px%3B%0A%7D%0Aul%20li%20%3E%20%3Afirst%2Dchild%2C%0Aol%20li%20%3E%20%3Afirst%2Dchild%2C%0Aul%20li%20ul%3Afirst%2Dof%2Dtype%2C%0Aol%20li%20ol%3Afirst%2Dof%2Dtype%2C%0Aul%20li%20ol%3Afirst%2Dof%2Dtype%2C%0Aol%20li%20ul%3Afirst%2Dof%2Dtype%20%7B%0Amargin%2Dtop%3A%200px%3B%0A%7D%0Aul%20ul%2C%20ul%20ol%2C%20ol%20ol%2C%20ol%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Adl%20%7B%0Apadding%3A%200%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dsize%3A%2014px%3B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dstyle%3A%20italic%3B%0Apadding%3A%200%3B%0Amargin%3A%2015px%200%205px%3B%0A%7D%0Adl%20dt%3Afirst%2Dchild%20%7B%0Apadding%3A%200%3B%0A%7D%0Adl%20dt%3E%3Afirst%2Dchild%20%7B%0Amargin%2Dtop%3A%200px%3B%0A%7D%0Adl%20dt%3E%3Alast%2Dchild%20%7B%0Amargin%2Dbottom%3A%200px%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%3A%200%200%2015px%3B%0Apadding%3A%200%2015px%3B%0A%7D%0Adl%20dd%3E%3Afirst%2Dchild%20%7B%0Amargin%2Dtop%3A%200px%3B%0A%7D%0Adl%20dd%3E%3Alast%2Dchild%20%7B%0Amargin%2Dbottom%3A%200px%3B%0A%7D%0A%0Apre%2C%20code%2C%20tt%20%7B%0Afont%2Dsize%3A%2012px%3B%0Afont%2Dfamily%3A%20Consolas%2C%20%22Liberation%20Mono%22%2C%20Courier%2C%20monospace%3B%0A%7D%0Acode%2C%20tt%20%7B%0Amargin%3A%200%200px%3B%0Apadding%3A%201px%202px%3B%0Awhite%2Dspace%3A%20nowrap%3B%0Aborder%3A%201px%20solid%20%23eaeaea%3B%0Abackground%2Dcolor%3A%20%23f8f8f8%3B%0Aborder%2Dradius%3A%203px%3B%0A%7D%0Apre%3Ecode%20%7B%0Amargin%3A%200%3B%0Apadding%3A%200%3B%0Awhite%2Dspace%3A%20pre%3B%0Aborder%3A%20none%3B%0Abackground%3A%20transparent%3B%0A%7D%0Apre%20%7B%0Abackground%2Dcolor%3A%20%23F8F8F8%3B%0Aborder%3A%201px%20solid%20%23BDBDBD%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%2019px%3B%0Aoverflow%3A%20auto%3B%0Apadding%3A%206px%2010px%3B%0Aborder%2Dradius%3A%203px%3B%0A%7D%0Apre%20code%2C%20pre%20tt%20%7B%0Abackground%2Dcolor%3A%20transparent%3B%0Aborder%3A%20none%3B%0A%7D%0Akbd%20%7B%0A%2Dmoz%2Dborder%2Dbottom%2Dcolors%3A%20none%3B%0A%2Dmoz%2Dborder%2Dleft%2Dcolors%3A%20none%3B%0A%2Dmoz%2Dborder%2Dright%2Dcolors%3A%20none%3B%0A%2Dmoz%2Dborder%2Dtop%2Dcolors%3A%20none%3B%0Abackground%2Dcolor%3A%20%23DDDDDD%3B%0Abackground%2Dimage%3A%20linear%2Dgradient%28%23F1F1F1%2C%20%23DDDDDD%29%3B%0Abackground%2Drepeat%3A%20repeat%2Dx%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%20%23CCCCCC%20%23CCCCCC%20%23DDDDDD%3B%0Aborder%2Dimage%3A%20none%3B%0Aborder%2Dradius%3A%202px%202px%202px%202px%3B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%2Dwidth%3A%201px%3B%0Afont%2Dfamily%3A%20%22Helvetica%20Neue%22%2CHelvetica%2CArial%2Csans%2Dserif%3B%0Aline%2Dheight%3A%2010px%3B%0Apadding%3A%201px%204px%3B%0A%7D%0A%0Ablockquote%20%7B%0Aborder%2Dcolor%3A%20%23333333%3B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%2Dleft%2Dwidth%3A%204px%3B%0Aborder%2Dright%2Dwidth%3A%201px%3B%0Aborder%2Dtop%2Dwidth%3A%201px%3B%0Aborder%2Dbottom%2Dwidth%3A%201px%3B%0Apadding%3A%200%2015px%3B%0Acolor%3A%20%23333333%3B%0Abackground%3A%20%23FFF%3B%0Aborder%2Dradius%3A%205px%3B%0A%7D%0Ablockquote%3E%3Afirst%2Dchild%20%7B%0Amargin%2Dtop%3A%200px%3B%0A%7D%0Ablockquote%3E%3Alast%2Dchild%20%7B%0Amargin%2Dbottom%3A%200px%3B%0A%7D%0A%0Ahr%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%2015px%200%3B%0Aheight%3A%200px%3B%0Aoverflow%3A%20hidden%3B%0Aborder%3A%20none%3B%0Abackground%3A%20transparent%3B%0Aborder%2Dbottom%3A%201px%20solid%20%23333439%3B%0Apadding%3A%200%3B%0A%7D%0A%0Atable%20%7B%0Aborder%2Dcollapse%3A%20collapse%3B%0Amargin%2Dleft%3A%20auto%3B%0Amargin%2Dright%3A%20auto%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0A%7D%0Atable%20th%20%7B%0Afont%2Dweight%3A%20bold%3B%0Atext%2Dalign%3A%20center%3B%0Acolor%3A%20%23000%3B%0Apadding%3A%200px%206px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Abackground%3A%20%23F5F5F5%3B%0Awhite%2Dspace%3A%20nowrap%0A%7D%0Atable%20td%20%7B%0Apadding%3A%200px%206px%3B%0A%7D%0Atable%20tr%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0A%7D%0Atable%20td%20%7B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0A%7D%0A%0A%0Aimg%20%7B%0Amax%2Dwidth%3A%20100%25%3B%0Adisplay%3A%20block%3B%0Amargin%3A%2010px%20auto%3B%0Abox%2Dshadow%3A%202px%202px%205px%201px%20rgb%28152%2C%20152%2C%20152%29%3B%0A%7D%0A%0A%2Ecaption%20%7B%0Adisplay%3A%20none%3B%0A%7D%0A%0A%2Efootnotes%20%7B%0Amargin%2Dtop%3A%2040px%3B%0A%7D%0A%0A%2Emath%20%7B%0Afont%2Dfamily%3A%20STIXGeneral%2DItalic%3B%0Afont%2Dsize%3A%2018px%3B%0A%7D%0A" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<script type="text/javascript">
+		document.getElementsByTagName("body")[0].style.display = "none";
+
+		function loadFunc() {
+			var toggled = false;
+			$(".navbar").append(
+				$("<h2>Contents</h2>").append(
+					$("<span class='collapse toggleAll'>-</span>").click(function() {
+						toggleAll(this);
+					})
+				)
+			);
+
+			$(".navbar").append("<div class='search'><span>Search</span><input></input></div>");
+			$(".navbar").append($("#TOC"));
+			$(".canvas, #header").click(function() {
+				if (toggled) {
+					$(".navbar").animate({width: "0px"}, "fast");
+					$(".header_banner").animate({left: "0"}, "fast");
+					$(".canvas").animate({left: "0px"}, "fast");
+					$("#header").animate({left: "0px"}, "fast");
+					$(".content_button").animate({left: "0px"}, "fast");
+					$(".chevron").text(">");
+					toggled=false;
+				}
+			});
+
+			$(".content_button").click(function() {
+				if(toggled) {$(".navbar").animate({width: "0px"}, "fast");
+					$(".header_banner").animate({left: "0"}, "fast");
+					$(".canvas").animate({left: "0px"}, "fast");
+					$("#header").animate({left: "0px"}, "fast");
+					$(".content_button").animate({left: "0px"}, "fast");
+					$(".chevron").text(">");
+					toggled=false;
+				} else {
+					$(".navbar").animate({width: "336px"}, "fast");
+					$(".header_banner").animate({left: "336"}, "fast");
+					$(".canvas").animate({left: "336px"}, "fast");
+					$(".content_button").animate({left: "336px"}, "fast");
+					$("#header").animate({left: "336px"}, "fast");
+					$(".chevron").text("<");
+					toggled=true;
+				}
+			});
+
+			$(".navbar").find("a").each(function() {
+				var list = $(this).next();
+				if (list.length > 0) {
+					$(this).before("<span class='toggleList collapse'>-</span>");
+					$(this).prev().click(function() {
+						if ($(this).hasClass("collapse")) {
+							$(this).text("+").removeClass("collapse");
+						} else {
+							$(this).text("-").addClass("collapse");
+						} list.animate({height: 'toggle'});
+					})
+				}
+				else {
+					$(this).before("<span class='hiddenToggle'>-</span>");
+				}
+			});
+
+			$(".navbar .search input").keyup(function() {
+				expandAll();
+				var val = $(this).val().toLowerCase();
+				$(".navbar a").each(function() {
+					var link = $(this).text().toLowerCase();
+					if (link.indexOf(val) >= 0) {
+						$(this).show(); $(this).prev().show();
+					} else {
+						$(this).hide(); $(this).prev().hide();
+					}
+				});
+			});
+
+			function toggleAll(el) {
+				if ($(el).hasClass('collapse')) {
+					$(el).removeClass('collapse');
+					$(el).text('+');
+					collapseAll();
+				} else {
+					$(el).addClass('collapse');
+					$(el).text('-');
+					expandAll();
+				}
+			}
+
+			function collapseAll() {
+				$("ul>li>.toggleList").text('+').removeClass('collapse').nextUntil("ul").next().animate({height: 'hide'});
+			}
+
+			function expandAll() {
+				$("ul>li>.toggleList").text('-').addClass('collapse').nextUntil("ul").next().animate({height: 'show'});
+			}
+			var title = document.getElementsByTagName("h1")[0].innerHTML;
+			document.getElementById("title").innerHTML = title;
+			document.getElementsByTagName("h1")[0].style.display = "none";
+			document.getElementsByTagName("body")[0].style.display = "block";
+		}
+
+		var head  = document.getElementsByTagName('head')[0];
+		var link  = document.createElement('link');
+	    link.rel  = 'stylesheet';
+	    link.type = 'text/css';
+	    link.href = '/insights/icons/css/font-awesome.min.css';
+	    head.appendChild(link);
+
+		window.onload = loadFunc;
+</script>
+<style>
+	.homeBtn {
+		float: right;
+		color: #E2E2E2;
+		font-size: 48px;
+		margin-top: -56px;
+		margin-right: 20px
+	}
+
+	.homeBtn:hover {
+		color: #FFFFFF;
+	}
+</style>
+
+<div class="navbar_container">
+<div class="navbar"/>
+</div><div class="content_button">
+<div class="chevron">></div>
+</div>
+<div class="header_banner">
+	<div>
+		<div class="header_title" id="title">The Title</div>
+		<a class="homeBtn" href="/insights/docs">
+			<i class="fa fa-home"></i>
+		</a>
+	</div>
+</div>
+<div id="header">
+<h1 class="title">Developing Plugins</h1>
+</div>
+<div class="canvas">
+<div id="TOC">
+<ul>
+<li><a href="#introduction-and-general-properties"><span class="toc-section-number">1</span> Introduction and General Properties</a><ul>
+<li><a href="#addingmodifying-plugins"><span class="toc-section-number">1.1</span> Adding/Modifying Plugins</a></li>
+</ul></li>
+<li><a href="#rendering"><span class="toc-section-number">2</span> Rendering</a></li>
+<li><a href="#column-mapping"><span class="toc-section-number">3</span> Column Mapping</a><ul>
+<li><a href="#column-map-properties"><span class="toc-section-number">3.1</span> Column Map Properties</a></li>
+<li><a href="#example"><span class="toc-section-number">3.2</span> Example</a></li>
+</ul></li>
+<li><a href="#configuration"><span class="toc-section-number">4</span> Configuration</a><ul>
+<li><a href="#properties"><span class="toc-section-number">4.1</span> Properties</a></li>
+<li><a href="#configuration-types"><span class="toc-section-number">4.2</span> Configuration Types</a><ul>
+<li><a href="#textbox"><span class="toc-section-number">4.2.1</span> <code>textbox</code></a></li>
+<li><a href="#checkbox"><span class="toc-section-number">4.2.2</span> <code>checkbox</code></a></li>
+<li><a href="#radio"><span class="toc-section-number">4.2.3</span> <code>radio</code></a></li>
+<li><a href="#dropdown"><span class="toc-section-number">4.2.4</span> <code>dropdown</code></a></li>
+<li><a href="#date"><span class="toc-section-number">4.2.5</span> <code>date</code></a></li>
+<li><a href="#daterange"><span class="toc-section-number">4.2.6</span> <code>dateRange</code></a></li>
+<li><a href="#range"><span class="toc-section-number">4.2.7</span> <code>range</code></a></li>
+<li><a href="#colour"><span class="toc-section-number">4.2.8</span> <code>colour</code></a></li>
+<li><a href="#icon"><span class="toc-section-number">4.2.9</span> <code>icon</code></a></li>
+<li><a href="#font"><span class="toc-section-number">4.2.10</span> <code>font</code></a></li>
+<li><a href="#palette"><span class="toc-section-number">4.2.11</span> <code>palette</code></a></li>
+<li><a href="#map"><span class="toc-section-number">4.2.12</span> <code>map</code></a></li>
+<li><a href="#mapcode"><span class="toc-section-number">4.2.13</span> <code>mapcode</code></a></li>
+<li><a href="#maptile"><span class="toc-section-number">4.2.14</span> <code>maptile</code></a></li>
+</ul></li>
+</ul></li>
+<li><a href="#interactivity"><span class="toc-section-number">5</span> Interactivity</a><ul>
+<li><a href="#actions"><span class="toc-section-number">5.1</span> Actions</a><ul>
+<li><a href="#properties-1"><span class="toc-section-number">5.1.1</span> Properties</a></li>
+<li><a href="#example-1"><span class="toc-section-number">5.1.2</span> Example</a></li>
+</ul></li>
+<li><a href="#reactions"><span class="toc-section-number">5.2</span> Reactions</a><ul>
+<li><a href="#properties-2"><span class="toc-section-number">5.2.1</span> Properties</a></li>
+<li><a href="#example-2"><span class="toc-section-number">5.2.2</span> Example</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#conditional-formatting"><span class="toc-section-number">6</span> Conditional Formatting</a><ul>
+<li><a href="#properties-3"><span class="toc-section-number">6.1</span> Properties</a><ul>
+<li><a href="#examples"><span class="toc-section-number">6.1.1</span> Examples</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+<h1 id="introduction-and-general-properties"><span class="header-section-number">1</span> Introduction and General Properties</h1>
+<p>This guide is an introduction and reference for developing and modifying plugins for use with the Insights framework. Plugins are defined as properties in the <code>rmvpp.Plugins</code> object. The framework expects a plugin object to have certain parameters which are consumed by the application, allowing a flexible but standardised format for the UI. Similarly, it helps to standardise the input passed to the <a href="#rendering">rendering</a> function for the benefit of plugin developers.</p>
+<p><code>pluginName</code> is the property in the umbrella <code>rmvpp.Plugins</code> object that will reference the plugin, e.g. <code>'bar'</code> and <code>rmvpp.Plugins.bar</code>. It is declared at the top of the and used to assign all other properties, but not used for display. This is the object that defines a plugin, all subsequent attributes in this section are properties of this main object.</p>
+<ul>
+<li><code>displayName</code> : Display name for the plugin. E.g. <code>'Bar Chart'</code>.</li>
+<li><code>description</code> : Description of the plugin to be used for documentation. Supports <a href="https://en.wikipedia.org/wiki/Markdown">markdown</a> syntax.</li>
+<li><code>icon</code> : <a href="http://fontawesome.io/icons/">Font Awesome</a> icon code to display in the UI when the plugin is being. used.</li>
+</ul>
+<h2 id="addingmodifying-plugins"><span class="header-section-number">1.1</span> Adding/Modifying Plugins</h2>
+<p>New plugins can be developed by adding properties to this object, and providing they are in the correct format, they will be consumed by the application. A template for designing plugins can be found at <code>plugins/template.js</code>, or any of the existing files can be copied and modified. It is recommended that modifications to plugins are made by copying the original files first and changing the <code>pluginName</code>. This will ensure that any changes you make are not lost if you update the application repository.</p>
+<p>Plugin files are stored in <code>/insights/plugins</code> and each plugin has a directory of its own, with the same name as as the pluginName. This directory should contain:</p>
+<ul>
+<li><code>&lt;pluginName&gt;.js</code> : Main plugin file with the properties and functions described in this document.</li>
+<li><code>doc.md</code> : Markdown documentation for the plugin. Any images for the document should also be contained in this directory. If it exists, the file will be automatically read during <a href="/insights/docs/technical-overview.html#documentation">documentation creation</a> and a HTML document produced at <code>/insights/docs/plugins/&lt;pluginName&gt;.html</code></li>
+<li><code>lib/*</code> : Directory containing any <code>js</code> or <code>css</code> specific only to this plugin. A full summary of <em>all</em> modules and libraries included in Insights can be found <a href="/insights/docs/technical-overview.html#javascript-libraries">here</a>.</li>
+</ul>
+<p>To add a new plugin to the application, the scripts and associated CSS and libraries need to be loaded in the two application pages:</p>
+<ul>
+<li><code>/insights/app/states/visBuilder/index.html</code></li>
+<li><code>/insights/app/states/view/index.html</code></li>
+</ul>
+<p>The include tag can be added to the header in the same location as the other plugin includes. E.g.</p>
+<div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;head&gt;</span>
+    <span class="co">&lt;!-- Bar Chart --&gt;</span>
+    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;/insights/plugins/bar/bar.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
+<span class="kw">&lt;/head&gt;</span></code></pre></div>
+<h1 id="rendering"><span class="header-section-number">2</span> Rendering</h1>
+<p>Each plugin has a <code>render</code> property which specifies the function to execute when loading a visualisation based on that plugin. The render function of all plugins will receive the same arguments (in this order):</p>
+<ul>
+<li><code>data</code> : Array of objects describing the data received from OBIEE. Each element will have property names for each property in described by the <a href="#column-mapping">column map</a>. Single columns will have the value assigned directly to that property. Multiple columns will have an array of objects with <code>name</code> and <code>value</code> properties. The order of items in this sub-array will match the order defined in the column map. The data set will be sorted in the the columns appear in the dataset. Additionally, each row will also have a property of the true column name (from OBIEE) with the value for that cell, providing a flattened view of the row even when 'multiple' columns types are used.</li>
+<li><code>columnMap</code> : Object describing the <a href="#column-mapping">column mapping</a> between columns in OBIEE and the custom visualisation. This allows the plugin developer to use properties of the <a href="/insights/docs/api/module-obiee.BIColumn.html">OBIEE columns</a> when rendering the visualisation.</li>
+<li><code>config</code> : Object describing the <a href="#configuration">configuration</a> for the plugin. This lets the user vary parameters (size, colour etc.) and gives the values in a structured way for the plugin developer to use.</li>
+<li><code>container</code> : HTML DOM element to act as the container for the visualisation. It is very important that a plugin developer uses this container as a parent frame of reference when doing <strong>any</strong> rendering or DOM manipulation. This will ensure that code for your given plugin does not affect anything else in the application.</li>
+<li><code>condFormats</code> : Array of <a href="/insights/docs/api/module-obiee.BIConditionalFormat.html"><code>conditional format rules</code></a> defined by the user. Can be used by the plugin developer to dynamically <a href="#conditional-formatting">format</a> elements of their visualisation based on the data.</li>
+</ul>
+<h1 id="column-mapping"><span class="header-section-number">3</span> Column Mapping</h1>
+<p>The <code>columnMappingParameters</code> property is array of objects defining column mapping between OBIEE and the custom visualisation. It acts as a way of the plugin developer communicating to the user which kind of columns should go where to achieve certain results. For example a bar chart has an category axis (usually X) and measure axis (usually Y). A user might select 'Product' to be the category and 'Revenue' to be the measure. The column map will tell them which is which.</p>
+<p>When passed to the <a href="#rendering"><code>render</code></a> function, the column map is an object of properties described by this configuration, and values of <a href="/insights/docs/api/module-obiee.BIColumn.html"><code>obiee.BIColumn</code></a> objects chosen by the user.</p>
+<h2 id="column-map-properties"><span class="header-section-number">3.1</span> Column Map Properties</h2>
+<ul>
+<li><code>targetProperty</code> : The name of the property the data should be mapped to. Target properties <strong>cannot</strong> end in numbers, as this logic is reserved for handling multiple columns.</li>
+<li><code>formLabel</code> : A description to be used by the UI to display a column map.</li>
+<li><code>type</code> : Designates the type of column. Can take one of the following values:
+<ul>
+<li>any</li>
+<li>fact</li>
+<li>dim</li>
+<li>hidden</li>
+</ul></li>
+<li><code>desc</code> <em>optional</em> : Description for the column mapping parameter. Will be used to generate documentation and in the UI. Supports <a href="https://en.wikipedia.org/wiki/Markdown">markdown</a> syntax.</li>
+<li><code>multiple</code> <em>optional</em> : Boolean property allowing mapping to be an array of multiple columns, rather than a one to one mapping. If this is set to true, <code>mapData</code> will create a new property on the row, with the <code>targetProperty</code> value, holding an array of <code>name</code> and <code>value</code> pairs for each selected column. This is useful in some rendering contexts, e.g. multiple series on charts.</li>
+<li><code>required</code> <em>optional</em> : Boolean property indicating whether or not this column is mandatory for producing the visualisation.</li>
+<li><code>conditionalFormat</code> <em>optional</em> : Boolean or string property indicating whether or not this column can have conditional formatting applied to it. Note that all columns can be used for logic in conditional format rules regardless of this property. Declaring as a string will allow further options. Currently the only available option is to set the value to <code>icon</code>, which will allow icon picking in the UI. In future, other options can be added by making this value a comma separated list.</li>
+<li><code>config</code> <em>optional</em> : Array of objects using the same structure as <a href="#configurationparameters"><code>configurationParameters</code></a>. These allow for column specific configuration for example, column widths on the table plugin. Parameters are assigned to the <code>Config</code> property of the columns in the column map when the viaulisation is rendered.</li>
+</ul>
+<h2 id="example"><span class="header-section-number">3.2</span> Example</h2>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript">rmvpp[pluginName].<span class="at">columnMappingParameters</span> <span class="op">=</span> [
+    <span class="op">{</span>
+        <span class="dt">targetProperty</span><span class="op">:</span><span class="st">&quot;x&quot;</span><span class="op">,</span>
+        <span class="dt">formLabel</span><span class="op">:</span> <span class="st">&quot;X Axis&quot;</span><span class="op">,</span>
+        <span class="dt">required</span><span class="op">:</span> <span class="kw">true</span>
+    <span class="op">},</span>
+    <span class="op">{</span>
+        <span class="dt">targetProperty</span><span class="op">:</span><span class="st">&quot;y&quot;</span><span class="op">,</span>
+        <span class="dt">formLabel</span><span class="op">:</span> <span class="st">&quot;Y Axis&quot;</span><span class="op">,</span>
+        <span class="dt">required</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span>
+        <span class="dt">conditionalFormat</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span>
+        <span class="dt">multiple</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span>
+        <span class="dt">config </span><span class="op">:</span> [
+            <span class="op">{</span>
+                <span class="dt">targetProperty</span><span class="op">:</span><span class="st">&quot;hide&quot;</span><span class="op">,</span>
+                <span class="dt">label</span><span class="op">:</span> <span class="st">&quot;Hide&quot;</span><span class="op">,</span>
+                <span class="dt">inputType</span><span class="op">:</span> <span class="st">&quot;checkbox&quot;</span><span class="op">,</span>
+                <span class="dt">inputOptions</span><span class="op">:</span> <span class="op">{</span>
+                    <span class="st">&quot;defaultValue&quot;</span><span class="op">:</span> <span class="kw">false</span>
+                <span class="op">}</span>
+            <span class="op">}</span>
+        ]
+    <span class="op">}</span>
+]<span class="op">;</span></code></pre></div>
+<h1 id="configuration"><span class="header-section-number">4</span> Configuration</h1>
+<p>The <code>configurationParameters</code> property is array of objects defining configuration settings. These settings most importantly contain the key-value properties to be passed through to the <a href="#rendering">rendering</a> function, allowing a plugin developer to parameterise their visualisations. This must include properties for sizing, but can include any other parameters like colour, fonts, axes titles etc.</p>
+<p>The framework assumes all visualisations have a fixed height and width, which allows resizing and dynamic scaling but places some constraints on some configuration parameters. A plugin <strong>must</strong> have one of the following configuration properties:</p>
+<ul>
+<li><code>size</code> : Assumes a maintenance of aspect ratio.</li>
+<li><code>width</code> and <code>height</code> : Two properties indicating the size.</li>
+</ul>
+<p>Note that these properties do <strong>not</strong> require the <code>scalable</code> attribute to be set and will scale automatically.</p>
+<p>Additionally, the options here affect the user interface generated as custom UI elements can be provided. This UI is governed by the <code>inputType</code> property which in turn dynamically calls an Angular template from <code>app/directives/templates/config/config-&lt;inputType&gt;.html</code>. This template can then call other directives as required.</p>
+<h2 id="properties"><span class="header-section-number">4.1</span> Properties</h2>
+<ul>
+<li><code>targetProperty</code> : Name of the property to assign the value to in the resulting config object.</li>
+<li><code>label</code> : Description to be used by the UI to display the configuration option.</li>
+<li><code>inputType</code> : Type of input. Each of these has various sub properties available. The full list of input types is below.</li>
+<li><code>inputOptions</code> Specific options for the type of input chosen. Details for each type in the following subsections.</li>
+<li><code>scalable</code> <em>optional</em> : String with the allowable values: <code>size</code>, <code>width</code> or <code>height</code>. This scales a custom attribute based on the screen resolution upon loading. Choose <code>width</code> will scale based on the change in width of the screen and similarly for <code>height</code>. Choosing <code>size</code> will scale on the mean of the width and height ratios.</li>
+<li><code>desc</code> <em>optional</em> : Description for the configuration parameter. Will be used to generate documentation and in the UI. Supports <a href="https://en.wikipedia.org/wiki/Markdown">markdown</a> syntax.</li>
+</ul>
+<h2 id="configuration-types"><span class="header-section-number">4.2</span> Configuration Types</h2>
+<h3 id="textbox"><span class="header-section-number">4.2.1</span> <code>textbox</code></h3>
+<p>Standard HTML5 text input, defaults to the <code>text</code> subtype.</p>
+<p><strong>Input Options</strong></p>
+<ul>
+<li><code>subtype</code> : HTML5 text input types, including:
+<ul>
+<li><code>text</code> : Normal alphanumeric text input.</li>
+<li><code>number</code> : Restricts to numeric input</li>
+</ul></li>
+<li><code>min</code> : Minimum value for dates and numbers</li>
+<li><code>max</code> : Maximum value for dates and numbers</li>
+<li><code>defaultValue</code> : <strong>String</strong> containing the default value</li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="op">{</span>
+    <span class="dt">targetProperty</span><span class="op">:</span><span class="st">&quot;test&quot;</span><span class="op">,</span>
+    <span class="dt">label</span><span class="op">:</span> <span class="st">&quot;Test&quot;</span><span class="op">,</span>
+    <span class="dt">inputType</span><span class="op">:</span> <span class="st">&quot;textbox&quot;</span><span class="op">,</span>
+    <span class="dt">inputOptions</span><span class="op">:</span> <span class="op">{</span>
+        <span class="dt">subtype </span><span class="op">:</span> <span class="st">'number'</span><span class="op">,</span>
+        <span class="st">&quot;min&quot;</span> <span class="op">:</span> <span class="dv">0</span><span class="op">,</span>
+        <span class="st">&quot;max&quot;</span> <span class="op">:</span> <span class="dv">10</span><span class="op">,</span>
+        <span class="dt">defaultValue </span><span class="op">:</span> <span class="dv">5</span>
+    <span class="op">}</span>
+<span class="op">}</span></code></pre></div>
+<h3 id="checkbox"><span class="header-section-number">4.2.2</span> <code>checkbox</code></h3>
+<p>Standard checkbox input for binary parameters.</p>
+<p><strong>Input Options</strong></p>
+<ul>
+<li><code>defaultValue</code> : <strong>Binary</strong>, either <code>true</code> or <code>false</code></li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="op">{</span>
+    <span class="dt">targetProperty</span><span class="op">:</span><span class="st">&quot;test&quot;</span><span class="op">,</span>
+    <span class="dt">label</span><span class="op">:</span> <span class="st">&quot;Test&quot;</span><span class="op">,</span>
+    <span class="dt">inputType</span><span class="op">:</span> <span class="st">&quot;checkbox&quot;</span><span class="op">,</span>
+    <span class="dt">inputOptions</span><span class="op">:</span> <span class="op">{</span>
+        <span class="dt">defaultValue </span><span class="op">:</span> <span class="kw">true</span>
+    <span class="op">}</span>
+<span class="op">}</span></code></pre></div>
+<h3 id="radio"><span class="header-section-number">4.2.3</span> <code>radio</code></h3>
+<p>Radio buttons to choose a single value from an array of choices.</p>
+<p><strong>Input Options</strong></p>
+<ul>
+<li><code>values</code> : Array of strings for possible values to select from. One of these will be selected and passed through to the config object.</li>
+<li><code>defaultValue</code> : One of the values defined above.</li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="op">{</span>
+    <span class="dt">targetProperty</span><span class="op">:</span><span class="st">&quot;test&quot;</span><span class="op">,</span>
+    <span class="dt">label</span><span class="op">:</span> <span class="st">&quot;Test&quot;</span><span class="op">,</span>
+    <span class="dt">inputType</span><span class="op">:</span> <span class="st">&quot;radio&quot;</span><span class="op">,</span>
+    <span class="dt">inputOptions</span><span class="op">:</span> <span class="op">{</span>
+        <span class="st">&quot;values&quot;</span> <span class="op">:</span> [<span class="st">'Option 1'</span><span class="op">,</span> <span class="st">'Option 2'</span>]<span class="op">,</span>
+        <span class="dt">defaultValue </span><span class="op">:</span> <span class="st">'Option 2'</span>
+    <span class="op">}</span>
+<span class="op">}</span></code></pre></div>
+<h3 id="dropdown"><span class="header-section-number">4.2.4</span> <code>dropdown</code></h3>
+<p>Dropdown supporting single or multiple value select. Single choice will give a string, similar to a radio button, multiple select will allow for arrays to be selected.</p>
+<p><strong>Input Options</strong></p>
+<ul>
+<li><code>multiSelect</code> : Binary value allowing multiple values to be selected.</li>
+<li><code>values</code> : Array of strings for possible values to select from.</li>
+<li><code>defaultValue</code> : <strong>String</strong> if <code>multiSelect == false</code>, <strong>Array</strong> otherwise.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="op">{</span>
+    <span class="dt">targetProperty</span><span class="op">:</span><span class="st">&quot;test&quot;</span><span class="op">,</span>
+    <span class="dt">label</span><span class="op">:</span> <span class="st">&quot;Test&quot;</span><span class="op">,</span>
+    <span class="dt">inputType</span><span class="op">:</span> <span class="st">&quot;dropdown&quot;</span><span class="op">,</span>
+    <span class="dt">inputOptions</span><span class="op">:</span> <span class="op">{</span>
+        <span class="st">'multiSelect'</span> <span class="op">:</span> <span class="kw">true</span><span class="op">,</span>
+        <span class="st">&quot;values&quot;</span> <span class="op">:</span> [<span class="st">'Option 1'</span><span class="op">,</span> <span class="st">'Option 2'</span><span class="op">,</span> <span class="st">'Option 3'</span><span class="op">,</span> <span class="st">'Option 4'</span><span class="op">,</span> <span class="st">'Option 5'</span>]<span class="op">,</span>
+        <span class="dt">defaultValue </span><span class="op">:</span> [<span class="st">'Option 2'</span><span class="op">,</span> <span class="st">'Option 3'</span>]
+    <span class="op">}</span>
+<span class="op">}</span></code></pre></div>
+<h3 id="date"><span class="header-section-number">4.2.5</span> <code>date</code></h3>
+<p>Uses an Angular <a href="https://github.com/720kb/angular-datepicker">datepicker</a> to allow the user to choose a date intuitively. Stores a date value in YYYY-MM-DD format.</p>
+<p><strong>Example:</strong></p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="op">{</span>
+    <span class="dt">targetProperty</span><span class="op">:</span><span class="st">&quot;test&quot;</span><span class="op">,</span>
+    <span class="dt">label</span><span class="op">:</span> <span class="st">&quot;Test&quot;</span><span class="op">,</span>
+    <span class="dt">inputType</span><span class="op">:</span> <span class="st">&quot;date&quot;</span>
+<span class="op">}</span></code></pre></div>
+<h3 id="daterange"><span class="header-section-number">4.2.6</span> <code>dateRange</code></h3>
+<p>Provides two <a href="https://github.com/720kb/angular-datepicker">datepicker</a> inputs to allow a user to select two dates which are constrained as a range. That is the first date has to be before the latter. Stores two dates in YYYY-MM-DD in a two-element array.</p>
+<p><strong>Example:</strong></p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="op">{</span>
+    <span class="dt">targetProperty</span><span class="op">:</span><span class="st">&quot;test&quot;</span><span class="op">,</span>
+    <span class="dt">label</span><span class="op">:</span> <span class="st">&quot;Test&quot;</span><span class="op">,</span>
+    <span class="dt">inputType</span><span class="op">:</span> <span class="st">&quot;dateRange&quot;</span>
+<span class="op">}</span></code></pre></div>
+<h3 id="range"><span class="header-section-number">4.2.7</span> <code>range</code></h3>
+<p>Creates a range input for selecting a number between two values.</p>
+<p><strong>Input Options</strong></p>
+<ul>
+<li><code>min</code></li>
+<li><code>max</code></li>
+<li><code>step</code> : Amount to increment on the slider, defaulting to 1</li>
+<li><code>defaultValue</code> : Number</li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="op">{</span>
+    <span class="dt">targetProperty</span><span class="op">:</span><span class="st">&quot;test&quot;</span><span class="op">,</span>
+    <span class="dt">label</span><span class="op">:</span> <span class="st">&quot;Test&quot;</span><span class="op">,</span>
+    <span class="dt">inputType</span><span class="op">:</span> <span class="st">&quot;range&quot;</span><span class="op">,</span>
+    <span class="dt">inputOptions</span><span class="op">:</span> <span class="op">{</span>
+        <span class="st">&quot;min&quot;</span> <span class="op">:</span> <span class="dv">5</span><span class="op">,</span>
+        <span class="st">&quot;max&quot;</span> <span class="op">:</span> <span class="dv">50</span><span class="op">,</span>
+        <span class="st">&quot;step&quot;</span> <span class="op">:</span> <span class="fl">0.01</span><span class="op">,</span>
+        <span class="dt">defaultValue </span><span class="op">:</span> <span class="dv">25</span>
+    <span class="op">}</span>
+<span class="op">}</span></code></pre></div>
+<h3 id="colour"><span class="header-section-number">4.2.8</span> <code>colour</code></h3>
+<p><a href="http://colpick.com/plugin">Colour picker</a> allowing users to select from a rich colour palette.</p>
+<p><strong>Input Options</strong></p>
+<ul>
+<li><code>defaultValue</code> : String with a Hex value of the colour.</li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="op">{</span>
+    <span class="dt">targetProperty</span><span class="op">:</span><span class="st">&quot;test&quot;</span><span class="op">,</span>
+    <span class="dt">label</span><span class="op">:</span> <span class="st">&quot;Test&quot;</span><span class="op">,</span>
+    <span class="dt">inputType</span><span class="op">:</span> <span class="st">&quot;colour&quot;</span><span class="op">,</span>
+    <span class="dt">inputOptions</span><span class="op">:</span> <span class="op">{</span>
+        <span class="dt">defaultValue </span><span class="op">:</span> <span class="st">'#0095FF'</span>
+    <span class="op">}</span>
+<span class="op">}</span></code></pre></div>
+<h3 id="icon"><span class="header-section-number">4.2.9</span> <code>icon</code></h3>
+<p>Provides an picker interface to choose one of any <a href="http://fontawesome.io/icons/">Font Awesome</a> icon.</p>
+<p><strong>Input Options</strong></p>
+<ul>
+<li><code>defaultValue</code> : String indicating the icon class.</li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="op">{</span>
+    <span class="dt">targetProperty</span><span class="op">:</span><span class="st">&quot;icon&quot;</span><span class="op">,</span>
+    <span class="dt">label</span><span class="op">:</span> <span class="st">&quot;Icon&quot;</span><span class="op">,</span>
+    <span class="dt">inputType</span><span class="op">:</span> <span class="st">&quot;icon&quot;</span><span class="op">,</span>
+    <span class="dt">inputOptions</span><span class="op">:</span> <span class="op">{</span> <span class="st">&quot;defaultValue&quot;</span><span class="op">:</span> <span class="st">&quot;arrow-up&quot;</span>  <span class="op">}</span>
+<span class="op">}</span></code></pre></div>
+<h3 id="font"><span class="header-section-number">4.2.10</span> <code>font</code></h3>
+<p>Provides a dropdown of available fonts from the master list in <code>InsightsConfig.Fonts</code>.</p>
+<p><strong>Input Options</strong></p>
+<ul>
+<li><code>defaultValue</code> : <strong>String</strong> indicating the font name.</li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="op">{</span>
+    <span class="dt">targetProperty</span><span class="op">:</span><span class="st">&quot;font&quot;</span><span class="op">,</span>
+    <span class="dt">label</span><span class="op">:</span> <span class="st">&quot;Font&quot;</span><span class="op">,</span>
+    <span class="dt">inputType</span><span class="op">:</span> <span class="st">&quot;font&quot;</span><span class="op">,</span>
+    <span class="dt">inputOptions</span><span class="op">:</span> <span class="op">{</span> <span class="st">&quot;defaultValue&quot;</span><span class="op">:</span> <span class="st">&quot;Open Sans&quot;</span> <span class="op">}</span>
+<span class="op">}</span></code></pre></div>
+<h3 id="palette"><span class="header-section-number">4.2.11</span> <code>palette</code></h3>
+<p>Allows a dynamic list of colours to be chosen from and edited. Preset palettes are defined in <code>InsightsConfig.Palettes</code>. Users are not restricted to the presets however, they can manually edit the palette as a series of colour pickers using the interface provided.</p>
+<p><strong>Input Options</strong></p>
+<ul>
+<li><code>defaultValue</code> : <strong>String</strong> with a preset palette property in <code>InsightsConfig.Palettes</code>.</li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="op">{</span>
+    <span class="dt">targetProperty</span><span class="op">:</span><span class="st">&quot;test&quot;</span><span class="op">,</span>
+    <span class="dt">label</span><span class="op">:</span> <span class="st">&quot;Test&quot;</span><span class="op">,</span>
+    <span class="dt">inputType</span><span class="op">:</span> <span class="st">&quot;palette&quot;</span><span class="op">,</span>
+    <span class="dt">inputOptions</span><span class="op">:</span> <span class="op">{</span>
+        <span class="dt">defaultValue </span><span class="op">:</span> <span class="st">'Flat-UI'</span>
+    <span class="op">}</span>
+<span class="op">}</span></code></pre></div>
+<h3 id="map"><span class="header-section-number">4.2.12</span> <code>map</code></h3>
+<p>Creates a map picker which shows previews of TopoJSON files that have been uploaded to the server and added to <code>InsightsConfig.Maps</code>. This is a list of objects describing the URL to the TopoJSON file and the name that should be presented to the user. The value stored by the picker will be the <em>URL</em> to the TopoJSON file and hence ultimately sent to the plugin, but the name will be shown in the display.</p>
+<p><strong>Example</strong></p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="op">{</span>
+    <span class="dt">targetProperty</span><span class="op">:</span><span class="st">&quot;topojson&quot;</span><span class="op">,</span>
+    <span class="dt">label</span><span class="op">:</span> <span class="st">&quot;TopoJSON File&quot;</span><span class="op">,</span>
+    <span class="dt">inputType</span><span class="op">:</span> <span class="st">&quot;map&quot;</span><span class="op">,</span>
+    <span class="dt">desc</span><span class="op">:</span> <span class="st">'TopoJSON file existing in the `topojson` directory.'</span>
+<span class="op">},</span></code></pre></div>
+<h3 id="mapcode"><span class="header-section-number">4.2.13</span> <code>mapcode</code></h3>
+<p>Special dropdown that is tied to a <code>map</code> picker showing the possible feature properties the user can use from that TopoJSON file. When the map picker is used and the map is changed, this dropdown will update automatically.</p>
+<p><strong>Input Options</strong></p>
+<ul>
+<li><code>mapProperty</code>: Name of the <code>map</code> picker configuration property that should drive the feature property dropdown.</li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="op">{</span>
+    <span class="dt">targetProperty</span><span class="op">:</span><span class="st">&quot;featureCode&quot;</span><span class="op">,</span>
+    <span class="dt">label</span><span class="op">:</span> <span class="st">&quot;Feature Code&quot;</span><span class="op">,</span>
+    <span class="dt">inputType</span><span class="op">:</span> <span class="st">&quot;mapcode&quot;</span><span class="op">,</span>
+    <span class="dt">inputOptions</span><span class="op">:</span> <span class="op">{</span> <span class="st">&quot;mapProperty&quot;</span><span class="op">:</span> <span class="st">'topojson'</span> <span class="op">},</span>
+    <span class="dt">desc</span><span class="op">:</span> <span class="st">'TopoJSON attribute linking the OBIEE dataset to the map.'</span>
+<span class="op">}</span></code></pre></div>
+<h3 id="maptile"><span class="header-section-number">4.2.14</span> <code>maptile</code></h3>
+<p>Picker for map imaging layers that have been defined in <code>InsightsConfig.MapTiles</code>. The images for these maps are obtained dynamically depending on the position and zoom. This uses <a href="http://leafletjs.com/">Leaflet</a> which is an open source equivalent to services like Goolge Maps. The picker lets you see a preview of what the tile layer will look like.</p>
+<p><strong>Input Options</strong></p>
+<ul>
+<li><code>defaultValue</code>: Default setting for the tile layer. Setting this to <code>Default</code> will use the property <code>InsightsConfig.DefaultMapTile</code>.</li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="op">{</span>
+    <span class="dt">targetProperty</span><span class="op">:</span> <span class="st">&quot;mapTile&quot;</span><span class="op">,</span>
+    <span class="dt">label</span><span class="op">:</span> <span class="st">&quot;Map Tiles&quot;</span><span class="op">,</span>
+    <span class="dt">inputType</span><span class="op">:</span> <span class="st">&quot;maptile&quot;</span><span class="op">,</span>
+    <span class="dt">inputOptions</span><span class="op">:</span> <span class="op">{</span> <span class="st">&quot;defaultValue&quot;</span><span class="op">:</span> <span class="st">&quot;Default&quot;</span> <span class="op">},</span>
+    <span class="dt">desc</span><span class="op">:</span> <span class="st">'Defines the images used for the map background in the plugin.'</span>
+<span class="op">}</span></code></pre></div>
+<h1 id="interactivity"><span class="header-section-number">5</span> Interactivity</h1>
+<h2 id="actions"><span class="header-section-number">5.1</span> Actions</h2>
+<p>The <code>actions</code> property is an array defining what the possible interaction triggers available for the visualisation. For example clicking on a bar in a bar chart or hovering over a row on the table. Data can be passed dynamically through that interaction allowing filtering and other customisable actions. The information declared here tells the UI what interactions are possible</p>
+<p>The function <a href="/insights/docs/api/module-rmvpp.html#.createTrigger"><code>rmvpp.createTrigger</code></a> declares such an action on a plugin when used in the <a href="#rendering"><code>render</code></a> function. The arguments required are as follows:</p>
+<ul>
+<li><code>pluginName</code> : ID <a href="#general-properties">property</a> for the plugin.</li>
+<li><code>columnMap</code> : Column map passed to the <a href="#rendering"><code>render</code></a> function.</li>
+<li><code>container</code> : HTML DOM element passed to the <a href="#rendering"><code>render</code></a> function.</li>
+<li><code>event</code> : Name of the event as declared in the <code>actions</code> array.</li>
+<li><code>datum</code> : One or more row objects in the format passed to the <a href="#rendering"><code>render</code></a> function.</li>
+</ul>
+<h3 id="properties-1"><span class="header-section-number">5.1.1</span> Properties</h3>
+<ul>
+<li><code>trigger</code> : Custom JavaScript event to trigger on a certain interaction (described by <code>type</code>). The name of the event should ideally describe the action, e.g. <code>barClick</code>. It is up to the plugin developer to ensure that the event is fired at the correct time, by using <code>rmvpp.createTrigger</code> in the <code>render</code> function as described above.</li>
+<li><code>type</code> : Type of regular <a href="http://www.w3schools.com/js/js_events.asp">JavaScript event</a>, e.g. <code>click</code>, <code>mouseover</code>.</li>
+<li><code>output</code> : Array of <a href="#column-mapping">column map</a> properties that indicate what possible data will be passed in the interaction. When a user is defining an interaction in the UI, they will be given a list of all <em>attribute</em> (not measure) columns that are mapped to these properties visualisation.</li>
+<li><code>description</code> : Text description of the interaction behaviour to be displayed to users in the UI.</li>
+</ul>
+<h3 id="example-1"><span class="header-section-number">5.1.2</span> Example</h3>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="va">rmvpp</span>.<span class="at">Plugins</span>[pluginName].<span class="at">actions</span> <span class="op">=</span> [ <span class="co">// Action definitions</span>
+    <span class="op">{</span>
+        <span class="st">'trigger'</span> <span class="op">:</span> <span class="st">'barClick'</span><span class="op">,</span>
+        <span class="st">'type'</span> <span class="op">:</span> <span class="st">'click'</span><span class="op">,</span>
+        <span class="st">'name'</span> <span class="op">:</span> <span class="st">'Click - Bar'</span><span class="op">,</span>
+        <span class="st">'output'</span> <span class="op">:</span> [<span class="st">'category'</span><span class="op">,</span> <span class="st">'vary'</span>]<span class="op">,</span>
+        <span class="st">'description'</span> <span class="op">:</span> <span class="st">'Click on a bar to pass columns and values.'</span>
+    <span class="op">}</span>
+]<span class="op">;</span>
+
+<span class="va">rmvpp</span>.<span class="at">Plugins</span>[pluginName].<span class="at">render</span> <span class="op">=</span> <span class="kw">function</span>(data<span class="op">,</span> columnMap<span class="op">,</span> config<span class="op">,</span> container<span class="op">,</span> condFormats)   <span class="op">{</span>
+    <span class="co">// Code to render the visualisation...</span>
+    <span class="kw">var</span> bars <span class="op">=</span> <span class="va">xGroups</span>.<span class="at">selectAll</span>(<span class="st">'g'</span>) <span class="co">// D3 selection...</span>
+        .<span class="at">on</span>(<span class="st">&quot;click&quot;</span><span class="op">,</span> <span class="kw">function</span>(d<span class="op">,</span> i) <span class="op">{</span> <span class="co">// Click handler...</span>
+            <span class="va">rmvpp</span>.<span class="at">createTrigger</span>(pluginName<span class="op">,</span> columnMap<span class="op">,</span> container<span class="op">,</span> <span class="st">'barClick'</span><span class="op">,</span> d)<span class="op">;</span> <span class="co">// `d` describes the datum bound by D3</span>
+        <span class="op">}</span>)<span class="op">;</span>
+<span class="op">}</span></code></pre></div>
+<h2 id="reactions"><span class="header-section-number">5.2</span> Reactions</h2>
+<p>The <code>reactions</code> reactions property is an array defining what possible reactions are available for the visualisation. This is a response to the actions described above. Reactions are split into two main categories: general and private. General reactions are defined globally (and hence can be applied to any plugin) by <a href="/insights/docs/api/module-insights.html#.generateHandler"><code>insights.generateHandler</code></a>. As of version 1.0, the only general reactions are:</p>
+<ul>
+<li><code>filter</code> : Queries OBIEE again, filtering for the columns provided.</li>
+<li><code>log</code> : Sends the output to the console. Used for debugging only.</li>
+</ul>
+<p>Private handlers are defined as properties on the plugin itself. The ID used for a private handler should be a the name of the function defined on the plugin.</p>
+<h3 id="properties-2"><span class="header-section-number">5.2.1</span> Properties</h3>
+<ul>
+<li><code>id</code> : Identifier for the handler that should be used.</li>
+<li><code>name</code> : UI friendly name for the reaciton.</li>
+<li><code>description</code> : Description of the reaction for displaying to the user.</li>
+<li><code>type</code> : Enumeration of <code>general</code> or <code>private</code>.</li>
+</ul>
+<h3 id="example-2"><span class="header-section-number">5.2.2</span> Example</h3>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="va">rmvpp</span>.<span class="at">Plugins</span>[pluginName].<span class="at">reactions</span> <span class="op">=</span> [
+    <span class="op">{</span>
+        <span class="dt">id </span><span class="op">:</span> <span class="st">'filter'</span><span class="op">,</span>
+        <span class="dt">name </span><span class="op">:</span> <span class="st">'Filter'</span><span class="op">,</span>
+        <span class="dt">description </span><span class="op">:</span> <span class="st">'Accepts a column map and value and filters the report if the subject area matches.'</span><span class="op">,</span>
+        <span class="dt">type </span><span class="op">:</span> <span class="st">'general'</span>
+    <span class="op">},</span>
+    <span class="op">{</span>
+        <span class="dt">id </span><span class="op">:</span> <span class="st">'search'</span><span class="op">,</span>
+        <span class="dt">name </span><span class="op">:</span> <span class="st">'Search'</span><span class="op">,</span>
+        <span class="dt">description </span><span class="op">:</span> <span class="st">'Uses the Data Tables search facility to search for a value passed.'</span><span class="op">,</span>
+        <span class="dt">type </span><span class="op">:</span> <span class="st">'private'</span> <span class="co">// Private reacion</span>
+    <span class="op">}</span>
+]<span class="op">;</span>
+
+<span class="co">// Handler for private reaction. Name of the property matches the reaction ID.</span>
+<span class="va">rmvpp</span>.<span class="at">Plugins</span>[pluginName].<span class="at">search</span> <span class="op">=</span> <span class="kw">function</span>(output<span class="op">,</span> container) <span class="op">{</span>
+    <span class="kw">var</span> searchVal <span class="op">=</span> <span class="va">output</span>.<span class="at">map</span>(<span class="kw">function</span>(d) <span class="op">{</span> <span class="cf">return</span> <span class="va">d</span>.<span class="va">values</span>.<span class="at">join</span>(<span class="st">' '</span>)<span class="op">;</span> <span class="op">}</span>).<span class="at">join</span>(<span class="st">' '</span>)<span class="op">;</span>
+    <span class="at">$</span>(container).<span class="at">find</span>(<span class="st">'input.search'</span>).<span class="at">val</span>(searchVal).<span class="at">trigger</span>(<span class="st">'keydown'</span>)<span class="op">;</span>
+<span class="op">}</span></code></pre></div>
+<h1 id="conditional-formatting"><span class="header-section-number">6</span> Conditional Formatting</h1>
+<p>The framework allows conditional formatting instructions to be sent to the <a href="#rendering"><code>render</code></a> function, which can then be used by the plugin developer to customise styling in whichever way they choose. These instructions take the form of an array of <a href="/insights/docs/api/module-obiee.BIConditionalFormat.html"><code>BIConditionalFormat</code></a> objects which have properties and helper functions. The most important are described here, but a detailed description can be found in the API reference.</p>
+<ul>
+<li><code>TargetID</code> : Column mapping property of the column to apply the formatting to. For multiple columns this will take the form <code>property+i</code> where <code>i</code> is the zero-based index of the multiple column. E.g. <code>columns0</code>, <code>columns3</code>. Also, a user may define conditional formatting for <em>all</em> the columns in a multiple parameter, in which case the target ID will simply be the property name, e.g. <code>columns</code>.</li>
+<li><code>compare(datum)</code> : Tests the condition for a given row, returning <code>true</code> if passed. <code>datum</code> should be a single object from the <code>data</code> parameter passed to the <a href="#rendering"><code>render</code></a> function. Alternatively, a value (string or number) can be passed directly to this function to test it against the rule.</li>
+<li><code>Style</code> : Describes the stylistic changes that should be applied.
+<ul>
+<li><code>colour</code></li>
+<li><code>icon</code> : <a href="http://fontawesome.io/icons/">Font Awesome</a> icon to apply.</li>
+</ul></li>
+</ul>
+<p><code>specialCondFormats</code> is an array of objects defining specific conditional formats that can be applied only to this particular plugin. An example of this is the heat map formatting on the pivot table. The ID used for these formats <strong>cannot</strong> be the same as any in the list below as they are reserved by the generic conditional formatting framework:</p>
+<ul>
+<li><code>equal</code></li>
+<li><code>notEqual</code></li>
+<li><code>greater</code></li>
+<li><code>greaterOrEqual</code></li>
+<li><code>less</code></li>
+<li><code>lessOrEqual</code></li>
+</ul>
+<h2 id="properties-3"><span class="header-section-number">6.1</span> Properties</h2>
+<ul>
+<li><code>id</code> : ID for the conditional format, that should be unique compared to the defaults, which is the operator list <code>equal, notEqual...</code></li>
+<li><code>name</code> : Display name of the conditional format type to the user.</li>
+<li><code>noValue</code> : Boolean that if true, will prevent the user from entering a specific value when configuring the conditional format.</li>
+</ul>
+<h3 id="examples"><span class="header-section-number">6.1.1</span> Examples</h3>
+<p><strong>Single column conditional formatting (measure tile)</strong></p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="va">rmvpp</span>.<span class="at">Plugins</span>[pluginName].<span class="at">render</span> <span class="op">=</span> <span class="kw">function</span>(data<span class="op">,</span> columnMap<span class="op">,</span> config<span class="op">,</span> container<span class="op">,</span> condFormats)   <span class="op">{</span>
+
+    <span class="co">// Loop over conditional format rules</span>
+    <span class="va">condFormats</span>.<span class="at">forEach</span>(<span class="kw">function</span>(cf) <span class="op">{</span>
+        <span class="cf">if</span> (<span class="va">cf</span>.<span class="at">compare</span>(data[<span class="dv">0</span>])) <span class="op">{</span> <span class="co">// Only one data item to compare</span>
+            colour <span class="op">=</span> <span class="at">applyStyle</span>(cf)<span class="op">;</span> <span class="co">// Apply styling when true</span>
+        <span class="op">}</span>
+    <span class="op">}</span>)<span class="op">;</span>
+<span class="op">}</span></code></pre></div>
+<p><strong>Multiple column conditional formatting (table)</strong></p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="va">rmvpp</span>.<span class="at">Plugins</span>[pluginName].<span class="at">render</span> <span class="op">=</span> <span class="kw">function</span>(data<span class="op">,</span> columnMap<span class="op">,</span> config<span class="op">,</span> container<span class="op">,</span> condFormats)   <span class="op">{</span>
+    <span class="co">// Code to render the visualisation...</span>
+
+    <span class="va">columnMap</span>.<span class="va">columns</span>.<span class="at">forEach</span>(<span class="kw">function</span>(c<span class="op">,</span> i) <span class="op">{</span> <span class="co">// Loop through all `columns`</span>
+
+        <span class="kw">var</span> cellRenderer <span class="op">=</span> <span class="kw">function</span>(params) <span class="op">{</span> <span class="co">// This function called for each cell in the table</span>
+            <span class="co">// Get conditional format rule that should apply to all `columns`.</span>
+            <span class="kw">var</span> filterCF <span class="op">=</span> <span class="va">condFormats</span>.<span class="at">filter</span>(<span class="kw">function</span>(cf) <span class="op">{</span> <span class="cf">return</span> <span class="va">cf</span>.<span class="at">TargetID</span> <span class="op">==</span> <span class="st">'columns'</span><span class="op">;</span> <span class="op">}</span>)<span class="op">;</span>
+
+            <span class="co">// Add any conditional format rules that apply only to this column</span>
+            filterCF <span class="op">=</span> <span class="va">filterCF</span>.<span class="at">concat</span>(
+                <span class="va">condFormats</span>.<span class="at">filter</span>(<span class="kw">function</span>(cf) <span class="op">{</span>
+                    <span class="cf">return</span> <span class="va">cf</span>.<span class="at">TargetID</span> <span class="op">==</span> <span class="st">'columns'</span> <span class="op">+</span> (i)<span class="op">;</span>
+                <span class="op">}</span>)
+            )<span class="op">;</span>
+
+            <span class="co">// Process each conditional format rule</span>
+            <span class="va">filterCF</span>.<span class="at">forEach</span>(<span class="kw">function</span>(cf) <span class="op">{</span>
+                <span class="cf">if</span> (<span class="va">cf</span>.<span class="at">compare</span>(<span class="va">params</span>.<span class="at">data</span>)) <span class="op">{</span> <span class="co">// Compare the data</span>
+                    <span class="at">$</span>(<span class="va">params</span>.<span class="at">eGridCell</span>).<span class="at">css</span>(<span class="op">{</span> <span class="co">// If the rule passes, change the colour and embolden</span>
+                        <span class="st">'color'</span> <span class="op">:</span> <span class="va">cf</span>.<span class="va">Style</span>.<span class="at">colour</span><span class="op">,</span>
+                        <span class="st">'font-weight'</span> <span class="op">:</span> <span class="st">'bold'</span>
+                    <span class="op">}</span>)<span class="op">;</span>
+                <span class="op">}</span>
+            <span class="op">}</span>)<span class="op">;</span>
+        <span class="op">};</span>
+    <span class="op">}</span>)<span class="op">;</span>
+<span class="op">}</span></code></pre></div>
+<p><strong>Custom conditional formatting (pivot table)</strong></p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="va">rmvpp</span>.<span class="at">Plugins</span>[pluginName].<span class="at">specialCondFormats</span> <span class="op">=</span> [ <span class="co">// Special conditional format presets for this plugin</span>
+    <span class="op">{</span>
+        <span class="dt">id</span><span class="op">:</span> <span class="st">'heatmap'</span><span class="op">,</span>
+        <span class="dt">name</span><span class="op">:</span> <span class="st">'Heatmap'</span><span class="op">,</span>
+        <span class="dt">noValue</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="co">// No comparison value is required</span>
+    <span class="op">}</span>
+]<span class="op">;</span>
+
+<span class="va">rmvpp</span>.<span class="at">Plugins</span>[pluginName].<span class="at">render</span> <span class="op">=</span> <span class="kw">function</span>(data<span class="op">,</span> columnMap<span class="op">,</span> config<span class="op">,</span> container<span class="op">,</span> condFormats)   <span class="op">{</span>
+    <span class="co">// Code to render the visualisation...</span>
+
+    <span class="co">// Get special conditional formats</span>
+    <span class="kw">var</span> heatmaps <span class="op">=</span> <span class="va">condFormats</span>.<span class="at">filter</span>(<span class="kw">function</span>(cf) <span class="op">{</span>
+        <span class="cf">return</span> <span class="va">cf</span>.<span class="at">Operator</span> <span class="op">==</span> <span class="st">'heatmap'</span><span class="op">;</span>
+    <span class="op">}</span>)<span class="op">;</span>
+
+    <span class="co">// Process them accordingly</span>
+    <span class="va">heatmaps</span>.<span class="at">forEach</span>(<span class="kw">function</span>(hm) <span class="op">{</span>
+        <span class="co">// Formatting actions</span>
+    <span class="op">}</span>)
+<span class="op">}</span></code></pre></div>
+</div>
+</body>
+</html>

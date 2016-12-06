@@ -1,0 +1,14 @@
+<div>
+	<div class="breadcrumbs">
+		<span breadcrumb ng-repeat="bc in db.Breadcrumbs"></span>
+	</div>
+	<div class="dashboard">
+		<div prompt ng-if="db.Prompts.Filters.length > 0"></div>
+		<div visualisation ng-repeat="vis in db.Visuals | filter: hideVis" ></div>
+		<div column-selector ng-repeat="cs in db.ColumnSelectors"></div>
+		<div visual-selector ng-repeat="vs in db.VisualSelectors"></div>
+		<span interaction ng-repeat="interaction in db.Interactions"></span>
+		<span drilldown ng-repeat="drilldown in db.Drilldowns"></span>
+	</div>
+	<div db-canvas ng-style="{ 'pointer-events' : designMode ? '' : 'none' }"></div>
+</div>

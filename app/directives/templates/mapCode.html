@@ -1,0 +1,6 @@
+<md-input-container style="margin-bottom: 18px;" class="md-block">
+    <label>{{ label }}</label>
+    <md-select ng-model="value" md-on-open="getMapCodes()" style="font-size: 16px;">
+        <md-option ng-repeat="val in options">{{ val }}</md-option>
+    </md-select>
+</md-input-container>

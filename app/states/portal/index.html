@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Insights Dashboards</title>
+
+        <!-- Standard Libraries -->
+		<script src="/insights/js/lib/jquery.min.js"></script>
+		<script src="/insights/js/lib/jquery.xml2json.min.js"></script>
+		<script src="/insights/js/lib/d3.min.js"></script>
+		<script src="/insights/js/lib/angular.min.js"></script>
+		<script src="/insights/js/lib/angular-animate.min.js"></script>
+
+        <!-- Angular Material Library -->
+        <script src="/insights/js/lib/angular-aria.min.js"></script>
+        <script src="/insights/js/lib/angular-messages.min.js"></script>
+        <script src="/insights/js/lib/angular-material.min.js"></script>
+        <link rel="stylesheet" href="/insights/css/lib/angular-material.min.css">
+
+        <!-- OBIEE Integration Libraries -->
+        <script src="/insights/js/config.js"></script>
+        <script src="/insights/js/customConfig.js"></script>
+		<script src="/insights/js/obiee.js"></script>
+		<link	rel="stylesheet" type="text/css" href="/insights/css/insights.css">
+
+        <!-- UI Libraries -->
+        <script src="/insights/js/insights.js"></script>
+		<script src="/insights/js/lib/angular-modal-service.min.js"></script>
+
+        <!-- RMVPP Integration Libraries -->
+		<script src="/insights/js/rmvpp.js"></script>
+		<link	rel="stylesheet" type="text/css" href="/insights/css/rmvpp.css">
+
+        <!-- Icons -->
+        <link rel="stylesheet" href="/insights/icons/css/font-awesome.min.css">
+
+        <!-- Angular -->
+		<script>var app = angular.module('PortalView', ['ngMaterial', 'angularModalService']);</script>
+		<script src="/insights/app/services/global.js"></script>
+		<script src="/insights/app/states/portal/portal-controller.js"></script>
+		<script src="/insights/app/directives/directives.js"></script>
+    </head>
+    <body class="portal" ng-app="PortalView">
+        <div ng-controller="portal" class="darkBg">
+            <div class="mask overlay" style="opacity: 1; background: #FFFFFF;"></div>
+            <div loading="loading"></div>
+            <div ng-if="!error">
+                <div style="font-size: 42px; font-weight: 300; margin-bottom: 20px;">Insights</div>
+                <div class="links">
+                    <i ng-if="create" class="fa fa-pencil" ng-mouseover="showText('Create a visualisation')" ng-mouseout="hideText()" ng-click="navigate('/insights/app/states/visBuilder')">
+                        <md-tooltip>Create Visualisation</md-tooltip>
+                    </i>
+                    <i class="fa fa-eye" ng-mouseover="showText('Explore the catalogue')" ng-mouseout="hideText()" ng-click="navigate('/insights/app/states/view')">
+                        <md-tooltip>Explore Catalogue</md-tooltip>
+                    </i>
+                </div>
+                <div ng-show="dbs.length > 0">
+                    <md-input-container md-theme="dark" style="width: 50%; text-align: left; font-size: 16px;">
+                        <label>Search</label>
+                        <input ng-model="search">
+                        <md-icon md-font-icon="fa-search" class="fa"></md-icon>
+                    </md-input-container>
+                    <div class="dbPicker dark" style="border-radius: 5px; background: #333439;">
+                        <div class="container" ng-repeat="db in dbs | filterDBs:search" ng-click="goToDB(db.path)">
+                            <i ng-class="'fa fa-' + db.icon"></i>
+                            <div class="dbdesc">{{ db.name }}</div>
+                            <md-tooltip md-direction="top">{{ db.desc }}</md-tooltip>
+                        </div>
+            		</div>
+                </div>
+            </div>
+            <div class="error pageText" ng-show="error" style="margin-top: 0px;">
+				<i class="fa fa-times-circle"></i>
+				<span>{{ error }}</span>
+			</div>
+        </div>
+    </body>
+</html>

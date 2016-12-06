@@ -1,0 +1,11 @@
+<div>
+	<div ng-class="editMode ? 'edit' : ''" class="biPrompt" data-x="{{ db.Prompts.X }}" data-y="{{ db.Prompts.Y}}"
+		 ng-style="{ 'transform': 'translate(' + db.Prompts.X + 'px, ' + db.Prompts.Y + 'px)' }">
+		<md-content style="text-align: center; width: 400px;">
+			<md-list>
+				<div prompt-filter ng-repeat="filter in db.Prompts.Filters"></div>
+			</md-list>
+			<md-button class="md-raised md-primary" ng-click="go()">Run</md-button>
+		</md-content>
+	</div>
+</div>

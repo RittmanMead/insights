@@ -1,0 +1,30 @@
+<div class="webcat modal">
+	<div class="overlay" ng-click="cancel()"></div>
+	<div class="contents" style="width: 20%; left: 40%; font-size: 14px;">
+		<div class="header">
+			<span>Palette Editor</span>
+			<mat-button flat icon="plus" label="Add Colour" margin="none" ng-click="add()" type="accent"></mat-button>
+		</div>
+		<md-content layout="column" md-theme="dark" layout-align="center center">
+			<div layout="row" ng-repeat="colour in colours">
+				<div md-color-picker
+					ng-model="colour.colour"
+					open-on-input="false"
+					md-color-material-palette="false"
+					md-color-generic-palette="true"
+					md-color-history="false"
+					md-color-rgb="false"
+					md-color-hsl="false"
+					md-color-clear-button="false"
+					has-backdrop="false"
+					style="display: inline-block; vertical-align: middle; width: 200px;"
+				></div>
+				<mat-button flex="20" flat icon="remove" label="Remove" size="mini-x" ng-click="remove($index)" type="warn"></mat-button>
+			</div>
+		</md-content>
+		<div style="font-size: 30px; margin-top:5px; text-align: center;">
+			<mat-button type="accent" icon="check" label="Accept Changes" label-pos="bottom" size="mini" ng-click="accept()"></mat-button>
+			<mat-button type="warn" icon="remove" label="Cancel Changes" label-pos="bottom" size="mini" ng-click="cancel()"></mat-button>
+		</div>
+	</div>
+</div>

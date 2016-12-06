@@ -1,0 +1,10 @@
+<div class="modal">
+	<div class="overlay" ng-click="cancel()"></div>
+	<div class="contents" ng-style="{ width: width + '%', left: ((100-width)/2)+'%', 'text-align':'center' }">
+		<div class="header">{{ msg }}</div>
+		<div>
+			<mat-button size="mini" type="accent" icon="check" ng-click="accept()"></mat-button>
+			<mat-button size="mini" type="warn" icon="remove" ng-click="cancel()"></mat-button>
+		</div>
+	</div>
+</div>

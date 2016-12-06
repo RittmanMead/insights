@@ -1,0 +1,7 @@
+<div class="visContainer" ng-style="{ 'transform': 'translate(' + vis.X + 'px, ' + vis.Y + 'px)' }"
+	 data-x="{{ vis.X }}" data-y="{{ vis.Y }}">
+	<div ng-if="editMode" class="remove">
+		<mat-button type="warn" label="Remove" ng-click="removeVis()" icon="remove" size="mini-x"></mat-button>
+	</div>
+	<div ng-class="editMode ? 'edit' : ''"  data-x="{{ vis.X }}" data-y="{{ vis.Y }}" class="visualisation"></div>
+</div>

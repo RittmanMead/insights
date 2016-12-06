@@ -1,0 +1,43 @@
+<div class="webcat modal">
+	<div class="overlay" ng-click="cancel()"></div>
+	<div class="contents" style="width: 60%; left: 20%;">
+		<div class="header">Web Catalogue</div>
+		<md-input-container md-theme="dark" style="width: calc(100% - 125px); margin-right: 5px; font-size: 14px;">
+			<label>Catalogue Path</label>
+			<input ng-model="path" code="13" on-key="go()">
+		</md-input-container>
+		<i class="input-icon" icon-button icon="'play'" fn="go" colour="positiveColour" name="Go"></i>
+		<i class="input-icon" icon-button icon="'level-up'" fn="folderUp" colour="'rgb(228, 195, 30)'" name="Folder Up"></i>
+		<i class="input-icon" ng-if="controls && folderPerms.write" icon-button icon="'asterisk'" fn="newFolder" colour="'rgb(228, 195, 30)'" name="New Folder"></i>
+		<i class="input-icon" ng-if="controls && folderPerms.write" icon-button icon="'clipboard'" fn="paste" colour="'#3C88CA'" name="Paste Here"></i>
+
+		<div class="fileExplorer inputBox dark">
+			<ul>
+				<li selection-model ng-repeat="item in items" ng-if="checkType(item)" ng-dblclick="open(item)">
+					<div>
+						<i class="fa" ng-class="item.type == 'Folder' ? 'fa-folder' : 'fa-file'"></i>
+						<span>{{ item.caption }}</span>
+					</div>
+					<div ng-if="controls" class="right">
+						<i icon-button ng-if="item.selected && !item.published && item.type == 'Folder'" icon="'leanpub'" ng-click="publish(item)" colour="'#FFFFFF'" name="Publish As Dashboard"></i>
+						<i icon-button ng-if="item.selected && item.published && item.type == 'Folder'" icon="'leanpub'" ng-click="publish(item)" colour="'#FFFFFF'" name="Edit Dashboard"></i>
+						<i icon-button ng-if="item.selected && item.published && item.type == 'Folder'" icon="'ban'" ng-click="unpublish(item)" colour="'#FFFFFF'" name="Unpublish Dashboard"></i>
+						<i icon-button ng-if="item.selected && item.permissions.changePerms" icon="'key'" ng-click="editPerms(item)" colour="'#FFFFFF'" name="Edit Permissions"></i>
+						<i icon-button ng-if="item.selected && item.permissions.write" icon="'scissors'" ng-click="cut(item)" colour="'#FFFFFF'" name="Cut"></i>
+						<i icon-button ng-if="item.selected" icon="'clone'" ng-click="copy(item)" colour="'#FFFFFF'" name="Copy"></i>
+						<i icon-button ng-if="item.selected && folderPerms.write" icon="'pencil'" ng-click="renameItem(item)" colour="'#FFFFFF'" name="Rename"></i>
+						<i icon-button ng-if="item.selected && item.permissions.write" icon="'times'" ng-click="deleteItem(item)" colour="'#FFFFFF'" name="Delete"></i>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div ng-show="saveMode" style="margin-top: 5px;">
+			<md-input-container md-theme="dark" style="width: calc(100% - 50px); margin-right: 5px; font-size: 14px;">
+				<label>Save As</label>
+				<input ng-model="saveName" code="13" on-key="go()">
+			</md-input-container>
+			<i class="input-icon" icon-button icon="'floppy-o'" ng-click="save()" name="Save" colour="positiveColour"></i>
+		</div>
+		<div ng-if="error" class="error" style="margin-top: 5px;">{{ error }}</div>
+	</div>
+</div>

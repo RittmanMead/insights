@@ -1,0 +1,42 @@
+<div class="modal">
+	<div class="overlay" ng-click="cancel()"></div>
+	<div class="contents" ng-style="{ width: width + '%', left: ((100-width)/2)+'%' }">
+		<div class="header">Visual Selector</div>
+		<md-content md-theme="dark" layout="row">
+			<section flex="100" class="modalSection" style="border-right: none;">
+				<div>
+					<section layout-align="center center" layout="row">
+						<md-radio-group ng-model="edit.Style" style="margin-bottom: 10px;" layout="row" layout-align="center center">
+							<md-radio-button class="md-primary" value="Dropdown">Dropdown</md-radio-button>
+							<md-radio-button class="md-primary" value="Radio">Radio</md-radio-button>
+						</md-radio-group>
+						<md-input-container>
+							<label>Default</label>
+							<md-select ng-model="edit.Default">
+			   					<md-option ng-repeat="vis in edit.Visuals | filter: {enabled:true}" ng-value="vis.name">{{ vis.displayName }}</md-option>
+							</md-select>
+						</md-input-container>
+					</section>
+					<md-subheader style="margin-bottom: 10px;">
+						<span>Visualisations</span>
+					</md-subheader>
+					<section layout="column">
+						<div ng-repeat="(k, val) in edit.Visuals">
+							<md-checkbox style="margin-left: 10px;"	ng-model="edit.Visuals[k].enabled" class="md-primary"
+										 aria-label="Affected Visualisation">{{ val.displayName }}</md-checkbox>
+						</div>
+					</section>
+					<!-- <md-subheader style="margin-bottom: 10px;">
+						<span>Default</span>
+					</md-subheader> -->
+
+				</div>
+			</section>
+		</md-content>
+		<div ng-show="error" class="error">{{ error }}</div>
+		<div style="text-align: center; margin-top: 10px;">
+			<mat-button size="mini" type="accent" icon="check" ng-click="accept()" label="Accept Changes" label-pos="bottom"></mat-button>
+			<mat-button size="mini" type="warn" icon="remove" ng-click="cancel()" label="Cancel Changes" label-pos="bottom"></mat-button>
+		</div>
+	</div>
+</div>

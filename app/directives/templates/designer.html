@@ -1,0 +1,74 @@
+<div class="scrollContainer" style="height: 100%; position: absolute;">
+	<div class="visList designer">
+		<div md-theme="dark" layout="column">
+			<section layout="row" layout-align="center center">
+				<div class="header">Designer</div>
+			</section>
+			<section layout="row" layout-align="center">
+				<mat-button type="warn" size="mini" icon="trash" size="mini" label="Remove Selected" ng-click="remove()" label-pos="bottom" flat></mat-button>
+				<mat-button size="mini" icon="copy" size="mini" label="Copy Selected" ng-click="copy()" label-pos="bottom" flat></mat-button>
+				<mat-button size="mini" icon="paste" size="mini" label="Paste" ng-click="paste()" label-pos="bottom" flat></mat-button>
+			</section>
+			<div md-color-picker
+			    ng-model="colour"
+				ng-change="colourChange()"
+			    label="Colour"
+			    open-on-input="true"
+				md-color-material-palette="false"
+			    md-color-generic-palette="true"
+			    md-color-history="false"
+			    md-color-rgb="false"
+			    md-color-hsl="false"
+			    md-color-clear-button="false"
+				style="margin-left: 10px;"
+			></div>
+			<md-radio-group style="margin-top: 8px; margin-bottom: 8px;" ng-model="shapeProperty" layout="row" layout-align="center">
+				<md-radio-button value="both" class="md-primary">Both</md-radio-button>
+			 	<md-radio-button value="fill" class="md-primary">Fill</md-radio-button>
+				<md-radio-button value="stroke" class="md-primary">Outline</md-radio-button>
+			</md-radio-group>
+			<md-divider style="margin-bottom: 10px;"></md-divider>
+			<div font-picker value="font" change="fontChange"></div>
+			<md-input-container style="min-width: 65px;">
+				<label>Font Size</label>
+				<input ng-change="fontSizeChange()" type="number" min="0" max="512" ng-model="fontSize"></input>
+			</md-input-container>
+			<div style="margin-top: 10px;">
+				<md-radio-group ng-model="textAlign" layout="row" layout-align="center" ng-change="textAlignChange()">
+					<md-radio-button value="left" class="md-primary" aria-label="Left Align">
+						<i class="fa fa-align-left"></i>
+					</md-radio-button>
+					<md-radio-button value="center" class="md-primary" aria-label="Centre Align">
+						<i class="fa fa-align-center"></i>
+					</md-radio-button>
+					<md-radio-button value="right" class="md-primary" aria-label="Right Align">
+						<i class="fa fa-align-right"></i>
+					</md-radio-button>
+					<md-radio-button value="justify" class="md-primary" aria-label="Justify">
+						<i class="fa fa-align-justify"></i>
+					</md-radio-button>
+				</md-radio-group>
+			</div>
+			<md-divider style="margin-top: 15px;"></md-divider>
+			<div layout="row" layout-align="center">
+				<md-switch ng-change="toggleBold()" ng-model="bold" aria-label="Bold" class="md-primary">
+					<i class="fa fa-bold"></i>
+				</md-switch>
+				<md-switch ng-change="toggleItalic()" ng-model="italic" aria-label="Italic" class="md-primary">
+					<i class="fa fa-italic"></i>
+				</md-switch>
+				<md-switch ng-change="toggleUnderline()" ng-model="underline" aria-label="Underline" class="md-primary">
+					<i class="fa fa-underline"></i>
+				</md-switch>
+			</div>
+			<md-divider style="margin-bottom: 10px;"></md-divider>
+			<div layout="row" layout-wrap layout-align="center" class="controls">
+				<mat-button size="mini" icon="font" label="Add Text" ng-click="addText()" label-pos="bottom"></mat-button>
+				<mat-button size="mini" icon="minus" label="Draw Line" ng-click="drawLine($event)" label-pos="bottom"></mat-button>
+				<mat-button size="mini" icon="square" label="Draw Rectangle" ng-click="drawSquare($event)" label-pos="bottom"></mat-button>
+				<mat-button size="mini" icon="circle" label="Draw Circle" ng-click="drawCircle($event)" label-pos="bottom"></mat-button>
+				<mat-button size="mini" icon="image" label="Add Image" ng-click="addImage()" label-pos="bottom"></mat-button>
+			</div>
+		</div>
+	</div>
+</div>

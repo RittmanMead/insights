@@ -1,0 +1,39 @@
+<md-content class="parameterList">
+	<md-list>
+		<div ng-repeat="column in colmapParams">
+			<div ng-if="column.multiple" sv-root="columns" sv-part="columns[column.targetProperty]">
+				<md-subheader drop-column column="columns[column.targetProperty]" multiple="true">
+					<span style="cursor: default;">
+						<span>{{ column.formLabel }}</span>
+						<span class="required" ng-show="column.required"> *</span>
+						<md-icon style="margin-left: 5px;" class="fa" md-font-icon="fa-clone"></md-icon>
+						<md-tooltip md-direction="right" md-delay="1000">{{ column.desc }}</md-tooltip>
+					</span>
+				</md-subheader>
+				<md-list-item ng-repeat="col in columns[column.targetProperty] track by $index" sv-element>
+					<p sv-handle>{{ col.Name }}</p>
+					<md-icon class="md-secondary fa" style="font-size: 20px;" ng-click="properties(col)" aria-label="Properties" md-font-icon="fa-cog"><md-tooltip>Properties</md-tooltip></md-icon>
+					<md-icon class="md-secondary fa" style="font-size: 20px;" ng-click="filter(col)" aria-label="Filter" md-font-icon="fa-filter"><md-tooltip>Filter</md-tooltip></md-icon>
+					<md-icon ng-if="column.config" class="md-secondary fa" style="font-size: 20px;" ng-click="configuration(col, column.config)" aria-label="Configuration" md-font-icon="fa-wrench"><md-tooltip>Configuration</md-tooltip></md-icon>
+					<md-icon class="md-warn md-secondary fa" style="font-size: 20px;" ng-click="remove(columns[column.targetProperty], col, true)" aria-label="Remove" md-font-icon="fa-times"><md-tooltip>Remove</md-tooltip></md-icon>
+				</md-list-item>
+			</div>
+			<div ng-if="!column.multiple">
+				<md-subheader drop-column column="columns[column.targetProperty]">
+					<span style="cursor: default;">
+						<span>{{ column.formLabel }}</span>
+						<span class="required" ng-show="column.required"> *</span>
+						<md-tooltip md-direction="right" md-delay="1000">{{ column.desc }}</md-tooltip>
+					</span>
+				</md-subheader>
+				<md-list-item class="dragColumn" drag-column="columns[column.targetProperty]" ng-if="columns[column.targetProperty].Code">
+					<p>{{ columns[column.targetProperty].Name }}</p>
+					<md-icon class="md-secondary fa" style="font-size: 20px;" ng-click="properties(columns[column.targetProperty])" aria-label="Properties" md-font-icon="fa-cog"><md-tooltip>Properties</md-tooltip></md-icon>
+					<md-icon class="md-secondary fa" style="font-size: 20px;" ng-click="filter(columns[column.targetProperty])" aria-label="Filter" md-font-icon="fa-filter"><md-tooltip>Filter</md-tooltip></md-icon>
+					<md-icon ng-if="column.config" class="md-secondary fa" style="font-size: 20px;" ng-click="configuration(columns[column.targetProperty], column.config)" aria-label="Configuration" md-font-icon="fa-wrench"><md-tooltip>Configuration</md-tooltip></md-icon>
+					<md-icon class="md-warn md-secondary fa" style="font-size: 20px;" ng-click="remove(column.targetProperty)" aria-label="Remove" md-font-icon="fa-times"><md-tooltip>Remove</md-tooltip></md-icon>
+				</md-list-item>
+			</div>
+		</div>
+	</md-list>
+</md-content>

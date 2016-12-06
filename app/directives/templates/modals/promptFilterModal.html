@@ -1,0 +1,125 @@
+<div class="modal" >
+	<div class="overlay" ng-click="cancel()"></div>
+	<div class="contents" style="width: 70%; left: 15%;">
+		<div ng-show="filter.DataType != 'date' && filter.Column.Measure == 'none'" tabset="['Criteria', 'Default Values', 'Input Type', 'Choices']" selected-tab="selectedTab"></div>
+		<div ng-show="filter.DataType != 'date' && filter.Column.Measure != 'none'" tabset="['Criteria', 'Default Values', 'Input Type']" selected-tab="selectedTab"></div>
+		<div ng-show="filter.DataType == 'date'" tabset="['Criteria', 'Default Values']" selected-tab="selectedTab"></div>
+		<div ng-if="selectedTab == 'Criteria'">
+			<div class="header">Prompt Criteria</div>
+			<md-content md-theme="dark" layout="row" layout-wrap>
+				<md-input-container>
+					<label>Column</label>
+					<input disabled ng-model="filter.Name"></input>
+				</md-input-container>
+				<md-input-container style="min-width: 200px">
+					<label>Operator</label>
+					<md-select aria-label="Prompt Operator" ng-model="filter.Operator">
+						<md-option value="in">Is In</md-option>
+						<md-option value="notIn">Is Not In</md-option>
+						<md-option value="greater">Greater than</md-option>
+						<md-option value="greaterOrEqual">Greater than or Equal</md-option>
+						<md-option value="less">Less than</md-option>
+						<md-option value="lessOrEqual">Less than or Equal</md-option>
+						<md-option value="isNull">Is Null</md-option>
+						<md-option value="isNotNull">Is Not Null</md-option>
+						<md-option value="top">Top</md-option>
+						<md-option value="bottom">Bottom</md-option>
+					</md-select>
+				</md-input-container>
+				<md-checkbox class="md-primary lowerLabel" ng-model="filter.PromptOptions.GoLess" aria-label="Go-less">Refresh on Change</md-checkbox>
+				<md-checkbox class="md-primary lowerLabel" ng-model="filter.PromptOptions.MultipleValues" aria-label="Multiple Values">Allow Multiple Values</md-checkbox>
+				<md-input-container>
+					<label>Presentation Variable</label>
+					<input ng-model="filter.PromptOptions.PresVar"></input>
+				</md-input-container>
+			</md-content>
+		</div>
+
+		<div ng-if="selectedTab == 'Default Values'">
+			<md-content md-theme="dark" ng-if="filter.PromptOptions.Style == 'picklist'">
+				<mat-button type="accent" size="mini" icon="plus" label="Add Default Value" ng-click="addDefault()"></mat-button>
+				<md-list>
+					<md-list-item ng-repeat="dv in filter.PromptOptions.DefaultValues">
+						<div ng-if="dv.ValueType == 'value'" flex="20" style="font-weight: bold;">Values</div>
+						<div ng-if="dv.ValueType == 'repVar'" flex="20" style="font-weight: bold;">Repository Variable</div>
+						<div ng-if="dv.ValueType == 'sessionVar'" flex="20" style="font-weight: bold;">Session Variable</div>
+						<div ng-if="dv.ValueType == 'expression'" flex="20" style="font-weight: bold;">LSQL Query</div>
+						<div>{{ displayVal(dv.Value) }}</div>
+						<md-icon class="fa md-secondary" style="font-size: 20px;" md-font-icon="fa-pencil" ng-click="editDV(dv)"><md-tooltip md-theme="default" aria-label="Edit">Edit</md-tooltip></md-icon>
+						<md-icon class="fa md-secondary md-warn" style="font-size: 20px;" md-font-icon="fa-times" ng-click="removeDV(dv)"><md-tooltip md-theme="default" aria-label="Remove">Remove</md-tooltip></md-icon>
+					</md-list-item>
+				<md-list>
+			</md-content>
+			<md-content md-theme="dark" ng-if="filter.PromptOptions.Style != 'picklist'">
+				<mat-button size="mini" icon="pencil" label="Edit Default Value" ng-click="editDV(filter.PromptOptions.DefaultValues[0])"></mat-button>
+				<md-list>
+					<md-list-item ng-repeat="dv in filter.PromptOptions.DefaultValues">
+						<div ng-if="dv.ValueType == 'value'" flex="20" style="font-weight: bold;">Values</div>
+						<div ng-if="dv.ValueType == 'repVar'" flex="20" style="font-weight: bold;">Repository Variable</div>
+						<div ng-if="dv.ValueType == 'sessionVar'" flex="20" style="font-weight: bold;">Session Variable</div>
+						<div ng-if="dv.ValueType == 'expression'" flex="20" style="font-weight: bold;">LSQL Query</div>
+						<div>{{ displayVal(dv.Value) }}</div>
+						<md-icon class="fa md-secondary md-warn" style="font-size: 20px;" md-font-icon="fa-times" ng-click="removeDV(dv)" aria-label="Remove"><md-tooltip md-theme="default">Remove</md-tooltip></md-icon>
+					</md-list-item>
+				<md-list>
+			</md-content>
+		</div>
+
+        <div ng-if="selectedTab == 'Input Type'">
+            <md-content md-theme="dark" ng-if="filter.Column.Measure != 'none'">
+                <md-radio-group ng-model="filter.PromptOptions.Style">
+                    <md-radio-button value="numbox" class="md-primary">Number Input</md-radio-button>
+                    <md-radio-button value="slider" class="md-primary">Slider</md-radio-button>
+                </md-radio-group>
+                <div ng-if="filter.PromptOptions.Style == 'slider'">
+                    <md-subheader style="margin-bottom: 10px;"><span>Settings</span></md-subheader>
+                    <md-input-container>
+    					<label>Minimum</label>
+    					<input type="number" ng-model="filter.PromptOptions.SubOptions.min"></input>
+    				</md-input-container>
+                    <md-input-container>
+    					<label>Maximum</label>
+    					<input type="number" ng-model="filter.PromptOptions.SubOptions.max"></input>
+    				</md-input-container>
+                </div>
+            </md-content>
+            <md-content md-theme="dark" ng-if="filter.Column.Measure == 'none'">
+                <md-radio-group ng-model="filter.PromptOptions.Style">
+                    <md-radio-button value="picklist" class="md-primary">Picklist</md-radio-button>
+                    <md-radio-button value="radio" class="md-primary">Radio</md-radio-button>
+					<md-radio-button value="checkboxes" class="md-primary">Checkboxes</md-radio-button>
+                </md-radio-group>
+            </md-content>
+        </div>
+
+		<div ng-if="selectedTab == 'Choices'">
+			<md-content md-theme="dark" layout="row" layout-wrap>
+				<label style="margin-left: 12px;">Choices</label>
+				<md-radio-group ng-model="filter.PromptOptions.ChoiceType" style="margin-left: 20px;">
+					<md-radio-button value="lsql" class="md-primary">LSQL</md-radio-button>
+					<md-radio-button value="values" class="md-primary">Values</md-radio-button>
+				</md-radio-group>
+				<section layout="row" layout-align="center center" ng-if="filter.PromptOptions.ChoiceType == 'lsql'">
+					<md-input-container style="min-width: 400px;">
+						<label>Logical SQL Override</label>
+						<textarea class="code" ng-model="filter.PromptOptions.SQLOverride"></textarea>
+					</md-input-container>
+					<mat-button icon="magic" size="mini" label="Default LSQL" ng-click="defaultLSQL()"></mat-button>
+				</section>
+				<section layout="row" layout-align="center center" ng-if="filter.PromptOptions.ChoiceType == 'values'">
+					<mat-button size="mini" icon="pencil" label="Choices" ng-click="editChoices()" style="margin-left: 20px;" ng-if="filter.PromptOptions.ChoiceType == 'values'"></mat-button>
+					<div style="margin-left: 10px;">{{ choiceList() }}</div>
+				</section>
+			</md-content>
+		</div>
+
+		<div ng-show="error" class="error" style="margin-left: 10px; margin-right: 10px;">
+			<div ng-bind="error"></div>
+		</div>
+
+		<div style="text-align: center;">
+			<mat-button size="mini" type="accent" icon="check" label="Accept Changes" label-pos="bottom" ng-click="close()"></mat-button>
+			<mat-button size="mini" type="warn" icon="remove" label="Cancel Changes" label-pos="bottom" ng-click="cancel()"></mat-button>
+		</div>
+	</div>
+</div>

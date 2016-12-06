@@ -1,0 +1,46 @@
+<div class="modal">
+	<div class="overlay" ng-click="cancel()"></div>
+	<div class="contents" ng-style="{ width: width + '%', left: ((100-width)/2)+'%' }">
+		<div class="header">Column Selector</div>
+		<md-content md-theme="dark" layout="row">
+			<div flex="33" class="modalSection">
+				<div class="scrollContainer" subject-area="subjectArea" subject-areas="subjectAreas" metadata="metadata"></div>
+			</div>
+			<section flex="33" class="modalSection">
+				<div sv-root="columns" sv-part="edit.Columns">
+					<md-subheader drop-column column="edit.Columns" multiple="true">
+						<span>Columns</span>
+					</md-subheader>
+					<md-list-item ng-repeat="col in edit.Columns track by $index" sv-element>
+						<p>{{ col.Name }}</p>
+						<md-icon class="md-warn md-secondary fa" style="font-size: 20px;" ng-click="removeColumn(col)" aria-label="Remove" md-font-icon="fa-times">
+							<md-tooltip md-theme="default">Remove</md-tooltip>
+						</md-icon>
+					</md-list-item>
+				</div>
+			</section>
+			<section flex="33" class="modalSection" style="border-right: none;">
+				<div>
+					<md-radio-group ng-model="edit.Style" style="margin-bottom: 10px;" layout="row" layout-align="center center">
+						<md-radio-button class="md-primary" value="Dropdown">Dropdown</md-radio-button>
+						<md-radio-button class="md-primary" value="Radio">Radio</md-radio-button>
+					</md-radio-group>
+					<md-subheader style="margin-bottom: 10px;">
+						<span>Visualisations</span>
+					</md-subheader>
+					<section layout="column">
+						<div ng-repeat="(k, val) in edit.Visuals">
+							<md-checkbox style="margin-left: 10px;"	ng-model="edit.Visuals[k].enabled" class="md-primary"
+										 aria-label="Affected Visualisation">{{ val.displayName }}</md-checkbox>
+						</div>
+					</section>
+				</div>
+			</section>
+		</md-content>
+		<div ng-show="error" class="error">{{ error }}</div>
+		<div style="text-align: center; margin-top: 10px;">
+			<mat-button size="mini" type="accent" icon="check" ng-click="accept()" label="Accept Changes" label-pos="bottom"></mat-button>
+			<mat-button size="mini" type="warn" icon="remove" ng-click="cancel()" label="Cancel Changes" label-pos="bottom"></mat-button>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,293 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Insights API</title>
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css"/>
+    <link type="text/css" rel="stylesheet" href="styles/insights-doc.css"/>
+    <script src="/insights/js/lib/jquery.min.js"> </script>
+    <link type="text/css" rel="stylesheet" href="/insights/icons/css/font-awesome.min.css"/>
+  </head>
+  <body>
+    <script type="text/javascript">
+			document.getElementsByTagName("body")[0].style.display = "none";
+
+			function loadFunc() {
+
+			$(".navbar .search input").keyup(function() {
+				expandAll();
+				var val = $(this).val().toLowerCase();
+				$(".navbar li>a").each(function() {
+					var link = $(this).text().toLowerCase();
+					if (link.indexOf(val) >= 0) {
+						$(this).show();
+					} else {
+						$(this).hide();
+					}
+				});
+			});
+			$("nav h3").click(function(){
+				$(this).next().animate({ height: "toggle" });
+				if ($(this).find(".toggleList").hasClass("collapse")) {
+					$(this).find(".toggleList").removeClass("collapse");
+					$(this).find(".toggleList").text("+");
+				} else {
+					$(this).find(".toggleList").addClass("collapse");
+					$(this).find(".toggleList").text("-");
+				}
+			});
+
+			function collapseAll() {
+				$(".toggleList").text("+").removeClass("collapse").parent().next().animate({height: "hide"});
+			}
+
+			function expandAll() {
+				$(".toggleList").text("-").addClass("collapse").parent().next().animate({height: "show"});
+			}
+
+			document.getElementsByTagName("body")[0].style.display = "block";
+}
+
+window.onload = loadFunc;</script>
+    <div id="main">
+      <div class="header-banner">
+        <h1 class="page-title">Home</h1>
+        <a class="homeBtn" href="/insights/docs">
+          <i class="fa fa-home"> </i>
+        </a>
+      </div>
+      <h3> </h3>
+      <section>
+        <header>
+          <h2>config.js</h2>
+        </header>
+        <article>
+          <div class="container-overview">
+            <div class="description">
+              <p>RM Insights OBIEE module</p>
+            </div>
+            <dl class="details">
+              <dt class="tag-version">Version:</dt>
+              <dd class="tag-version">
+                <ul class="dummy">
+                  <li>1.00</li>
+                </ul>
+              </dd>
+              <dt class="tag-author">Author:</dt>
+              <dd class="tag-author">
+                <ul>
+                  <li>Minesh Patel</li>
+                </ul>
+              </dd>
+              <dt class="tag-source">Source:</dt>
+              <dd class="tag-source">
+                <ul class="dummy">
+                  <li><a href="config.js.html">config.js</a>, <a href="config.js.html#line1">line 1</a></li>
+                </ul>
+              </dd>
+            </dl>
+          </div>
+        </article>
+      </section>
+      <section>
+        <header>
+          <h2>insights.js</h2>
+        </header>
+        <article>
+          <div class="container-overview">
+            <div class="description">
+              <p>RM Insights UI module</p>
+            </div>
+            <dl class="details">
+              <dt class="tag-version">Version:</dt>
+              <dd class="tag-version">
+                <ul class="dummy">
+                  <li>1.00</li>
+                </ul>
+              </dd>
+              <dt class="tag-author">Author:</dt>
+              <dd class="tag-author">
+                <ul>
+                  <li>Minesh Patel</li>
+                </ul>
+              </dd>
+              <dt class="tag-source">Source:</dt>
+              <dd class="tag-source">
+                <ul class="dummy">
+                  <li><a href="insights.js.html">insights.js</a>, <a href="insights.js.html#line1">line 1</a></li>
+                </ul>
+              </dd>
+            </dl>
+          </div>
+        </article>
+      </section>
+      <section>
+        <header>
+          <h2>obiee.js</h2>
+        </header>
+        <article>
+          <div class="container-overview">
+            <div class="description">
+              <p>RM Insights OBIEE module</p>
+            </div>
+            <dl class="details">
+              <dt class="tag-version">Version:</dt>
+              <dd class="tag-version">
+                <ul class="dummy">
+                  <li>1.00</li>
+                </ul>
+              </dd>
+              <dt class="tag-author">Author:</dt>
+              <dd class="tag-author">
+                <ul>
+                  <li>Minesh Patel</li>
+                </ul>
+              </dd>
+              <dt class="tag-source">Source:</dt>
+              <dd class="tag-source">
+                <ul class="dummy">
+                  <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line1">line 1</a></li>
+                </ul>
+              </dd>
+            </dl>
+          </div>
+        </article>
+      </section>
+      <section>
+        <header>
+          <h2>rmvpp.js</h2>
+        </header>
+        <article>
+          <div class="container-overview">
+            <div class="description">
+              <p>RM Visual Plugin module</p>
+            </div>
+            <dl class="details">
+              <dt class="tag-version">Version:</dt>
+              <dd class="tag-version">
+                <ul class="dummy">
+                  <li>1.00</li>
+                </ul>
+              </dd>
+              <dt class="tag-author">Author:</dt>
+              <dd class="tag-author">
+                <ul>
+                  <li>Minesh Patel</li>
+                </ul>
+              </dd>
+              <dt class="tag-source">Source:</dt>
+              <dd class="tag-source">
+                <ul class="dummy">
+                  <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line1">line 1</a></li>
+                </ul>
+              </dd>
+            </dl>
+          </div>
+        </article>
+      </section>
+    </div>
+    <nav>
+      <div class="navbar">
+        <h2>
+          <a href="index.html">Home</a>
+        </h2>
+        <div class="search">
+          <span>Search</span>
+          <input/>
+        </div>
+        <h3>Modules<span class="toggleList collapse">-</span></h3>
+        <ul>
+          <li>
+            <a href="module-insights.html">insights</a>
+          </li>
+          <li>
+            <a href="module-InsightsConfig.html">InsightsConfig</a>
+          </li>
+          <li>
+            <a href="module-obiee.html">obiee</a>
+          </li>
+          <li>
+            <a href="module-rmvpp.html">rmvpp</a>
+          </li>
+        </ul>
+        <h3>Classes<span class="toggleList collapse">-</span></h3>
+        <ul>
+          <li>
+            <a href="module-obiee.BIBreadcrumb.html">BIBreadcrumb</a>
+          </li>
+          <li>
+            <a href="module-obiee.BICanvas.html">BICanvas</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIColumn.html">BIColumn</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIColumnSelector.html">BIColumnSelector</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIConditionalFormat.html">BIConditionalFormat</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIDashboardPage.html">BIDashboardPage</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIDrilldown.html">BIDrilldown</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIFilter.html">BIFilter</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIFilterGroup.html">BIFilterGroup</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIInteraction.html">BIInteraction</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIPermission.html">BIPermission</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIPres.html">BIPres</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIPrompt.html">BIPrompt</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIQuery.html">BIQuery</a>
+          </li>
+          <li>
+            <a href="module-obiee.BISort.html">BISort</a>
+          </li>
+          <li>
+            <a href="module-obiee.BITable.html">BITable</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIVariable.html">BIVariable</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIVisual.html">BIVisual</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIVisualSelector.html">BIVisualSelector</a>
+          </li>
+          <li>
+            <a href="module-rmvpp.Chart.html">Chart</a>
+          </li>
+          <li>
+            <a href="module-rmvpp.Legend.html">Legend</a>
+          </li>
+          <li>
+            <a href="module-rmvpp.Tooltip.html">Tooltip</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <br class="clear"/>
+    <script> prettyPrint(); </script>
+    <script src="scripts/linenumber.js"> </script>
+  </body>
+</html>
+

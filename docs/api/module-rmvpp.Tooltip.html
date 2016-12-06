@@ -1,0 +1,603 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Insights API</title>
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css"/>
+    <link type="text/css" rel="stylesheet" href="styles/insights-doc.css"/>
+    <script src="/insights/js/lib/jquery.min.js"> </script>
+    <link type="text/css" rel="stylesheet" href="/insights/icons/css/font-awesome.min.css"/>
+  </head>
+  <body>
+    <script type="text/javascript">
+			document.getElementsByTagName("body")[0].style.display = "none";
+
+			function loadFunc() {
+
+			$(".navbar .search input").keyup(function() {
+				expandAll();
+				var val = $(this).val().toLowerCase();
+				$(".navbar li>a").each(function() {
+					var link = $(this).text().toLowerCase();
+					if (link.indexOf(val) >= 0) {
+						$(this).show();
+					} else {
+						$(this).hide();
+					}
+				});
+			});
+			$("nav h3").click(function(){
+				$(this).next().animate({ height: "toggle" });
+				if ($(this).find(".toggleList").hasClass("collapse")) {
+					$(this).find(".toggleList").removeClass("collapse");
+					$(this).find(".toggleList").text("+");
+				} else {
+					$(this).find(".toggleList").addClass("collapse");
+					$(this).find(".toggleList").text("-");
+				}
+			});
+
+			function collapseAll() {
+				$(".toggleList").text("+").removeClass("collapse").parent().next().animate({height: "hide"});
+			}
+
+			function expandAll() {
+				$(".toggleList").text("-").addClass("collapse").parent().next().animate({height: "show"});
+			}
+
+			document.getElementsByTagName("body")[0].style.display = "block";
+}
+
+window.onload = loadFunc;</script>
+    <div id="main">
+      <div class="header-banner">
+        <h1 class="page-title">Class: Tooltip</h1>
+        <a class="homeBtn" href="/insights/docs">
+          <i class="fa fa-home"> </i>
+        </a>
+      </div>
+      <section>
+        <header>
+          <h2><span class="ancestors"><a href="module-rmvpp.html">rmvpp</a>.</span>Tooltip</h2>
+          <div class="class-description">
+            <p>Tooltip positioned using mouse events and DOM elements that can display information
+in a number of different ways.</p>
+          </div>
+        </header>
+        <article>
+          <div class="container-overview">
+            <h2>Constructor</h2>
+            <hr/>
+            <h4 class="name" id="Tooltip"><span class="type-signature"/>new Tooltip<span class="signature">(container)</span><span class="type-signature"/></h4>
+            <h5>Parameters:</h5>
+            <table class="params">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Type</th>
+                  <th class="last">Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="name">
+                    <code>container</code>
+                  </td>
+                  <td class="type">
+            
+            </td>
+                  <td class="description last">
+                    <p>Container DOM element in which to create the tooltip.</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <dl class="details">
+              <dt class="tag-source">Source:</dt>
+              <dd class="tag-source">
+                <ul class="dummy">
+                  <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line946">line 946</a></li>
+                </ul>
+              </dd>
+            </dl>
+          </div>
+          <h3 class="subsection-title">Members</h3>
+          <hr/>
+          <h4 class="name" id="Container"><span class="type-signature"/>Container<span class="type-signature"/></h4>
+          <div class="description">
+            <p>Container DOM element in which to create the tooltip.</p>
+          </div>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line948">line 948</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id="Element"><span class="type-signature"/>Element<span class="type-signature"/></h4>
+          <div class="description">
+            <p>HTML element of the tooltip itself.</p>
+          </div>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line961">line 961</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <h3 class="subsection-title">Methods</h3>
+          <hr/>
+          <h4 class="name" id="create"><span class="type-signature"/>create<span class="signature">()</span><span class="type-signature"/></h4>
+          <div class="description">
+            <p>Creates the HTML elements for the tooltip.</p>
+          </div>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line951">line 951</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id="displayFull"><span class="type-signature"/>displayFull<span class="signature">(tooltipCols, columnMap, datum, event)</span><span class="type-signature"/></h4>
+          <div class="description">
+            <p>Display tooltip with the full set of information from a datum.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>tooltipCols</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">Array.&lt;string></span>
+                </td>
+                <td class="description last">
+                  <p>List of properties for which to display the tooltip data.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>columnMap</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">object</span>
+                </td>
+                <td class="description last">
+                  <p>Column map object containing the BIColumn objects for each column in the visualisation.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>datum</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">object</span>
+                </td>
+                <td class="description last">
+                  <p>Datum containing the information to display.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>event</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">event</span>
+                </td>
+                <td class="description last">
+                  <p>Mouse event fired when displaying the tooltip.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line1035">line 1035</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id="displayHTML"><span class="type-signature"/>displayHTML<span class="signature">(html, event, overridePos)</span><span class="type-signature"/></h4>
+          <div class="description">
+            <p>Display tooltip with any HTML as input.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>html</code>
+                </td>
+                <td class="type">
+            
+            </td>
+                <td class="description last">
+                  <p>HTML to render in the tooltip.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>event</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">event</span>
+                </td>
+                <td class="description last">
+                  <p>Mouse event fired when displaying the tooltip.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>overridePos</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">boolean</span>
+                </td>
+                <td class="description last">
+                  <p>If specified as true, the function will <em>not</em> position the tooltip.
+Instead, it us up to the developer to ensure the tooltip is correctly positioned</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line1062">line 1062</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id="displayList"><span class="type-signature"/>displayList<span class="signature">(datum, category, measures, event, colourScale, highlight)</span><span class="type-signature"/></h4>
+          <div class="description">
+            <p>Display and position tooltip displaying data in a list format for an XY plot space.
+Displays one or measure values as a list in the tooltip for comparison.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>datum</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">object</span>
+                </td>
+                <td class="description last">
+                  <p>Object with data for all of the measures. Expects measure properties to be arrays
+of objects with properties <code>name</code> and <code>value</code>.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>category</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">string</span>
+                </td>
+                <td class="description last">
+                  <p>Property name for the category (dimension) attribute in the datum.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>measures</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">Array.&lt;string></span>
+                </td>
+                <td class="description last">
+                  <p>One or more property names indicating the measures in the datum.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>event</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">event</span>
+                </td>
+                <td class="description last">
+                  <p>Mouse event fired when displaying the tooltip.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>colourScale</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="description last">
+                  <p>D3 scale including the colours that should be tied to the categories.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>highlight</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">string</span>
+                </td>
+                <td class="description last">
+                  <p>Name of the measure in which to higlight. Will display the number in bold and
+changes the colour of the border of the tooltip.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line980">line 980</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id="hide"><span class="type-signature"/>hide<span class="signature">()</span><span class="type-signature"/></h4>
+          <div class="description">
+            <p>Hides the tooltip using a fade animation.</p>
+          </div>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line964">line 964</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id="position"><span class="type-signature"/>position<span class="signature">(offsetX, offsetY)</span><span class="type-signature"/></h4>
+          <div class="description">
+            <p>Move tooltip on the screen using an animation.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>offsetX</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">number</span>
+                </td>
+                <td class="description last">
+                  <p>Horizontal position in pixels to set as the <code>left</code> CSS property..</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>offsetY</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">number</span>
+                </td>
+                <td class="description last">
+                  <p>Vertical position in pixels to set as the <code>top</code> CSS property.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line1085">line 1085</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id="updateText"><span class="type-signature"/>updateText<span class="signature">(html)</span><span class="type-signature"/></h4>
+          <div class="description">
+            <p>Update the text/html of a tooltip without changing colour or position.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>html</code>
+                </td>
+                <td class="type">
+            
+            </td>
+                <td class="description last">
+                  <p>HTML to update the tooltip with.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line1076">line 1076</a></li>
+              </ul>
+            </dd>
+          </dl>
+        </article>
+      </section>
+    </div>
+    <nav>
+      <div class="navbar">
+        <h2>
+          <a href="index.html">Home</a>
+        </h2>
+        <div class="search">
+          <span>Search</span>
+          <input/>
+        </div>
+        <h3>Modules<span class="toggleList collapse">-</span></h3>
+        <ul>
+          <li>
+            <a href="module-insights.html">insights</a>
+          </li>
+          <li>
+            <a href="module-InsightsConfig.html">InsightsConfig</a>
+          </li>
+          <li>
+            <a href="module-obiee.html">obiee</a>
+          </li>
+          <li>
+            <a href="module-rmvpp.html">rmvpp</a>
+          </li>
+        </ul>
+        <h3>Classes<span class="toggleList collapse">-</span></h3>
+        <ul>
+          <li>
+            <a href="module-obiee.BIBreadcrumb.html">BIBreadcrumb</a>
+          </li>
+          <li>
+            <a href="module-obiee.BICanvas.html">BICanvas</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIColumn.html">BIColumn</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIColumnSelector.html">BIColumnSelector</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIConditionalFormat.html">BIConditionalFormat</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIDashboardPage.html">BIDashboardPage</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIDrilldown.html">BIDrilldown</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIFilter.html">BIFilter</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIFilterGroup.html">BIFilterGroup</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIInteraction.html">BIInteraction</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIPermission.html">BIPermission</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIPres.html">BIPres</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIPrompt.html">BIPrompt</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIQuery.html">BIQuery</a>
+          </li>
+          <li>
+            <a href="module-obiee.BISort.html">BISort</a>
+          </li>
+          <li>
+            <a href="module-obiee.BITable.html">BITable</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIVariable.html">BIVariable</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIVisual.html">BIVisual</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIVisualSelector.html">BIVisualSelector</a>
+          </li>
+          <li>
+            <a href="module-rmvpp.Chart.html">Chart</a>
+          </li>
+          <li>
+            <a href="module-rmvpp.Legend.html">Legend</a>
+          </li>
+          <li>
+            <a href="module-rmvpp.Tooltip.html">Tooltip</a>
+          </li>
+        </ul>
+        <h3>Members<span class="toggleList collapse">-</span></h3>
+        <ul>
+          <li>
+            <a href="#Container">Container</a>
+          </li>
+          <li>
+            <a href="#Element">Element</a>
+          </li>
+        </ul>
+        <h3>Methods<span class="toggleList collapse">-</span></h3>
+        <ul>
+          <li>
+            <a href="#create">create</a>
+          </li>
+          <li>
+            <a href="#displayFull">displayFull</a>
+          </li>
+          <li>
+            <a href="#displayHTML">displayHTML</a>
+          </li>
+          <li>
+            <a href="#displayList">displayList</a>
+          </li>
+          <li>
+            <a href="#hide">hide</a>
+          </li>
+          <li>
+            <a href="#position">position</a>
+          </li>
+          <li>
+            <a href="#updateText">updateText</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <br class="clear"/>
+    <script> prettyPrint(); </script>
+    <script src="scripts/linenumber.js"> </script>
+  </body>
+</html>
+

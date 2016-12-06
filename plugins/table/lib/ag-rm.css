@@ -1,0 +1,126 @@
+.ag-rm {
+  line-height: 1.4;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.ag-rm .ag-header-cell {
+  border-right: 1px solid white;
+}
+
+.ag-rm .ag-root {
+  border: 1px solid #808080;
+}
+
+.ag-rm .ag-header {
+	font-weight: bold;
+}
+
+.ag-rm .ag-header-cell-moving {
+  color : white;
+  background-color: #666666;
+}
+
+.ag-rm .ag-menu {
+  border-radius: 5px;
+  border: 1px solid #AAAAAA;
+  background-color: #f5f5f5;
+  cursor: default;
+  font-size: 14px;
+}
+
+.ag-rm .ag-header-icon svg {
+  fill: currentColor
+}
+
+.ag-rm .ag-filter-filter {
+	width: 100px;
+}
+
+.ag-rm .ag-header-cell-menu-button {
+  padding: 2px;
+  margin-top: 4px;
+  border: 1px solid transparent;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box; /* When using bootstrap, box-sizing was set to 'border-box' */
+  line-height: 0px; /* normal line height, a space was appearing below the menu button */
+}
+
+.ag-rm .ag-header-cell-label {
+  padding: 4px 2px 4px 2px;
+}
+.ag-rm .ag-header-cell-text {
+  padding-left: 2px;
+}
+
+.ag-rm .ag-body .ag-row-odd {
+  background-color: #F5F5F5;
+}
+
+.ag-rm .ag-body .ag-row-even {
+  background-color: #fff;
+}
+
+.ag-rm .ag-floating-top .ag-row {
+  background-color: #f0f0f0;
+}
+
+.ag-rm .ag-floating-bottom .ag-row {
+  background-color: #f0f0f0;
+}
+
+.ag-rm .ag-cell {
+  padding: 2px;
+}
+
+.ag-header-cell-ghost {
+	opacity: 0.8;
+	font-family: Open Sans;
+	font-size: 10px;
+	border-radius: 5px;
+}
+
+.ag-rm .ag-cell-focus {
+  border-right: 1px solid #CCCCCC;
+  border-top: 1px solid transparent;
+  border-left: 1px solid transparent;
+  border-bottom: 1px solid #CCCCCC;
+  outline: 0;
+}
+.ag-rm .ag-cell-no-focus {
+  border-right: 1px solid #CCCCCC;
+  border-top: 1px solid transparent;
+  border-left: 1px solid transparent;
+  border-bottom: 1px solid #CCCCCC;
+}
+
+.rm-table-toolbar {
+	margin-bottom: 3px;
+}
+
+.rm-table-toolbar input {
+	margin-left: 5px;
+	padding-bottom: 0px;
+	padding-top: 0px;
+}
+/*
+.ag-pinned-left-header {
+  float: left;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: inline-block;
+  overflow: hidden;
+  height: 100%;
+}
+.ag-pinned-right-header {
+  float: right;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: inline-block;
+  overflow: hidden;
+  height: 100%;
+} */

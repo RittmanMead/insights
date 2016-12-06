@@ -1,0 +1,25 @@
+
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+	      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	      xsi:schemaLocation="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	      version="2.5">
+
+<servlet>
+<servlet-name>obi</servlet-name>
+<jsp-file>/sso-poc.jsp</jsp-file>
+</servlet>
+ 
+<servlet-mapping>
+<servlet-name>obi</servlet-name>
+<url-pattern>/obi-ws</url-pattern>
+</servlet-mapping>
+
+<context-param>
+  <param-name>weblogic.jsp.pageCheckSeconds</param-name>
+    <param-value>0</param-value>
+    </context-param>
+
+</web-app>

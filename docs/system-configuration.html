@@ -1,0 +1,273 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400italic,700italic,700">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,700italic,700">
+  <title>System Configuration</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #0000ff; } /* Keyword */
+code > span.ch { color: #008080; } /* Char */
+code > span.st { color: #008080; } /* String */
+code > span.co { color: #008000; } /* Comment */
+code > span.ot { color: #ff4000; } /* Other */
+code > span.al { color: #ff0000; } /* Alert */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #008000; font-weight: bold; } /* Warning */
+code > span.cn { } /* Constant */
+code > span.sc { color: #008080; } /* SpecialChar */
+code > span.vs { color: #008080; } /* VerbatimString */
+code > span.ss { color: #008080; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { } /* Variable */
+code > span.cf { color: #0000ff; } /* ControlFlow */
+code > span.op { } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #ff4000; } /* Preprocessor */
+code > span.do { color: #008000; } /* Documentation */
+code > span.an { color: #008000; } /* Annotation */
+code > span.cv { color: #008000; } /* CommentVar */
+code > span.at { } /* Attribute */
+code > span.in { color: #008000; } /* Information */
+  </style>
+  <link href="data:text/css;charset=utf-8,%0A%0Ahtml%2C%20body%2C%20div%2C%20span%2C%20applet%2C%20object%2C%20iframe%2C%20h1%2C%20h2%2C%20h3%2C%20h4%2C%20h5%2C%20h6%2C%20p%2C%20blockquote%2C%20pre%2C%20a%2C%20abbr%2C%20acronym%2C%20address%2C%20big%2C%20cite%2C%20code%2C%20del%2C%20dfn%2C%20em%2C%20img%2C%20ins%2C%20kbd%2C%20q%2C%20s%2C%20samp%2C%20small%2C%20strike%2C%20strong%2C%20sub%2C%20sup%2C%20tt%2C%20var%2C%20b%2C%20u%2C%20i%2C%20center%2C%20dl%2C%20dt%2C%20dd%2C%20ol%2C%20ul%2C%20li%2C%20fieldset%2C%20form%2C%20label%2C%20legend%2C%20table%2C%20caption%2C%20tbody%2C%20tfoot%2C%20thead%2C%20tr%2C%20th%2C%20td%2C%20article%2C%20aside%2C%20canvas%2C%20details%2C%20embed%2C%20figure%2C%20figcaption%2C%20footer%2C%20header%2C%20hgroup%2C%20menu%2C%20nav%2C%20output%2C%20ruby%2C%20section%2C%20summary%2C%20time%2C%20mark%2C%20audio%2C%20video%20%7B%0Amargin%3A%200%3B%0Apadding%3A%200%3B%0Aborder%3A%200%3B%0A%7D%0A%0A%23header%20%7B%0Aposition%3A%20relative%3B%0A%7D%0A%2Eheader%5Fbanner%20%7B%0Abox%2Dshadow%3A%200px%200px%205px%20black%3B%0Abackground%3A%20%23333439%3B%0Aposition%3A%20absolute%3B%0Awidth%3A100%25%3B%0Aheight%3A%2090px%3B%0Aleft%3A%200%3B%0Atop%3A%200%3B%0A%7D%0A%2Eheader%5Fbanner%3Ediv%20%7B%0Awidth%3A%20100%25%3B%0Adisplay%3A%20inline%2Dblock%3B%0A%7D%0A%2Elogo%20%7B%0Aheight%3A%2090px%3B%0Afloat%3A%20right%3B%0Abox%2Dshadow%3A%20none%3B%0Amargin%3A%200%3B%0A%7D%0A%2Eheader%5Ftitle%20%7B%0Acolor%3A%20%23FFF%3B%0Amargin%2Dleft%3A%2030px%3B%0Amargin%2Dtop%3A11px%3B%0Afont%2Dsize%3A%2042px%3B%0Afont%2Dfamily%3A%20Open%20Sans%3B%0Afont%2Dweight%3A%20300%3B%0Awhite%2Dspace%3A%20nowrap%3B%0Aoverflow%3A%20hidden%3B%0A%7D%0A%0Abody%20%7B%0Afont%2Dfamily%3A%20Source%20Sans%20Pro%2C%20Open%20Sans%2C%20Helvetica%2C%20Arial%2C%20freesans%2C%20clean%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2015px%3B%0Aline%2Dheight%3A%201%2E6%3B%0Acolor%3A%20%23000%3B%0Abackground%2Dcolor%3A%20%23fff%3B%0Apadding%3A%2020px%3B%0Apadding%2Dtop%3A%20120px%3B%0Amax%2Dwidth%3A%2080%25%3B%0Amargin%3A%200%20auto%3B%0A%7D%0Abody%3E%2A%3Afirst%2Dchild%20%7B%0Amargin%2Dtop%3A%200%20%21important%3B%0A%7D%0Abody%3E%2A%3Alast%2Dchild%20%7B%0Amargin%2Dbottom%3A%200%20%21important%3B%0A%7D%0A%0Ap%2C%20blockquote%2C%20ul%2C%20ol%2C%20dl%2C%20table%2C%20pre%20%7B%0Amargin%3A%2015px%200%3B%0A%7D%0A%0Aul%20%7B%0Alist%2Dstyle%2Dtype%3A%20disc%3B%0A%7D%0A%2Enavbar%20ul%20%7B%0Alist%2Dstyle%2Dtype%3A%20none%3B%0A%7D%0A%23TOC%3Eul%20%7B%0Afont%2Dsize%3A%2016px%3B%0Afont%2Dweight%3A%20lighter%3B%0A%7D%0A%23TOC%3Eul%3Eli%3Eul%20%7B%0Afont%2Dsize%3A%2015px%3B%0A%7D%0A%23TOC%3Eul%3Eli%3Eul%3Eli%3Eul%20%7B%0Afont%2Dsize%3A%2013px%3B%0A%7D%0Ah2%20%3E%20%2EtoggleAll%20%7B%0Amargin%2Dleft%3A%2010px%3B%0Acursor%3A%20pointer%3B%0Acolor%3A%20%235484F1%3B%0A%7D%0Aul%20%2EtoggleList%20%7B%0Afont%2Dweight%3A%20bold%3B%0Amargin%2Dright%3A%205px%3B%0Acursor%3A%20pointer%3B%0Acolor%3A%20%235484F1%3B%0A%7D%0Aul%20%2EhiddenToggle%20%7B%0Avisibility%3A%20hidden%3B%0Amargin%2Dright%3A%205px%3B%0A%7D%0A%2A%20%7Bmargin%3A%200%3B%20padding%3A%200%3B%7D%0A%2Ebody%20%7Bheight%3A%20100%25%3B%20width%3A%20100%25%3B%7D%0A%2Ecanvas%20%7B%0Aposition%3A%20relative%3B%0Aleft%200px%3B%0A%7D%0A%2Enavbar%20%7B%0Aheight%3A%20100%25%3B%0Awidth%3A%200px%3B%0Awhite%2Dspace%3A%20nowrap%3B%0Abackground%3A%20%23333439%3B%0Afloat%3A%20left%3B%0Aoverflow%3A%20auto%3B%0Az%2Dindex%3A%201%3B%0Aposition%3A%20fixed%3B%0Atop%3A%200%3B%0Aleft%3A%200%3B%0Abox%2Dshadow%3A%200px%200px%205px%3B%0A%7D%0A%2Enavbar%20%2Esearch%20%7B%0Amargin%2Dleft%3A%2010px%3B%0A%7D%0A%2Enavbar%20%2Esearch%20span%7B%0Acolor%3A%20white%3B%0Adisplay%3A%20none%3B%0A%7D%0A%2Enavbar%20%2Esearch%20input%20%7B%0Amargin%2Dleft%3A%205px%3B%0Aborder%3A%201px%20solid%20%237E8391%3B%0Aborder%2Dradius%3A%2020px%3B%0Apadding%3A%203px%3B%0Apadding%2Dleft%3A%2015px%3B%0Abackground%2Dcolor%3A%20%232B2B2B%3B%0Acolor%3A%20white%3B%0Afont%2Dfamily%3A%20Open%20Sans%3B%0Awidth%3A%20265px%3B%0A%7D%0A%2Enavbar%20%2Esearch%20input%3Afocus%20%7B%0Aborder%2Dcolor%3A%20%237E8391%3B%0Aoutline%3A%200%3B%0A%2Dwebkit%2Dbox%2Dshadow%3A%20inset%200%201px%201px%20rgba%280%2C0%2C0%2C%2E075%29%2C%200%200%208px%20rgba%28184%2C%20197%2C%20228%2C%200%2E6%29%3B%0Abox%2Dshadow%3A%20inset%200%201px%201px%20rgba%280%2C0%2C0%2C%2E075%29%2C%200%200%208px%20rgba%28184%2C%20197%2C%20228%2C%200%2E6%29%3B%0A%7D%0A%2Enavbar%20a%20%7B%0Acolor%3A%20%23FFFFFF%3B%0A%7D%0A%2Enavbar%20a%20code%20%7B%0Abackground%2Dcolor%3A%20%23333439%3B%0Aborder%3A%20none%3B%0A%7D%0A%2Enavbar%20h2%20%7B%0Amargin%3A%2010px%3B%0Acolor%3A%20%23FFFFFF%3B%0Afont%2Dweight%3A%20300%3B%0A%7D%0A%2Econtent%5Fbutton%20%7B%0Aheight%3A%2030px%3B%0Awidth%3A%2030px%3B%0Abackground%3A%20%23333439%3B%0Atop%3A%2050%25%3B%0Aposition%3A%20fixed%3B%0Aleft%3A%200%3B%0Aborder%2Dtop%3A%201px%20white%20solid%3B%0Aborder%2Dbottom%3A%201px%20white%20solid%3B%0Aborder%2Dradius%3A%200px%205px%205px%200px%3B%0A%7D%0A%2Econtent%5Fbutton%20%2Echevron%20%7B%0Afont%2Dsize%3A%2020px%3B%0Acolor%3A%20white%3B%0Amargin%2Dleft%3A%208px%3B%0A%7D%0A%0Ah1%2C%20h2%2C%20h3%2C%20h4%2C%20h5%2C%20h6%20%7B%0Amargin%3A%2030px%200%2010px%3B%0Afont%2Dweight%3A%20normal%3B%0Apadding%3A%200%3B%0A%2Dwebkit%2Dfont%2Dsmoothing%3A%20antialiased%3B%0Afont%2Dfamily%3A%20Open%20Sans%2C%20Helvetica%2C%20Arial%3B%0A%7D%0Ah1%20tt%2C%20h1%20code%2C%20h2%20tt%2C%20h2%20code%2C%20h3%20tt%2C%20h3%20code%2C%20h4%20tt%2C%20h4%20code%2C%20h5%20tt%2C%20h5%20code%2C%20h6%20tt%2C%20h6%20code%20%7B%0Afont%2Dsize%3A%20inherit%3B%0A%7D%0Ah1%20%7B%0Afont%2Dsize%3A%2036px%3B%0Acolor%3A%20%235484F1%3B%0Afont%2Dweight%3A%20300%3B%0Aborder%2Dbottom%3A%202px%20solid%20%23EAEAEA%3B%0Amargin%2Dbottom%3A%2030px%3B%0A%7D%0Ah2%20%7B%0Afont%2Dsize%3A%2028px%3B%0Acolor%3A%20%23333439%3B%0Aletter%2Dspacing%3A%20%2D1px%3B%0A%7D%0Ah3%20%7B%0Afont%2Dsize%3A%2022px%3B%0Acolor%3A%20%23333%3B%0A%7D%0Ah4%20%7B%0Afont%2Dsize%3A%2018px%3B%0Acolor%3A%20%23333%3B%0A%7D%0Ah5%20%7B%0Acolor%3A%20%23000%3B%0Afont%2Dweight%3A%20normal%3B%0Afont%2Dsize%3A%2016px%3B%0A%7D%0Ah6%20%7B%0Acolor%3A%20%23000%3B%0Afont%2Dweight%3A%20normal%3B%0Afont%2Dsize%3A%2015px%3B%0A%7D%0Abody%3Eh2%3Afirst%2Dchild%2C%20body%3Eh1%3Afirst%2Dchild%2C%20body%3Eh1%3Afirst%2Dchild%2Bh2%2C%20body%3Eh3%3Afirst%2Dchild%2C%20body%3Eh4%3Afirst%2Dchild%2C%20body%3Eh5%3Afirst%2Dchild%2C%20body%3Eh6%3Afirst%2Dchild%20%7B%0Amargin%2Dtop%3A%200%3B%0Apadding%2Dtop%3A%200%3B%0A%7D%0Aa%3Afirst%2Dchild%20h1%2C%20a%3Afirst%2Dchild%20h2%2C%20a%3Afirst%2Dchild%20h3%2C%20a%3Afirst%2Dchild%20h4%2C%20a%3Afirst%2Dchild%20h5%2C%20a%3Afirst%2Dchild%20h6%20%7B%0Amargin%2Dtop%3A%200%3B%0Apadding%2Dtop%3A%200%3B%0A%7D%0Ah1%2Bp%2C%20h2%2Bp%2C%20h3%2Bp%2C%20h4%2Bp%2C%20h5%2Bp%2C%20h6%2Bp%20%7B%0Amargin%2Dtop%3A%2010px%3B%0A%7D%0A%0Aa%20%7B%0Acolor%3A%20%235484F1%3B%0Atext%2Ddecoration%3A%20none%3B%0A%2Dwebkit%2Dtransition%3A%20all%20200ms%20ease%2Din%3B%0A%2Do%2Dtransition%3A%20all%20200ms%20ease%2Din%3B%0A%2Dmoz%2Dtransition%3A%20all%20200ms%20ease%2Din%3B%0Afont%2Dsize%3A%20100%25%3B%0Atransition%3A%20all%200%2E2s%20ease%2Din%3B%0Atransition%2Dproperty%3A%20font%2Dsize%2C%20color%3B%0A%7D%0Aa%3Ahover%20%7B%0A%2Dwebkit%2Dtransition%3A%20all%20200ms%20ease%2Din%3B%0A%2Do%2Dtransition%3A%20all%20200ms%20ease%2Din%3B%0A%2Dmoz%2Dtransition%3A%20all%20200ms%20ease%2Din%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20black%3B%0A%7D%0A%2Enavbar%20a%3Ahover%20%7B%0Acolor%3A%20white%3B%0Afont%2Dsize%3A%20120%25%3B%0Atransition%3A%20font%2Dsize%200%2E2s%20ease%2Din%3B%0A%7D%0A%0Aul%2C%20ol%20%7B%0Apadding%2Dleft%3A%2030px%3B%0A%7D%0A%2Enavbar%20ul%20%7B%0Apadding%2Dleft%3A%2010px%3B%0A%7D%0Aul%20li%20%3E%20%3Afirst%2Dchild%2C%0Aol%20li%20%3E%20%3Afirst%2Dchild%2C%0Aul%20li%20ul%3Afirst%2Dof%2Dtype%2C%0Aol%20li%20ol%3Afirst%2Dof%2Dtype%2C%0Aul%20li%20ol%3Afirst%2Dof%2Dtype%2C%0Aol%20li%20ul%3Afirst%2Dof%2Dtype%20%7B%0Amargin%2Dtop%3A%200px%3B%0A%7D%0Aul%20ul%2C%20ul%20ol%2C%20ol%20ol%2C%20ol%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Adl%20%7B%0Apadding%3A%200%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dsize%3A%2014px%3B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dstyle%3A%20italic%3B%0Apadding%3A%200%3B%0Amargin%3A%2015px%200%205px%3B%0A%7D%0Adl%20dt%3Afirst%2Dchild%20%7B%0Apadding%3A%200%3B%0A%7D%0Adl%20dt%3E%3Afirst%2Dchild%20%7B%0Amargin%2Dtop%3A%200px%3B%0A%7D%0Adl%20dt%3E%3Alast%2Dchild%20%7B%0Amargin%2Dbottom%3A%200px%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%3A%200%200%2015px%3B%0Apadding%3A%200%2015px%3B%0A%7D%0Adl%20dd%3E%3Afirst%2Dchild%20%7B%0Amargin%2Dtop%3A%200px%3B%0A%7D%0Adl%20dd%3E%3Alast%2Dchild%20%7B%0Amargin%2Dbottom%3A%200px%3B%0A%7D%0A%0Apre%2C%20code%2C%20tt%20%7B%0Afont%2Dsize%3A%2012px%3B%0Afont%2Dfamily%3A%20Consolas%2C%20%22Liberation%20Mono%22%2C%20Courier%2C%20monospace%3B%0A%7D%0Acode%2C%20tt%20%7B%0Amargin%3A%200%200px%3B%0Apadding%3A%201px%202px%3B%0Awhite%2Dspace%3A%20nowrap%3B%0Aborder%3A%201px%20solid%20%23eaeaea%3B%0Abackground%2Dcolor%3A%20%23f8f8f8%3B%0Aborder%2Dradius%3A%203px%3B%0A%7D%0Apre%3Ecode%20%7B%0Amargin%3A%200%3B%0Apadding%3A%200%3B%0Awhite%2Dspace%3A%20pre%3B%0Aborder%3A%20none%3B%0Abackground%3A%20transparent%3B%0A%7D%0Apre%20%7B%0Abackground%2Dcolor%3A%20%23F8F8F8%3B%0Aborder%3A%201px%20solid%20%23BDBDBD%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%2019px%3B%0Aoverflow%3A%20auto%3B%0Apadding%3A%206px%2010px%3B%0Aborder%2Dradius%3A%203px%3B%0A%7D%0Apre%20code%2C%20pre%20tt%20%7B%0Abackground%2Dcolor%3A%20transparent%3B%0Aborder%3A%20none%3B%0A%7D%0Akbd%20%7B%0A%2Dmoz%2Dborder%2Dbottom%2Dcolors%3A%20none%3B%0A%2Dmoz%2Dborder%2Dleft%2Dcolors%3A%20none%3B%0A%2Dmoz%2Dborder%2Dright%2Dcolors%3A%20none%3B%0A%2Dmoz%2Dborder%2Dtop%2Dcolors%3A%20none%3B%0Abackground%2Dcolor%3A%20%23DDDDDD%3B%0Abackground%2Dimage%3A%20linear%2Dgradient%28%23F1F1F1%2C%20%23DDDDDD%29%3B%0Abackground%2Drepeat%3A%20repeat%2Dx%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%20%23CCCCCC%20%23CCCCCC%20%23DDDDDD%3B%0Aborder%2Dimage%3A%20none%3B%0Aborder%2Dradius%3A%202px%202px%202px%202px%3B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%2Dwidth%3A%201px%3B%0Afont%2Dfamily%3A%20%22Helvetica%20Neue%22%2CHelvetica%2CArial%2Csans%2Dserif%3B%0Aline%2Dheight%3A%2010px%3B%0Apadding%3A%201px%204px%3B%0A%7D%0A%0Ablockquote%20%7B%0Aborder%2Dcolor%3A%20%23333333%3B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%2Dleft%2Dwidth%3A%204px%3B%0Aborder%2Dright%2Dwidth%3A%201px%3B%0Aborder%2Dtop%2Dwidth%3A%201px%3B%0Aborder%2Dbottom%2Dwidth%3A%201px%3B%0Apadding%3A%200%2015px%3B%0Acolor%3A%20%23333333%3B%0Abackground%3A%20%23FFF%3B%0Aborder%2Dradius%3A%205px%3B%0A%7D%0Ablockquote%3E%3Afirst%2Dchild%20%7B%0Amargin%2Dtop%3A%200px%3B%0A%7D%0Ablockquote%3E%3Alast%2Dchild%20%7B%0Amargin%2Dbottom%3A%200px%3B%0A%7D%0A%0Ahr%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%2015px%200%3B%0Aheight%3A%200px%3B%0Aoverflow%3A%20hidden%3B%0Aborder%3A%20none%3B%0Abackground%3A%20transparent%3B%0Aborder%2Dbottom%3A%201px%20solid%20%23333439%3B%0Apadding%3A%200%3B%0A%7D%0A%0Atable%20%7B%0Aborder%2Dcollapse%3A%20collapse%3B%0Amargin%2Dleft%3A%20auto%3B%0Amargin%2Dright%3A%20auto%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0A%7D%0Atable%20th%20%7B%0Afont%2Dweight%3A%20bold%3B%0Atext%2Dalign%3A%20center%3B%0Acolor%3A%20%23000%3B%0Apadding%3A%200px%206px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Abackground%3A%20%23F5F5F5%3B%0Awhite%2Dspace%3A%20nowrap%0A%7D%0Atable%20td%20%7B%0Apadding%3A%200px%206px%3B%0A%7D%0Atable%20tr%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0A%7D%0Atable%20td%20%7B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0A%7D%0A%0A%0Aimg%20%7B%0Amax%2Dwidth%3A%20100%25%3B%0Adisplay%3A%20block%3B%0Amargin%3A%2010px%20auto%3B%0Abox%2Dshadow%3A%202px%202px%205px%201px%20rgb%28152%2C%20152%2C%20152%29%3B%0A%7D%0A%0A%2Ecaption%20%7B%0Adisplay%3A%20none%3B%0A%7D%0A%0A%2Efootnotes%20%7B%0Amargin%2Dtop%3A%2040px%3B%0A%7D%0A%0A%2Emath%20%7B%0Afont%2Dfamily%3A%20STIXGeneral%2DItalic%3B%0Afont%2Dsize%3A%2018px%3B%0A%7D%0A" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<script type="text/javascript">
+		document.getElementsByTagName("body")[0].style.display = "none";
+
+		function loadFunc() {
+			var toggled = false;
+			$(".navbar").append(
+				$("<h2>Contents</h2>").append(
+					$("<span class='collapse toggleAll'>-</span>").click(function() {
+						toggleAll(this);
+					})
+				)
+			);
+
+			$(".navbar").append("<div class='search'><span>Search</span><input></input></div>");
+			$(".navbar").append($("#TOC"));
+			$(".canvas, #header").click(function() {
+				if (toggled) {
+					$(".navbar").animate({width: "0px"}, "fast");
+					$(".header_banner").animate({left: "0"}, "fast");
+					$(".canvas").animate({left: "0px"}, "fast");
+					$("#header").animate({left: "0px"}, "fast");
+					$(".content_button").animate({left: "0px"}, "fast");
+					$(".chevron").text(">");
+					toggled=false;
+				}
+			});
+
+			$(".content_button").click(function() {
+				if(toggled) {$(".navbar").animate({width: "0px"}, "fast");
+					$(".header_banner").animate({left: "0"}, "fast");
+					$(".canvas").animate({left: "0px"}, "fast");
+					$("#header").animate({left: "0px"}, "fast");
+					$(".content_button").animate({left: "0px"}, "fast");
+					$(".chevron").text(">");
+					toggled=false;
+				} else {
+					$(".navbar").animate({width: "336px"}, "fast");
+					$(".header_banner").animate({left: "336"}, "fast");
+					$(".canvas").animate({left: "336px"}, "fast");
+					$(".content_button").animate({left: "336px"}, "fast");
+					$("#header").animate({left: "336px"}, "fast");
+					$(".chevron").text("<");
+					toggled=true;
+				}
+			});
+
+			$(".navbar").find("a").each(function() {
+				var list = $(this).next();
+				if (list.length > 0) {
+					$(this).before("<span class='toggleList collapse'>-</span>");
+					$(this).prev().click(function() {
+						if ($(this).hasClass("collapse")) {
+							$(this).text("+").removeClass("collapse");
+						} else {
+							$(this).text("-").addClass("collapse");
+						} list.animate({height: 'toggle'});
+					})
+				}
+				else {
+					$(this).before("<span class='hiddenToggle'>-</span>");
+				}
+			});
+
+			$(".navbar .search input").keyup(function() {
+				expandAll();
+				var val = $(this).val().toLowerCase();
+				$(".navbar a").each(function() {
+					var link = $(this).text().toLowerCase();
+					if (link.indexOf(val) >= 0) {
+						$(this).show(); $(this).prev().show();
+					} else {
+						$(this).hide(); $(this).prev().hide();
+					}
+				});
+			});
+
+			function toggleAll(el) {
+				if ($(el).hasClass('collapse')) {
+					$(el).removeClass('collapse');
+					$(el).text('+');
+					collapseAll();
+				} else {
+					$(el).addClass('collapse');
+					$(el).text('-');
+					expandAll();
+				}
+			}
+
+			function collapseAll() {
+				$("ul>li>.toggleList").text('+').removeClass('collapse').nextUntil("ul").next().animate({height: 'hide'});
+			}
+
+			function expandAll() {
+				$("ul>li>.toggleList").text('-').addClass('collapse').nextUntil("ul").next().animate({height: 'show'});
+			}
+			var title = document.getElementsByTagName("h1")[0].innerHTML;
+			document.getElementById("title").innerHTML = title;
+			document.getElementsByTagName("h1")[0].style.display = "none";
+			document.getElementsByTagName("body")[0].style.display = "block";
+		}
+
+		var head  = document.getElementsByTagName('head')[0];
+		var link  = document.createElement('link');
+	    link.rel  = 'stylesheet';
+	    link.type = 'text/css';
+	    link.href = '/insights/icons/css/font-awesome.min.css';
+	    head.appendChild(link);
+
+		window.onload = loadFunc;
+</script>
+<style>
+	.homeBtn {
+		float: right;
+		color: #E2E2E2;
+		font-size: 48px;
+		margin-top: -56px;
+		margin-right: 20px
+	}
+
+	.homeBtn:hover {
+		color: #FFFFFF;
+	}
+</style>
+
+<div class="navbar_container">
+<div class="navbar"/>
+</div><div class="content_button">
+<div class="chevron">></div>
+</div>
+<div class="header_banner">
+	<div>
+		<div class="header_title" id="title">The Title</div>
+		<a class="homeBtn" href="/insights/docs">
+			<i class="fa fa-home"></i>
+		</a>
+	</div>
+</div>
+<div id="header">
+<h1 class="title">System Configuration</h1>
+</div>
+<div class="canvas">
+<div id="TOC">
+<ul>
+<li><a href="#security"><span class="toc-section-number">1</span> Security</a></li>
+<li><a href="#data-formats"><span class="toc-section-number">2</span> Data Formats</a></li>
+<li><a href="#managing-dashboards"><span class="toc-section-number">3</span> Managing Dashboards</a></li>
+<li><a href="#maps"><span class="toc-section-number">4</span> Maps</a><ul>
+<li><a href="#tiles"><span class="toc-section-number">4.1</span> Tiles</a></li>
+<li><a href="#features"><span class="toc-section-number">4.2</span> Features</a></li>
+</ul></li>
+<li><a href="#look-and-feel"><span class="toc-section-number">5</span> Look and Feel</a><ul>
+<li><a href="#styling-the-documentation"><span class="toc-section-number">5.1</span> Styling the Documentation</a><ul>
+<li><a href="#styling-general-documents"><span class="toc-section-number">5.1.1</span> Styling General Documents</a></li>
+<li><a href="#styling-the-api-reference"><span class="toc-section-number">5.1.2</span> Styling the API Reference</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#numeric-to-double-conversion"><span class="toc-section-number">6</span> Numeric To Double Conversion</a></li>
+</ul>
+</div>
+<p>Most of the application is self contained, but there are a few global configuration options available.</p>
+<p>These options are configured in <code>js/config.js</code> which defines the global <code>InsightsConfig</code> object. This file will be overwritten when you pull updates from the Insights Git repository which will overwite any changes you make. As such, <code>js/customConfig.js</code> has been included on each page but is unversioned in the repository. If you create this file and override parameters in <code>InsightsConfig</code>, these changes will be kept even after updating the repository. As it is unversioned, <code>js/customConfig.js</code> needs to be created manually after you deploy the application to WebLogic.</p>
+<p>Below is an example of the line required in <code>customConfig</code> to change the default locale to US.</p>
+<pre><code>InsightsConfig.Locale = 'US';</code></pre>
+<p>A full list of all configuration parameters in <code>InsightsConfig</code> can be found <a href="/insights/docs/api/module-InsightsConfig.html">here</a>.</p>
+<h1 id="security"><span class="header-section-number">1</span> Security</h1>
+<p>All queries act through the BI server and are authenticated in the same way as OBIEE, so any row or object level security is maintained through OBIEE and the BI server as normal. However, pages of the Insights application can be optionally restricted to application roles.</p>
+<p><code>InsightsConfig.Security</code> has properties that correspond to roles in the Insight application. The value of each properties should be set to the respective OBIEE application role for granting that permission.</p>
+<table style="width:11%;">
+<colgroup>
+<col width="5%"></col>
+<col width="5%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Insights Role</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>view</code></td>
+<td align="left">Allows viewing of dashboards, specifically access to <code>/insights/app/states/view</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>create</code></td>
+<td align="left">Allows creation of dashboards, specifically access to <code>/insights/app/states/visBuilder</code></td>
+</tr>
+</tbody>
+</table>
+<h1 id="data-formats"><span class="header-section-number">2</span> Data Formats</h1>
+<p>The app uses the <a href="https://github.com/d3/d3-format">D3 formatting</a> specification to format dates and numbers. The defaults for each data type can be modified by editing <code>InsightsConfig.DataFormats</code>. Additionally, numbers are formatting using SI prefixes. This is not always desirable, for example 1000,000,000 will be displayed as 1G rather than 1B. <code>InsightsConfig.SIPrefixes</code> can be modified to override these format prefixes to suit your needs.</p>
+<h1 id="managing-dashboards"><span class="header-section-number">3</span> Managing Dashboards</h1>
+<p>Insights keeps a master list (JSON) of <em>all</em> published dashboard folders. This governs which dashboards are available on the <a href="/insights/app/states/portal">portal</a> and contains the metadata for icons and tags for searching. This is stored as a hidden item in the catalogue at <code>/shared/RM-Insights/Published-Dashboards</code> which can be modified by anyone with the RM Insights <code>create</code> security role and read by anyone with the RM Insights <code>view</code> role. Migrating published dashboards is then simply a case of migrating this web catalogue item.</p>
+<h1 id="maps"><span class="header-section-number">4</span> Maps</h1>
+<h2 id="tiles"><span class="header-section-number">4.1</span> Tiles</h2>
+<p>All of the default map plugins use <a href="http://leafletjs.com/">LeafletJS</a> and the <a href="https://www.openstreetmap.org/#map=5/51.500/-0.100">Open Street</a> tile layer. This allows you to plot D3 objects with a dynamic and scalable map. The actual tile configurations are done in <code>rmvpp.js</code> and extend the <code>L.TileLayer</code> object to have properties matching the configuration in <code>InsightsConfig.MapTiles</code>. The Leaflet <a href="http://leafletjs.com/reference.html#tilelayer">tile layers</a> specifications at minimum must include a <code>url</code> and <code>attribution</code>. As such you can change <code>InsightsConfig</code> to choose which tile layer Leaflet will use as default. The <code>Default</code> map layer is selected using the <code>InsightsConifg.DefaultMapTile</code> property.</p>
+<h2 id="features"><span class="header-section-number">4.2</span> Features</h2>
+<p>Regional map features can be defined in Insights using <a href="https://github.com/topojson/topojson">TopoJSON</a> files. <code>InsightsConfig.MapFeatures</code> is an array of objects describing locations (<code>path</code>) of TopoJSON files and descriptive names (<code>name</code>). Plugins like the <a href="'/insights/docs/plugins/map-choropleth.html'">Choropleth</a> allow the user to choose these map files and include them on their maps. You can add more features by uploading a new TopoJSON and appending to <code>InsightsConfig.MapFeatures</code> in <code>customConfig.js</code>.</p>
+<h1 id="look-and-feel"><span class="header-section-number">5</span> Look and Feel</h1>
+<p>The most general way to modify the style of the application is to add a custom CSS file to each of the HTML pages:</p>
+<ul>
+<li><code>index.html</code>: Login page</li>
+<li><code>app/states/portal/index.html</code>: Portal page</li>
+<li><code>app/states/visBuilder/index.html</code>: Dashboard Builder</li>
+<li><code>app/states/view/index.html</code>: Dashboard Viewer</li>
+</ul>
+<p>Additionally, the app has been designed using Google's <a href="https://material.angularjs.org/latest/">Angular Material</a> library. This means that most of the app follows a defined theme. Customisations to the <a href="https://material.google.com/style/color.html#color-ui-color-palette">default themes</a> have been made at the top of <code>app/services/global.js</code>.</p>
+<blockquote>
+<p><strong>Note:</strong> The app has not been perfectly refactored to Material directives yet, so a combination of Material theme changes and an additional CSS file must be used to fully customise the colours.</p>
+</blockquote>
+<p><code>InsightsConfig.UI</code> contains some more options for modifying the UI. There is a <code>Buttons</code> object which contains properties for optionally hiding certain UI elements. The only option currently available is to remove the sign out button, for SSO enabled environments.</p>
+<h2 id="styling-the-documentation"><span class="header-section-number">5.1</span> Styling the Documentation</h2>
+<p>The last thing that needs updating are the stylesheets for the documentation. The documentation is split into general documents and the automatically generated API reference. These have their own stylesheets and both need to be updated.</p>
+<h3 id="styling-general-documents"><span class="header-section-number">5.1.1</span> Styling General Documents</h3>
+<p>An example CSS file is at <code>private-docs/styles/rm.css</code>. This can be used as a template when writing customisations but any new files <strong>must</strong> be saved in the same directory. To apply the modification, edit <code>private-docs/md_to_html.py</code> and uncomment lines 109 and 110. This should then read:</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">custom_css <span class="op">=</span> read_file(os.path.abspath(<span class="st">&quot;rm.css&quot;</span>))
+write_output(custom_css, <span class="st">'temp.css'</span>)</code></pre></div>
+<p>Make sure to replace <code>rm.css</code> with the name of your custom CSS file.</p>
+<h3 id="styling-the-api-reference"><span class="header-section-number">5.1.2</span> Styling the API Reference</h3>
+<p>An example CSS file is at <code>docs/api/styles/rm-doc.css</code>. This can be used as a template when writing customisations but any new files <strong>must</strong> be saved in the same directory. Modify <code>docs/api/scripts/mod_doc.py</code> and uncomment line 209:</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">head.insert(<span class="bu">len</span>(head), ET.XML(<span class="st">'&lt;link type=&quot;text/css&quot; rel=&quot;stylesheet&quot; href=&quot;styles/rm-doc.css&quot;/&gt;'</span>))</code></pre></div>
+<p>Make sure to replace <code>rm-doc.css</code> with the name of your custom CSS file.</p>
+<h1 id="numeric-to-double-conversion"><span class="header-section-number">6</span> Numeric To Double Conversion</h1>
+<p>Columns with a <code>NUMERIC</code> data types are automatically cast as <code>DOUBLE</code> to prevent a <a href="bugs/numeric-data-type.html">reporting bug</a>. This leaves reports potentially susceptible to rounding errors due to the <a href="https://docs.oracle.com/cd/E28280_01/bi.1111/e10540/data_types.htm#BIEMG4605">floating point limitation</a>. The behaviour is controlled by <code>InsightsConfig.NumericToDouble</code> and so can be turned off at such a time as Oracle repair the issue with the web service.</p>
+</div>
+</body>
+</html>

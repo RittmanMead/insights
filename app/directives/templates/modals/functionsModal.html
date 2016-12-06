@@ -1,0 +1,51 @@
+<div class="modal">
+	<div class="overlay" ng-click="cancel()"></div>
+	<div class="contents" style="width: 50%; left: 25%;">
+		<div class="header">Function Library</div>
+
+		<!-- Function selector  -->
+		<md-input-container md-theme="dark" style="width: calc(100% - 40px); text-align: left; font-size: 16px; margin-right: 0px;">
+			<label>Function Search</label>
+			<input class="md-primary md-hue-1" ng-model="search"></input>
+			<md-icon md-font-icon="fa-search" class="fa"></md-icon>
+		</md-input-container>
+		<!-- <input ng-model="search" style="margin-right: 5px; width: calc(100% - 40px);"></input><i class="fa fa-search nonSelect"></i> -->
+		<div class="dark">
+			<div class="fileExplorer">
+			    <ul style="margin-left: 5px; cursor: default;">
+			        <li ng-repeat="(K, V) in functions | filterFunctions:search">
+			            <i ng-show="!(functions[K].expand || search.length > 0)"class="fa fa-folder pointer" ng-click="expand(functions[K])"></i>
+			            <i ng-show="functions[K].expand || search.length > 0"class="fa fa-folder-open pointer" ng-click="expand(functions[K])"></i>
+			            <span class="label pointer" ng-click="expand(functions[K])">{{ K }}</span>
+			            <ul style="cursor: default;" ng-show="functions[K].expand || search.length > 0" class="collapsible">
+			                <li ng-repeat="(k, v) in functions[K] | filterFunctions:search" ng-if="k != 'expand'">
+			                    <span class="subLabel pointer" ng-class="functions[K][k].selected ? 'selected' : ''"
+			                          ng-click="select(functions[K][k])" ng-dblclick="accept()">{{ functions[K][k].Name }}</span>
+			                </li>
+			            </ul>
+			        </li>
+			    </ul>
+			</div>
+		</div>
+
+		<div ng-show="showDesc" class="selectable" style="font-size: 14px;">
+			<div style="font-weight: bold; margin-bottom: 5px; font-size: 16px;">{{ selected.Name }}</div>
+			<div>{{ selected.Desc }}</div>
+			<div class="field" style="margin-top: 5px;">
+				<span>Syntax</span>
+				<code>{{ selected.Syntax }}</code>
+			</div>
+			<div>{{ selected.SyntaxHelp }}</div>
+			<div class="field" style="margin-top: 5px;">
+				<span>Example</span>
+				<code>{{ selected.Example }}</code>
+			</div>
+		</div>
+
+		<!-- Controls -->
+		<div style="text-align: center;">
+			<mat-button type="accent" size="mini" icon="check" ng-click="accept()" label="Insert Function" label-pos="bottom"></mat-button>
+			<mat-button type="warn" size="mini" icon="remove" ng-click="cancel()" label="Cancel" label-pos="bottom"></mat-button>
+		</div>
+	</div>
+</div>

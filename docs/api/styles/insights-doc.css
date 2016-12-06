@@ -1,0 +1,497 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300&subset=latin);
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic&subset=latin,latin-ext);
+
+html
+{
+    overflow: auto;
+    background-color: #fff;
+    font-size: 14px;
+}
+
+body
+{
+    font-family: 'Source Sans Pro', 'Open Sans', Calibri, Helvetica, Arial, freesans, clean, sans-serif;
+    font-style: normal;
+    line-height: 1.5;
+    color: #000;
+    background-color: white;
+}
+
+a {
+  color: #5484F1;
+  text-decoration: none;
+  -webkit-transition: all 200ms ease-in;
+  -o-transition: all 200ms ease-in;
+  -moz-transition: all 200ms ease-in;
+  transition-property: color, font-size;
+}
+
+a:hover {
+	-webkit-transition: all 200ms ease-in;
+	-o-transition: all 200ms ease-in;
+	-moz-transition: all 200ms ease-in;
+    transition-property: color, font-size;
+	color: black;
+}
+
+nav a:hover {
+	color: white;
+	font-size: 120%;
+}
+
+.homeBtn {
+    float: right;
+    color: #E2E2E2;
+    font-size: 48px;
+    margin-top: 20px;
+    margin-right: 20px;
+}
+
+.homeBtn:hover {
+    color: #FFFFFF;
+}
+
+header
+{
+    display: block;
+    padding: 0px 4px;
+}
+
+tt, code, kbd, samp {
+    font-family: Consolas, Monaco, 'Andale Mono', monospace;
+}
+
+.class-description {
+    font-size: 130%;
+    line-height: 140%;
+    margin-bottom: 1em;
+    margin-top: 1em;
+}
+
+.class-description:empty {
+    margin: 0;
+}
+
+.header-banner {
+	box-shadow: 0px 0px 5px black;
+	background: #333439;
+	position: absolute;
+	width:100%;
+	height: 90px;
+	left: 0;
+	top: -10;
+}
+
+.header-banner>div, .header-banner h1 {
+	display: inline-block;
+}
+
+.logo {
+	float: right;
+}
+
+.logo img {
+	height: 90px;
+    float: right;
+    box-shadow: none;
+    margin: 0;
+}
+
+.page-title {
+	color: #FFF;
+	margin-left: 30px;
+	margin-top:11px;
+	font-size: 42px;
+	font-family: 'Open Sans';
+	font-weight: 300;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+#main {
+    left: 336px;
+    position: absolute;
+	width: calc(100% - 336px)
+}
+
+article dl {
+    margin-bottom: 40px;
+}
+
+section
+{
+    display: block;
+    background-color: #fff;
+    padding: 12px 24px;
+    margin-right: 30px;
+}
+
+section:first-of-type {
+    margin-top: 90px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: Open Sans, Helvetica, Arial;
+}
+
+hr {
+  clear: both;
+  margin: 15px 0;
+  height: 0px;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  border-bottom: 1px solid #333439;
+  padding: 0;
+}
+
+.variation {
+    display: none;
+}
+
+.signature-attributes {
+    font-size: 60%;
+    color: #aaa;
+    font-style: italic;
+    font-weight: lighter;
+}
+
+nav
+{
+	height: 100%;
+	width: 0px;
+	white-space: nowrap;
+	background: #333439;
+	float: left;
+	overflow: auto;
+	z-index: 1;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 336px;
+	color: white;
+	box-shadow: 0px 0px 5px black;
+}
+
+.navbar {
+	padding-left: 20px;
+    padding-top: 10px;
+}
+
+.navbar h2 {
+	margin: 10px;
+	margin-left: 0px;
+}
+
+.navbar h3 {
+	cursor: pointer;
+}
+
+h3 > .toggleList {
+	margin-left: 10px;
+    cursor: pointer;
+    color: #5484F1;
+}
+
+.navbar .search span{
+	color: white;
+	display: none;
+}
+
+.navbar .search input {
+	margin-left: 5px;
+	border: 1px solid #7E8391;
+	border-radius: 20px;
+	padding: 3px;
+	padding-left: 15px;
+	background-color: #2B2B2B;
+    color: white;
+    font-family: Open Sans;
+	width: 265px;
+}
+.navbar .search input:focus {
+	border-color: #7E8391;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(184, 197, 228, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(184, 197, 228, 0.6);
+}
+
+.content_button {
+	height: 30px;
+	width: 30px;
+	background: #333439;
+	top: 50%;
+	position: fixed;
+	left: 0;
+	border-top: 1px white solid;
+	border-bottom: 1px white solid;
+	border-radius: 0px 5px 5px 0px;
+}
+
+.content_button .chevron {
+	font-size: 20px;
+	color: white;
+	margin-left: 8px;
+}
+
+nav h2 a, nav h2 a:visited, nav h2 a:active, nav h2 a:hover {
+	color: white;
+	font-family: 'Open Sans';
+	font-weight: 300;
+	text-decoration: none;
+	font-size: 32px;
+}
+
+nav ul {
+    font-family: 'Lucida Grande', 'Lucida Sans Unicode', arial, sans-serif;
+    font-size: 100%;
+    line-height: 17px;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+nav ul a, nav ul a:visited, nav ul a:active {
+    font-family: Consolas, Monaco, 'Andale Mono', monospace;
+    line-height: 18px;
+    color: #FFFFFF;
+}
+
+nav h3 {
+    margin-top: 12px;
+	font-size: 28px;
+	font-weight: 300;
+}
+
+nav li {
+    margin-top: 6px;
+}
+
+footer {
+    display: none;
+    padding: 6px;
+    margin-top: 12px;
+    font-style: italic;
+    font-size: 90%;
+}
+
+h1, h2, h3, h4 {
+    font-weight: 200;
+    margin: 0;
+}
+
+h1
+{
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+    font-size: 48px;
+    letter-spacing: -2px;
+    margin: 12px 24px 20px;
+}
+
+h2, h3 {
+	font-size: 28px;
+    color: #333439;
+    letter-spacing: -1px;
+	font-weight: normal;
+}
+
+nav h2, nav h3 {
+	color: #FFFFFF;
+}
+
+h4
+{
+    font-size: 18px;
+    letter-spacing: -0.33px;
+    margin-bottom: 12px;
+	margin-top: 24px;
+    color: #000;
+}
+
+h5, .container-overview .subsection-title
+{
+    font-size: 120%;
+    font-weight: bold;
+    letter-spacing: -0.01em;
+    margin: 8px 0 3px 0;
+}
+
+h6
+{
+    font-size: 100%;
+    letter-spacing: -0.01em;
+    margin: 6px 0 3px 0;
+    font-style: italic;
+}
+
+.ancestors { color: #999; }
+.ancestors a
+{
+    color: #999 !important;
+    text-decoration: none;
+}
+
+.clear
+{
+    clear: both;
+}
+
+.important
+{
+    font-weight: bold;
+    color: #950B02;
+}
+
+.yes-def {
+    text-indent: -1000px;
+}
+
+.type-signature {
+    color: #5484F1;
+}
+
+.name, .signature {
+    font-family: Consolas, Monaco, 'Andale Mono', monospace;
+}
+
+.details { margin-top: 14px; border-left: 2px solid #DDD; }
+.details dt { width: 120px; float: left; padding-left: 10px;  padding-top: 6px; }
+.details dd { margin-left: 70px; }
+.details ul { margin: 0; }
+.details ul { list-style-type: none; }
+.details li { margin-left: 30px; padding-top: 6px; }
+.details pre.prettyprint { margin: 0 }
+.details .object-value { padding-top: 0; }
+
+.description {
+    margin-bottom: 1em;
+    margin-top: 1em;
+}
+
+.code-caption
+{
+    font-style: italic;
+    font-size: 107%;
+    margin: 0;
+}
+
+.prettyprint
+{
+    border: 1px solid #ddd;
+    width: 80%;
+    overflow: auto;
+}
+
+.prettyprint.source {
+    width: inherit;
+}
+
+.prettyprint code
+{
+    font-size: 100%;
+    line-height: 18px;
+    display: block;
+    margin: 0;
+    background-color: #fff;
+    color: #000;
+}
+
+pre.prettyprint>span.pln {
+	display: none;
+}
+
+.prettyprint code span.line
+{
+  display: inline-block;
+}
+
+.prettyprint.linenums
+{
+  padding-left: 70px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.prettyprint.linenums ol
+{
+  padding-left: 0;
+}
+
+.prettyprint.linenums li
+{
+  border-left: 3px #ddd solid;
+}
+
+.prettyprint.linenums li.selected,
+.prettyprint.linenums li.selected *
+{
+  background-color: lightyellow;
+}
+
+.prettyprint.linenums li *
+{
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+.params, .props
+{
+    border-spacing: 0;
+    border: 0;
+    border-collapse: collapse;
+}
+
+.params .name, .props .name, .name code {
+    color: #000;
+    font-family: Consolas, Monaco, 'Andale Mono', monospace;
+    font-size: 100%;
+}
+
+.params td, .params th, .props td, .props th
+{
+    border: 1px solid #ccc;
+    margin: 0px;
+    text-align: left;
+    vertical-align: top;
+    padding: 4px 6px;
+    display: table-cell;
+}
+
+.params thead tr, .props thead tr
+{
+    background-color: #F5F5F5;
+    font-weight: bold;
+}
+
+.params .params thead tr, .props .props thead tr
+{
+    background-color: #fff;
+    font-weight: bold;
+}
+
+.params td.description > p:first-child,
+.props td.description > p:first-child
+{
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.params td.description > p:last-child,
+.props td.description > p:last-child
+{
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.disabled {
+    color: #454545;
+}
+
+table {
+	font-size: 14px;
+}

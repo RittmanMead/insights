@@ -1,0 +1,56 @@
+<div class="webcat modal">
+	<div class="overlay" ng-click="cancel()"></div>
+	<div class="contents" style="width: 60%; left: 20%; font-size: 14px;">
+		<div class="header">Edit Permissions</div>
+		<md-content md-theme="dark">
+			<md-input-container >
+				<label>Catalogue Item</label>
+				<input disabled value="{{ filename() }}"></input>
+			</md-input-container>
+			<section layout="row">
+				<div flex="70">
+					<div class="dark" style="max-height: 250px; overflow: auto;">
+						<table class="editPerms" style="width: 100%;">
+							<tr>
+								<th><span>Application Role</span></th>
+								<th><mat-button flat size="mini" icon="eye" label="Read" label-pos="bottom"></mat-button></th>
+								<th><mat-button flat size="mini" icon="pencil" label="Write" label-pos="bottom"></mat-button></th>
+								<th><mat-button flat size="mini" icon="times" label="Delete" label-pos="bottom"></mat-button></th>
+								<th><mat-button flat size="mini" icon="key" label="Change Permissions" label-pos="bottom"></mat-button></th>
+								<th></th>
+							</tr>
+							<tr ng-repeat="acl in acls">
+								<td style="text-align: left;">{{ acl.displayName }}</td>
+								<td><md-checkbox aria-label="Read" class="md-primary" ng-model="acl.perms.read"></md-checkbox></td>
+								<td><md-checkbox aria-label="Write" class="md-primary" ng-model="acl.perms.write"></md-checkbox></td>
+								<td><md-checkbox aria-label="Delete" class="md-primary" ng-model="acl.perms.delete"></md-checkbox></td>
+								<td><md-checkbox aria-label="Change Permissions" class="md-primary" ng-model="acl.perms.changePerms" ng-change="toggleAll(acl)"></md-checkbox></td>
+								<td>
+									<mat-button type="warn" colour="#E53935" flat size="mini" icon="times" label="Remove" ng-click="remove(acl)"></mat-button>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div flex="30" class="appRolePicker">
+					<md-input-container >
+						<label>Search Roles</label>
+						<input ng-model="appRoleSearch"></input>
+						<md-icon md-font-icon="fa-search" class="fa"></md-icon>
+					</md-input-container>
+					<div class="dark" style="padding: 5px; margin: 10px;">
+						<div selection-model ng-dblclick="addRole(appRole)" ng-if="checkInACL(appRole)"
+							 ng-repeat="appRole in appRoles | filter:appRoleSearch" class="item">
+							{{ appRole.displayName }}
+						</div>
+					</div>
+				</div>
+			</section>
+		</md-content>
+
+		<div style="text-align: center;">
+			<mat-button size="mini" type="accent" icon="check" ng-click="accept()" label="Accept Changes" label-pos="bottom"></mat-button>
+			<mat-button size="mini" type="warn" icon="remove" ng-click="cancel()" label="Cancel Changes" label-pos="bottom"></mat-button>
+		</div>
+	</div>
+</div>

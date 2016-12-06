@@ -1,0 +1,1477 @@
+body, html {
+	height: 100%;
+	background: white;
+}
+
+:focus {
+	outline: none;
+}
+
+/* General UI styling */
+body, select, input, input.md-input, textarea, .md-chips {
+	font-family: 'Open Sans', Avenir, Calibri, Helvetica, Arial, sans-serif;
+}
+
+body, select {
+	color: #000000;
+	margin: 0;
+}
+
+input, select, textarea, .inputBox, tags-input .tags {
+	border-radius: 5px;
+	border: 1px solid #CCC;
+	padding: 4px;
+}
+
+.pointer {
+	cursor: pointer;
+}
+
+/* Input tags */
+tags-input .tags .tag-item {
+	background: #5484F1;
+}
+
+i.headerIcon {
+	font-size: 30px;
+	margin-top: 5px;
+	margin-bottom: 15px;
+	text-align: center;
+	margin-left: 16px;
+    margin-right: 10px;
+}
+
+md-list-item {
+	font-size: 14px;
+}
+
+md-icon[md-font-icon] {
+	line-height: 22px;
+}
+
+.md-mini-x md-icon[md-font-icon] {
+	line-height: 18px;
+}
+
+.md-button.md-fab.md-mini-x {
+    line-height: 35px;
+    width: 35px;
+    height: 35px;
+}
+
+
+
+.modal .md-errors-spacer {
+	display: none;
+}
+
+.modalSection {
+	border-right: 1px solid #CCC;
+}
+
+.modalSection > div {
+	max-height: 400px;
+	overflow: auto;
+}
+
+.textOverflow {
+	text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden
+}
+
+.modal .md-color-picker-input-container md-input-container {
+	margin: 0px;
+}
+
+.modal [md-color-picker] .md-color-picker-input-container .md-color-picker-preview {
+	top: 3px;
+}
+
+.md-button.md-fab {
+	z-index: 1;
+}
+
+body md-input-container {
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+i.input-icon {
+	font-size: 16px;
+	vertical-align: middle;
+	line-height: 28px;
+	margin-left: 5px;
+}
+
+/* Panel styling when the left pane is fixed to 220 pixels*/
+.topPane.fixed {
+	width: calc(100% - 60px);
+	left: 60px;
+	transition: all 0.2s linear;
+	transition-property: width, left;
+}
+
+.topPane mat-button {
+	margin-top: 3px;
+}
+
+.topPane.fixed.showLeft {
+	width: calc(100% - 220px);
+	left: 220px;
+	transition: all 0.2s linear;
+	transition-property: width, left;
+}
+
+.mainContent.fixed {
+	margin-left: 60px;
+	transition: margin-left 0.2s linear;
+}
+
+.mainContent.fixed.showLeft {
+	margin-left: 220px;
+	transition: margin-left 0.2s linear;
+}
+
+.leftPane.fixed.showLeft { width: 220px; transition: width 0.2s linear; }
+.leftPane.fixed {
+	overflow: hidden;
+	width: 60px;
+	transition: width 0.2s linear;
+}
+
+.leftPane .toggle {
+	padding: 20px;
+	text-align: center;
+	cursor: pointer;
+	transition: background 0.2s linear;
+	margin-top: -20px;
+}
+
+.leftPane .toggle:hover {
+	background: #5484F1;
+	transition: background 0.2s linear;
+}
+
+.leftPane .expandBtn {
+	text-align: center;
+	cursor: pointer;
+	bottom: 10px;
+	position: absolute;
+}
+
+.leftPane .pageList {
+	font-size: 14px;
+	height: calc(100% - 102px);
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.leftPane .pageList>div {
+	padding-left: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+	cursor: pointer;
+	transition: all 0.2s linear;
+	transition-property: background, color;
+}
+
+.leftPane .pageList>div:hover {
+	color: #E2E2E2;
+	background: #5484F1;
+	transition: all 0.2s linear;
+	transition-property: background, color;
+}
+
+.pageList i {
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.darkBg {
+	background: #2B2B2B;
+}
+
+.dark {
+	border: 0px solid #7E8391;
+	background-color: #2B2B2B;
+	border-radius: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.editPerms {
+	padding: 10px;
+}
+
+.editPerms td {
+	text-align: center;
+}
+
+.editPerms md-checkbox {
+	margin: 0px;
+	margin-left: 8px;
+}
+
+.appRolePicker .item {
+	padding-left: 5px;
+	padding-top: 3px;
+	cursor: pointer;
+}
+
+.appRolePicker .selected {
+	background: #5484F1;
+}
+
+.iconPicker {
+	font-size: 48px;
+	overflow: auto;
+	max-height: 300px;
+	border-radius: 15px;
+}
+
+.iconPicker i {
+	padding: 15px;
+	border-radius: 5px;
+	transition: all 0.2s linear;
+}
+
+.iconPicker i:hover:not(.selected) {
+	background: #5484F1;
+	transition: all 0.2s linear;
+}
+
+.iconPicker i.selected {
+	color: #5484F1;
+}
+
+select {
+	padding: 3px;
+	cursor: pointer;
+}
+
+input, span, td {
+	vertical-align: inherit;
+}
+
+.parameterList input, .parameterList md-select ._md-text {
+	vertical-align: middle;
+	font-size: 14px;
+}
+
+.parameterList label {
+	font-size: 14px;
+}
+
+.parameterList md-input-container {
+	margin-bottom: 0px;
+}
+
+.nonSelect {
+	-webkit-user-select: none; /* Chrome/Safari */
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+ */
+}
+
+.selectable {
+	-webkit-user-select: initial; /* Chrome/Safari */
+	-moz-user-select: initial; /* Firefox */
+	-ms-user-select: initial; /* IE10+ */
+}
+
+.button, i.fa {
+	cursor: pointer;
+	-webkit-user-select: none; /* Chrome/Safari */
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+ */
+}
+
+.button > i {
+	margin-right: 5px;
+}
+
+/* Login page */
+.login table {
+	margin: 0 auto;
+	text-align: left;
+}
+
+.login table span {
+	margin-right: 20px;
+}
+
+.login #loginBtn {
+	margin-top: 20px;
+	font-size: 32px;
+	cursor: pointer;
+}
+
+.login img.logo {
+	padding-right: 5px;
+	background-repeat: no-repeat;
+	background-size: 64px;
+}
+
+.login {
+	font-size: 16px;
+}
+
+html.login, html.portal, body.login, body.portal {
+	background: #2B2B2B;
+	color: #E2E2E2;
+	text-align: center;
+}
+
+/* URL CSS for IE and Chrome */
+.login img.logo {
+	height: 60px;
+}
+
+.login .header {
+	height: 90px;
+	padding: 0px;
+	background: #333439;
+	color: white;
+	font-weight: 300;
+	font-size:42px;
+	margin-bottom: 10px;
+	font-family: 'Open Sans', 'Arial';
+}
+
+.login .title {
+	padding-top: 20px;
+}
+
+.login .form {
+	margin-top: 20px;
+	display: inline-block;
+	padding: 40px 30px 20px 30px;
+	border-radius: 10px;
+	background-color: #333439;
+}
+
+.portal .links {
+	margin-top: 10px;
+}
+
+.portal .links i {
+	font-size: 36px;
+	padding: 20px;
+	border: 1px solid;
+	border-radius: 15px;
+	margin-left: 10px;
+	margin-right: 10px;
+	transition: all 0.2s linear;
+}
+
+.portal .links i:hover {
+	background: #0B93E0;
+	color: #2B2B2B;
+	transition: all 0.2s linear;
+}
+
+.portal .desc {
+	color: white;
+	opacity: 0;
+	margin-top: 10px;
+	min-height: 22px;
+	font-size: 16px;
+	transition: opacity 0.2s linear;
+}
+
+.portal .desc.show {
+	opacity: 1;
+	transition: opacity 0.2s linear;
+}
+
+.portal .search {
+	margin-top: 10px;
+}
+
+.portal .search>input {
+	width: 50%;
+}
+
+.portal .search .md-errors-spacer {
+	display: none;
+}
+
+.dbPicker {
+	max-height: 400px;
+	overflow: auto;
+	width: 90%;
+	margin: 0 auto;
+	margin-top: 20px;
+	padding-top: 15px;
+	padding-bottom: 15px
+}
+
+.dbPicker i {
+	font-size: 48px;
+	border-radius: 15px;
+}
+
+.dbPicker .dbdesc {
+	font-size: 18px;
+	font-weight: 300;
+}
+
+.dbPicker .container {
+	display: inline-block;
+	border-radius: 15px;
+	padding: 15px;
+	cursor: pointer;
+	transition: all 0.2s linear;
+	color: #DDDDDD;
+}
+
+.dbPicker .container:hover {
+	color: #FFFFFF;
+	background: #0B93E0;
+	transition: all 0.2s linear;
+}
+
+/* Top UI panel */
+.topPane {
+	position: fixed;
+    top: 0px;
+	border-bottom: 1px solid #CCC;
+    width: 100%;
+	height: 60px;
+    box-shadow: 3px 3px 5px #CCC;
+    z-index: 4;
+    background: white;
+	overflow-x: auto;
+	overflow-y: hidden;
+	white-space: nowrap;
+	font-size: 30px;
+	-webkit-user-select: none; /* Chrome/Safari */
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+ */
+}
+
+.topPane .options .tab {
+	border-right: 1px solid #666;
+	padding-right: 5px;
+	margin-right: 5px;
+}
+
+.topPane .options span {
+	cursor: pointer;
+}
+
+.topPane .options {
+	text-align: center;
+}
+
+.topPane, .leftPane, .rightPane {
+	background: #333439;
+	color: #FFFFFF;
+}
+
+.rightPane button.md-secondary {
+	margin: 0px;
+	padding: 0px;
+	height: 20px;
+	width: 30px;
+}
+
+.visList .visBtn {
+	display: inline-block;
+	background: #333439;
+}
+
+.dbTitle {
+	font-size: 16px;
+    font-weight: bold;
+    color: white;
+	vertical-align: middle;
+	line-height: 60px
+}
+
+.topBtn {
+	margin-left: 8px;
+}
+
+/* Add to any containers which contain draggable items */
+.scrollContainer {
+	overflow: auto;
+}
+
+/* Left UI Panel */
+.leftPane {
+	position: fixed;
+    left: 0px;
+    top: 0px;
+	height: 100%;
+	white-space: nowrap;
+	border-right: solid 1px #CCC;
+    box-shadow: 3px 0px 3px #CCC;
+    z-index: 3;
+}
+
+/* Right UI Panel */
+.rightPane {
+	position: fixed;
+    top: 60px;
+    height: calc(100% - 60px);
+    white-space: nowrap;
+    border-right: solid 1px #CCC;
+    box-shadow: -3px 3px 3px #CCC;
+    z-index: 5;
+	-webkit-user-select: none; /* Chrome/Safari */
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+ */
+}
+
+.rightPane md-list-item ._md-no-style.md-button {
+	white-space: nowrap;
+}
+
+.edit md-radio-button ._md-label {
+	white-space: nowrap;
+}
+
+md-checkbox.lowerLabel ._md-label {
+	margin-top: 14px;
+}
+
+md-select-menu md-option {
+	max-height: 36px;
+	min-height: 36px;
+}
+
+md-select-menu md-option > ._md-text {
+	font-size: 14px;
+}
+
+.rightLabel {
+	font-size: 24px;
+    text-align: center;
+}
+
+.rightLabel>span {
+	font-weight: 300;
+	cursor: default;
+}
+
+.visList {
+	margin-top: 5px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.visList .colourpicker {
+	text-align: center;
+    width: calc(100% - 30px);
+}
+
+.visList > div {
+	font-size: 14px;
+	padding-left: 15px;
+	margin-bottom: 5px;
+}
+
+.visList .visBtn {
+	padding: 5px;
+    border-radius: 15px;
+}
+
+.dragVis {
+	cursor: pointer;
+	background: #333439;
+}
+
+.visBuilder .visList > div.selected {
+	border: 1px solid;
+	border-radius: 3px;
+	overflow: hidden;
+}
+
+.subjectAreaContainer ul {
+	list-style-type: none;
+	padding-left: 20px;
+}
+
+/* Make text unselectable */
+.subjectAreaContainer ul, .header, .collabel {
+	-webkit-user-select: none; /* Chrome/Safari */
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+ */
+}
+
+.pres-table-container {
+	margin-right: 7px;
+	max-height: 100%;
+	direction: rtl;
+	margin-top: 10px;
+}
+
+/* Fix for prseentation table container in the column selector edit modal in IE11 Only*/
+.modal .pres-table-container.flex {
+	flex: none;
+	-ms-flex: none;
+	-webkit-flex: none;
+}
+
+.pres-table-container .expandList {
+	padding-left: 5px;
+	padding-right: 5px;
+	color: #CCC;
+}
+
+.pres-table-container .parent {
+	margin-left: 20px;
+}
+
+.pres-table-container .pres-col {
+	background: #333439;
+	margin-left: 20px;
+	padding: 3px;
+	padding-left: 5px;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+.pres-table-container .pres-col .label {
+	display: inline-block;
+	font-size: 14px;
+    width: calc(100% - 25px);
+	overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pres-table-container .pres-table {
+	background: #333439;
+	cursor: pointer;
+	padding: 6px 3px;
+	transition: all 0.5s ease-out;
+}
+
+.pres-table-container .pres-table:hover {
+	background: rgba(255,255,255, 0.15);
+	transition: all 0.5s ease-out;
+}
+
+.pres-table-container .pres-col .fa-filter {
+	float: right;
+    margin-right: 5px;
+    margin-top: 3px;
+	color: #CCCCCC;
+	transition: color 0.4s ease-out;
+}
+
+.pres-table-container .pres-col .fa-filter:hover {
+	color: rgba(255,255,255, 0.15);
+	transition: color 0.4s ease-out;
+}
+
+.subject-area {
+	padding: 0 10px;
+}
+
+.subject-area .fa {
+	cursor: default;
+}
+
+/* Allows resize handler to operate properly */
+.leftPane .subjectAreaContainer {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+.subjectAreaContainer .search {
+	overflow: hidden;
+}
+
+.subjectAreaContainer .search .md-errors-spacer {
+	display: none;
+}
+
+.subjectAreaContainer .search md-input-container {
+	margin-bottom: 0px;
+	width: calc(100% - 50px);
+}
+
+.subjectAreaContainer .search>i {
+	cursor: default;
+}
+
+/* Main Content */
+.mainContent {
+	color: #333439;
+	background: #FFFFFF;
+    padding-top: 60px;
+	/*position: relative;*/
+}
+
+/* Ensures visualisation containers aren't wider than their contents */
+.visContainer {
+	display: inline-block;
+	white-space: nowrap;
+}
+
+.visualisation.highlight {
+	border: 1px dotted #AAAAAA;
+	border-radius: 5px;
+}
+
+/* Dashboard container doesn't need a height or width */
+.dashboard {
+	height: 0px;
+	width: 0px;
+}
+
+.visualisation {
+	font-size: 14px;
+}
+
+.visualisation, .selector {
+	position: absolute;
+	z-index: 0;
+}
+
+.dbObject {
+	background: white;
+	border: 1px solid #CCCCCC;
+	border-radius: 5px;
+}
+
+.dbLayout .selector .remove {
+	float: right;
+	position: relative;
+	margin-left: 0px;
+}
+
+.dbLayout .remove {
+	position: absolute;
+	margin-left: -40px;
+	margin-top: -35px;
+}
+
+.breadcrumb {
+	cursor: pointer;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.dbLayout .edit {
+	border: 1px dotted #5484F1;
+    border-radius: 5px;
+	cursor: move;
+}
+
+.dbLayout .edit.visualisation *:not(.ui-resizable-handle),
+.dbLayout .edit.selector>*:not(.remove),
+.dbLayout .edit.biPrompt .filterButton,
+.dbLayout .edit.biPrompt .ist-multiSelect
+{
+	pointer-events: none;
+}
+
+/* Design CSS */
+
+.tabset {
+	text-align: center;
+}
+
+.tab {
+	cursor: pointer;
+	outline: none;
+	font-size: 14px;
+}
+
+.tab.selected {
+	cursor: default;
+	font-weight: bold;
+	color: #5484F1;
+}
+
+/* Interactions panel styling */
+.interactions {
+	max-height: 400px;
+    overflow-y: auto;
+}
+
+.interactions .source, .interactions .target {
+	display: inline-block;
+	vertical-align: top;
+	margin-right: 30px;
+}
+
+.interactions .options, .interactions .desc {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.interactions .set{
+	margin-bottom: 5px;
+}
+
+.checkLabel {
+	margin-left: 5px;
+}
+
+.filters table td {
+	padding: 5px;
+	font-size: 14px;
+}
+
+.filters table {
+	width: 100%;
+}
+
+.filters md-input-container {
+	width: 100%;
+	margin: 0px;
+}
+
+.filters md-input-container .md-errors-spacer {
+	display: none;
+}
+
+.filters .buttons {
+	text-align: right;
+}
+
+.filters .buttons .fa {
+	cursor: pointer;
+	font-size: 20px;
+	padding: 8px;
+	margin: 0px 6px;
+}
+
+.filters md-datepicker {
+	margin-top: -10px;
+	display: block;
+}
+
+.filters md-datepicker button.md-datepicker-button {
+	margin-left: 0px;
+	padding-left: 0px;
+}
+
+.filters md-datepicker div {
+	width: calc(100% - 40px);
+    margin-left: 0px;
+}
+
+.selectSelectHeader .header-searchbox {
+	border: none;
+	outline: none;
+	height: 100%;
+	width: 100%;
+	padding: 0;
+}
+
+.selectSelectHeader .select-header {
+	box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.1), 0 0 0 0 rgba(0, 0, 0, 0.14), 0 0 0 0 rgba(0, 0, 0, 0.12);
+	padding-left: 10.667px;
+	height: 48px;
+	cursor: pointer;
+	position: relative;
+	display: flex;
+	align-items: center;
+	width: auto;
+}
+
+.selectSelectHeader md-content._md {
+	max-height: 240px;
+}
+
+/* Prompt styling */
+.biPrompt {
+	position: absolute;
+	font-size: 14px;
+    padding: 5px;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+	background: white;
+	z-index: 1;
+}
+
+.biPrompt md-list-item > ._md-list-item-inner {
+	width: 384px;
+}
+
+.biPrompt md-checkbox ._md-label span.ng-binding {
+	white-space: nowrap;
+}
+
+.biPrompt md-select {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+.biPrompt .picklist {
+	margin-left: 27px;
+}
+
+.biPrompt md-datepicker .md-datepicker-input-container {
+	padding: 0px;
+	margin-top: 7px;
+}
+
+.biPrompt md-datepicker .md-datepicker-triangle-button {
+	margin-top: 7px;
+}
+
+.biPrompt .numbox {
+	margin: 0px;
+	margin-left: 12px;
+	max-width: 60%;
+}
+
+.biPrompt .numbox .md-errors-spacer {
+	display: none;
+}
+
+.biFilter .ist-multiSelect {
+	width: 250px;
+}
+
+.biFilter .multiSelect > button {
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.multiSelect .multiSelectItem:hover,
+.multiSelect .multiSelectGroup:hover {
+    border: 1px solid #333439 !important;
+    background: rgb(201, 220, 230) !important;
+	background-image: none;
+	color: #000;
+}
+
+.multiSelect .multiSelectItem:not(.multiSelectGroup).selected
+{
+	background: #333439 !important;
+	color: #ffffff;
+}
+
+.multiSelect .multiSelectItem:not(.multiSelectGroup).selected:hover
+{
+	color: #ffffff !important;
+}
+
+.biFilter .datePicker {
+	width: 249px;
+    border-radius: 15px;
+    text-align: center;
+    border: 1px solid #CCC;
+    padding: 5px 0px 5px 0px;
+    cursor: pointer;
+}
+
+.biFilter .numBox {
+	width: 240px;
+    border-radius: 15px;
+	text-align: center;
+	outline: 0;
+}
+
+.filterButton {
+    color: #333;
+	background-color: #EEE;
+    border-radius: 5px;
+    padding: 5px;
+	cursor: pointer;
+	border: 1px solid #CCCCCC;
+	transition: all 0.2s ease-out;
+	transition-property: background-color, border-color, color;
+}
+
+.filterButton > div {
+	min-height: 25px;
+	overflow: hidden;
+	white-space: nowrap;
+    width: 316px;
+}
+
+.filterButton .desc {
+	display: none;
+}
+
+.filterButton:hover {
+	background-color: #333439;
+	color: #FFFFFF;
+	border-color: #333439;
+	transition: all 0.2s ease-in;
+	transition-property: background-color, border-color, color;
+}
+
+.defaultValues {
+	max-height: 250px;
+	overflow: auto;
+}
+
+.singleVis {
+	padding-top: 10px;
+	padding-left: 10px;
+}
+
+.error {
+	color: #FF4C41;
+}
+
+.pageText {
+	text-align: center;
+	margin-top: 80px;
+	font-size: 16px;
+}
+
+.success {
+	color: #11D243;
+}
+
+.statusMsg {
+	font-size: 16px;
+}
+
+/* Modal dialogue styling */
+.overlay {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width:100%;
+	height:100%;
+	text-align:center;
+	background-color: black;
+	opacity: 0.75;
+	z-index: 100;
+}
+
+.mask.overlay {
+	z-index: 1000;
+}
+
+/* Loading screen takes precedence from mask */
+.loading * {
+	z-index: 1001;
+}
+
+.loading .contents {
+    position: fixed;
+	text-align: center;
+    color: white;
+    top: 40%;
+    left: 20%;
+    width: 60%;
+}
+
+/* CSS loading animation */
+.loading .spinner {
+  margin: 0px auto 0;
+  width: 70px;
+  text-align: center;
+  color: white;
+}
+
+.loading .spinner > div {
+  width: 18px;
+  height: 18px;
+  background-color: #FFFFFF;
+  border-radius: 100%;
+  display: inline-block;
+  -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+  animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+}
+
+.loading .spinner .bounce1 {
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+
+.loading .spinner .bounce2 {
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+
+@-webkit-keyframes sk-bouncedelay {
+  0%, 80%, 100% { -webkit-transform: scale(0) }
+  40% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes sk-bouncedelay {
+  0%, 80%, 100% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  } 40% {
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+  }
+}
+
+.loading .text {
+	font-size: 24px;
+	font-family: Open Sans;
+	font-weight: 300;
+}
+
+/* Animations */
+.modal.ng-enter, .loading.ng-hide-remove {
+	transition: opacity 0.25s ease-out;
+	opacity: 0;
+	z-index: 1001;
+	position: relative;
+}
+.modal.ng-enter.ng-enter-active, .loading.ng-hide-remove-active {
+	opacity: 1;
+}
+
+.modal.ng-leave, .loading.ng-hide-add {
+	transition: opacity 0.25s ease-out;
+	opacity: 1;
+	z-index: 1001;
+	position: relative;
+}
+.modal.ng-leave.ng-leave-active, .loading.ng-hide-add-active {
+	opacity: 0;
+}
+
+.modal .contents {
+    z-index: 100;
+    position: fixed;
+    background: white;
+    top: 10%;
+    left: 20%;
+    width: 60%;
+    padding: 20px;
+    border-radius: 5px;
+	-webkit-user-select: none; /* Chrome/Safari */
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+ */
+	background: #333439;
+    box-shadow: 3px 3px 5px #2B2B2B;
+	color: #ffffff;
+}
+
+.md-dialog-container, div._md-select-menu-container {
+	z-index: 105;
+}
+
+.fileExplorer i.fa-folder, .fileExplorer i.fa-folder-open {
+	color: rgb(228, 195, 30);
+}
+
+.modal .closeBtn {
+    display: block;
+    font-size: 24px;
+	display: block;
+    font-size: 20px;
+    margin-top: -15px;
+    margin-right: -10px;
+    text-align: right;
+	color: #FFFFFF;
+}
+
+.modal .inputBox {
+	border-radius: 5px;
+	padding-left: 5px;
+}
+
+/* Visualisation Options */
+.header  {
+    font-size:24px;
+	font-weight: 300;
+    padding-bottom: 10px;
+	padding-top: 5px;
+	cursor: default;
+}
+
+.subHeading {
+	text-align: center;
+	font-size: 20px;
+}
+
+input.colourpicker {
+	border: 1px solid;
+	width:70px;
+	height:20px;
+	border-right:20px solid;
+	line-height:20px;
+}
+
+.mainPanel {
+	border-bottom: 1px solid #CCCCCC;
+    padding: 10px;
+	overflow-y: auto;
+	max-height: 400px;
+}
+
+.code {
+	font-family: Consolas, Courier New;
+	font-size: 14px;
+}
+
+.newColumn .code {
+	width: 190%;
+	margin-top: 5px;
+}
+
+.field {
+	margin-bottom: 5px;
+}
+
+.field>span:first-child, .field > .label {
+	display: inline-block;
+    width: 100px;
+	font-weight: bold;
+}
+
+.modal .field>span {
+	font-weight: bold;
+}
+
+.parameterList {
+	position: relative;
+	vertical-align: top;
+	display: block;
+	padding-right: 10px;
+}
+
+.parameterList ul {
+	padding-left: 0px;
+}
+
+.parameterList li {
+	display: block;
+	margin-bottom: 5px;
+
+}
+
+.parameterList .collabel, .parameterList .colvalue {
+	margin-right: 5px;
+	vertical-align: middle;
+	display: inline-block;
+	min-width: 100px;
+	cursor: default;
+}
+
+.parameterList .configValue {
+	width: 135px;
+}
+
+.parameterList .required {
+	color: #FF4C41;
+	vertical-align: top;
+}
+
+.parameterList .colvalue {
+    display: inline-block;
+    min-width: 120px;
+    min-height: 14px;
+    padding: 4px;
+    border-radius: 5px;
+	border: 0px;
+	background: #333439;
+	text-align: center;
+	color: white;
+}
+
+.parameterList .empty {
+	border: 1px dashed #B7B7B7;
+	background: white;
+}
+
+.parameterList .dropTarget {
+	background: #333439;
+}
+
+.dropTarget {
+	background: #333439;
+	color: white;
+}
+
+/* Shuttle selector formatting */
+
+.shuttle .selected, .fileExplorer .selected {
+	padding-left: 5px;
+	background: #3C75CA;
+    color: white;
+}
+
+.shuttle .panel {
+	/*width: calc(50% - 50px);*/
+    display: inline-block;
+	height: 200px;
+    overflow-y: auto;
+	-webkit-user-select: none; /* Chrome/Safari */
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+ */
+}
+
+.mapPicker .shuttle .panel {
+	height: 300px;
+	width: 200px;
+	white-space: nowrap;
+	text-align: left;
+}
+
+.mapPicker .panel.mapPreview {
+	width: calc(100% - 250px);
+	height: 300px;
+}
+
+.shuttle ul {
+	padding-left: 5px;
+	font-size: 14px;
+	margin-top: 0px;
+}
+
+.shuttle ul li {
+	cursor: pointer;
+	padding: 4px;
+	margin-left: -5px;
+}
+
+.shuttle .controls {
+	display: inline-block;
+	font-size: 20px;
+	vertical-align: top;
+	margin-top: 65px;
+	padding: 5px;
+}
+
+.shuttle .controls i {
+	display: block;
+}
+
+.shuttle .controls i:hover {
+	color: #5484F1;
+}
+
+/* Webcat explorer formatting */
+
+.fileExplorer {
+	width: 95%;
+    height: 200px;
+    margin-top: 5px;
+	overflow-y: auto;
+	font-size: 14px;
+	-webkit-user-select: none; /* Chrome/Safari */
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+ */
+}
+
+.fileExplorer ul {
+	cursor: pointer;
+	margin: 0px;
+	padding: 0px;
+}
+
+.fileExplorer ul>li>div {
+	display: inline-block;
+}
+
+.fileExplorer ul>li>div.right {
+	float: right;
+	padding-right: 5px;
+}
+
+.fileExplorer .subLabel {
+	margin-left: 25px;
+	padding-right: 5px;
+    border-radius: 3px
+}
+
+.dropTarget {
+	background: #333439;
+	transition: background 0.2s ease-in;
+}
+
+.rotateImg {
+    position: absolute;
+    margin:0px 0 0 0px;
+    -webkit-animation:spin 1s linear infinite;
+    -moz-animation:spin 1s linear infinite;
+    animation:spin 1s linear infinite;
+}
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+
+.canvas-container {
+	z-index: 2;
+}
+
+.designer md-input-container {
+	margin-bottom: 5px;
+}
+
+.designer md-input-container .md-errors-spacer{
+	display: none;
+}
+
+.visList.designer>div {
+	padding-left: 2px;
+}
+
+.visListButton ._md-subheader-content {
+	margin-top: -3px;
+}
+
+.designer input.font {
+	width: 80px;
+}
+
+.designer input.fontSize {
+	width: 30px;
+}
+
+.resizable-helper {
+	border: 1px solid #666666;
+	background: #CCCCCC;
+	opacity: 0.6;
+}
+
+/** Google Fonts */
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url(/insights/fonts/OpenSans-latin-ext-400.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url(/insights/fonts/OpenSans-latin-400.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Open Sans Light'), local('OpenSans-Light'), url(/insights/fonts/OpenSans-latin-ext-300.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Open Sans Light'), local('OpenSans-Light'), url(/insights/fonts/OpenSans-latin-300.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Open Sans Bold'), local('OpenSans-Bold'), url(/insights/fonts/OpenSans-latin-ext-700.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Open Sans Bold'), local('OpenSans-Bold'), url(/insights/fonts/OpenSans-latin-700.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}

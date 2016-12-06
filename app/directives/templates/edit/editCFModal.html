@@ -1,0 +1,58 @@
+<div class="modal">
+	<div class="overlay" ng-click="cancel()"></div>
+	<div class="contents" ng-style="{ width: width + '%', left: ((100-width)/2)+'%' }">
+		<div class="header">Conditional Format</div>
+		<md-content md-theme="dark" layout="column">
+			<md-input-container>
+				<label>Target Column</label>
+				<md-select ng-model="edit.TargetID" ng-change="checkIcon()">
+					<md-optgroup ng-repeat="(key, value) in targetCols" label="{{key}}">
+						<md-option ng-value="col.id" ng-repeat="col in value">{{ col.name }}</md-option>
+					</md-optgroup>
+				</md-select>
+			</md-input-container>
+			<section layout="row">
+				<md-input-container flex="40">
+					<label>Rule Column</label>
+					<md-select ng-model="edit.SourceID">
+						<md-option ng-value="col.id" ng-repeat="col in allCols">{{ col.name }}</md-option>
+					</md-select>
+				</md-input-container>
+				<md-input-container flex="20">
+					<label>Operator</label>
+					<md-select ng-model="edit.Operator" ng-change="opChange()">
+						<md-option ng-value="op.id" ng-repeat="op in operators">{{ op.name }}</md-option>
+					</md-select>
+				</md-input-container>
+				<md-input-container flex="40">
+					<label>Value</label>
+					<input ng-disabled="noValue" ng-model="edit.Value"></input>
+				</md-input-container>
+			</section>
+			<section layout="row">
+				<div md-color-picker
+					ng-model="edit.Style.colour"
+					label="Colour"
+					open-on-input="true"
+					md-color-material-palette="false"
+					md-color-generic-palette="true"
+					md-color-history="false"
+					md-color-rgb="false"
+					md-color-hsl="false"
+					md-color-clear-button="false"
+					style="margin-top: 18px; margin-left: 10px;"
+					flex="50"
+				></div>
+				<div icon-picker ng-show="showIcon" value="edit.Style.icon" label="iconLabel" flex="50"></div>
+			</section>
+		</md-content>
+
+		<div ng-show="error" class="error" style="margin-left: 10px; margin-right: 10px;">
+			<div ng-bind="error"></div>
+		</div>
+		<div style="text-align: center;">
+			<mat-button size="mini" type="accent" icon="check" ng-click="accept()" label="Accept Changes" label-pos="bottom"></mat-button>
+			<mat-button size="mini" type="warn" icon="remove" ng-click="cancel()" label="Cancel Changes" label-pos="bottom"></mat-button>
+		</div>
+	</div>
+</div>

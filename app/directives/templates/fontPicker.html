@@ -1,0 +1,6 @@
+<md-input-container style="margin-bottom: 18px;" class="md-block">
+    <label>Font</label>
+    <md-select ng-model="value" ng-change="change()" aria-label="Font">
+        <md-option ng-repeat="font in fonts" ng-style="{ 'font-family' : font }">{{ font }}</md-option>
+    </md-select>
+</md-input-container>

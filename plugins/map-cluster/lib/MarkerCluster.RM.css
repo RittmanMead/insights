@@ -1,0 +1,36 @@
+.marker-cluster {
+	background-clip: padding-box;
+	background: #333333;
+	border-radius: 20px;
+	border: none;
+	background: none
+}
+
+.marker-cluster div {
+	width: 30px;
+	height: 30px;
+	margin-left: 5px;
+	margin-top: 5px;
+
+	text-align: center;
+	border-radius: 15px;
+	font-family: Open Sans, Arial, sans-serif;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.marker-cluster span {
+	line-height: 30px;
+}
+
+.leaflet-div-icon {
+	background: none;
+	border: none;
+}
+
+.leaflet-marker-icon .dot {
+	border-radius: 30px;
+	background-color: #333333;
+	border: 5px solid;
+	width: 0px;
+}

@@ -1,0 +1,7 @@
+<md-input-container style="margin: 0px; margin-top: 10px; font-size: 16px;">
+	<label>Repository Variable</label>
+	<md-select ng-model="val">
+		<md-option ng-repeat="v in repVarNames">{{ v }}</md-option>
+	</md-select>
+	<div style="margin-top: 5px; font-size: 12px; color: #AAA;">{{ '(' + getVarVal() +')' }}</div>
+</md-input-container>

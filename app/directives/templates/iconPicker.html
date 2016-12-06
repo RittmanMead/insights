@@ -1,0 +1,10 @@
+<section layout="row">
+    <md-input-container flex="80" style="margin-right: 0px;" class="md-block md-primary md-hue-1">
+        <label>{{ label }}</label>
+        <input class="md-primary md-hue-1" ng-model="value"></input>
+        <md-icon md-font-icon="fa-search" class="fa" style="right: 15px; cursor: pointer;" ng-click="openPicker()" flex="20">
+            <md-tooltip md-theme="default" md-direction="top">Search</md-tooltip>
+        </md-icon>
+    </md-input-container>
+    <i class="input-icon fa" style="cursor: default; font-size: 28px; line-height: 60px;" ng-class="'fa-' + value" style="margin-left:5px; font-size: 20px; vertical-align: middle;"></i>
+</section>

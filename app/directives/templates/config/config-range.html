@@ -1,0 +1,7 @@
+<md-slider-container class="md-primary" style="margin-left: 10px; margin-bottom: 18px;">
+    <span flex style="color: rgba(0,0,0,0.54);">{{ cp.label }}</span>
+    <md-slider class="md-primary" flex min="{{ cp.inputOptions.min }}" max="{{ cp.inputOptions.max }}" step="{{ cp.inputOptions.step || 1 }}" ng-model="configVals[cp.targetProperty]" aria-label="{{ cp.label }}"></md-slider>
+    <md-input-container>
+        <input flex type="number" ng-model="configVals[cp.targetProperty]" step="{{ cp.inputOptions.step || 1 }}" min="{{ cp.inputOptions.min }}" max="{{ cp.inputOptions.max }}" aria-label="{{ cp.label }}" aria-controls="slider">
+    </md-input-container>
+</md-slider-container>

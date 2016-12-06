@@ -1,0 +1,52 @@
+<div class="newColumn">
+	<md-content layout="column">
+		<section layout="row">
+			<section flex="45" layout="column">
+				<div ng-if="newMode" class="header">New Column</div>
+				<div ng-if="!newMode" class="header">Edit Column</div>
+				<mat-input value="column.Name" label="Name"></mat-input>
+				<section layout="row">
+					<md-input-container style="margin: 0px; margin-top: 10px; font-size: 16px;" flex="20">
+						<label>Locale</label>
+						<md-select ng-model="column.Locale" style="font-size: 16px;">
+							<md-option ng-repeat="l in locales">{{ l }}</md-option>
+						</md-select>
+					</md-input-container>
+					<md-input-container flex="75" style="margin: 0px; margin-top: 10px; font-size: 16px;" class="md-primary md-hue-1">
+						<label>Data Format</label>
+						<input class="md-primary md-hue-1" ng-model="column.DataFormat"></input>
+						<md-icon md-font-icon="fa-info-circle" class="fa" style="cursor: pointer;" ng-click="formatHelp()">
+							<md-tooltip>Help</md-tooltip>
+						</md-icon>
+					</md-input-container>
+				</section>
+			</section>
+			<section flex="10" />
+			<section flex="45" layout="column">
+				<section layout="row">
+					<div class="header">Formula Helper</div>
+					<mat-button style="text-align: center;" size="mini" icon="book" label="Function Library" ng-click="insertFunc()"></mat-button>
+				</section>
+				<section layout="row">
+					<span flex="90" rep-vars val="repVar"></span>
+					<mat-button type="accent" icon="plus" label="Add to Formula" size="mini-x" label-pos="bottom" ng-click="addRepVar()"></mat-button>
+				</section>
+				<section layout="row" style="margin-top: 15px;">
+					<span flex="90" session-vars val="sessionVar"></span>
+					<mat-button type="accent" icon="plus" label="Add to Formula" size="mini-x" label-pos="bottom" ng-click="addSessionVar()"></mat-button>
+				</section>
+			</section>
+		</section>
+		<md-input-container style="margin-left: 0px; margin-bottom: 0px; font-size: 16px;">
+			<label>Formula</label>
+			<textarea style="font-family: Consolas, 'Courier New'; font-size: 14px;" ng-model="column.Code"></textarea>
+		</md-input-container>
+		<div ng-show="error" class="error" style="margin-left: 10px; margin-right: 10px;">
+			<div ng-bind="error"></div>
+		</div>
+		<section style="text-align: center;">
+			<mat-button size="mini" icon="check" type="accent" label="{{ newMode ? 'Add Column' : 'Accept Changes' }}" label-pos="bottom" ng-click="addNewColumn()"></mat-button>
+			<mat-button size="mini" icon="remove" type="warn" label="Cancel Changes" label-pos="bottom" ng-click="cancelNewColumn()"></mat-button>
+		</section>
+	</md-content>
+</div>

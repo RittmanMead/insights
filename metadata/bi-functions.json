@@ -1,0 +1,790 @@
+{
+	"Aggregate": {
+		"AggregateAt": {
+			"Name": "Aggregate At",
+			"Syntax": "AGGREGATE(measure AT level [, level1, levelN])",
+			"Example": "AGGREGATE(sales AT month, region)",
+			"SyntaxHelp": "measure is the name of a measure column.\nlevel is the level at which you want to aggregate. You can optionally specify more than one level.",
+			"Desc": "This function aggregates columns based on the level or levels you specify."
+		},
+		"Avg": {
+			"Name": "Mean",
+			"Syntax": "Avg(expr)",
+			"Example": "Avg(expr)",
+			"SyntaxHelp": "    expr is any expression that evaluates to a numerical value.\n",
+			"Desc": "Calculates the average (mean) value of an expression in a result set."
+		},
+		"AvgDistinct": {
+			"Name": "Distinct Average",
+			"Syntax": "Avg(DISTINCT expr)",
+			"Example": "Avg(DISTINCT expr)",
+			"SyntaxHelp": "    expr is any expression that evaluates to a numerical value.\n",
+			"Desc": "Calculates the average (mean) of all distinct values of an expression."
+		},
+		"Bin": {
+			"Name": "Bin",
+			"Syntax": "BIN(numeric_expr [BY grain_expr1, ..., grain_exprN] [WHERE condition] INTO number_of_bins BINS [BETWEEN min_value AND max_value] [RETURNING {NUMBER | RANGE_LOW | RANGE_HIGH}])",
+			"Example": "BIN(sales.revenue BY product.productid, year.year WHERE product.productid > 2 INTO 4 BINS RETURNING RANGE_LOW)",
+			"SyntaxHelp": "Numeric_expr is the measure or numeric attribute to bin\nBY grain_expr1, ..., grain_exprN is a list of expressions that define the grain at which the numeric_expr will be calculated. BY is required for measure expressions and is optional for attribute expressions.\nWHERE a filter to apply to the numeric_expr before the numeric values are assigned to bins\nINTO number_of_bins BINS is the number of bins to return\nBETWEEN min_value AND max_value is the min and max values used for the end points of the outermost bins\nRETURNING NUMBER indicates that the return value should be the bin number (1, 2, 3, 4, etc.). This is the default.\nRETURNING RANGE_LOW indicates the lower value of the bin interval\nRETURNING RANGE_HIGH indicates the higher value of the bin interval\n",
+			"Desc": "This function classifies a given numeric expression into a specified number of equal width buckets. The function can return either the bin number or one of the two end points of the bin interval."
+		},
+		"BottomN": {
+			"Name": "Bottom N",
+			"Syntax": "BottomN(expr, integer)",
+			"Example": "BottomN(expr, integer)",
+			"SyntaxHelp": "    expr is any expression that evaluates to a numerical value.\ninteger is any positive integer. Represents the bottom number of rankings displayed in the result set,\r\n1 being the lowest rank.",
+			"Desc": "Ranks the lowest n values of the expression argument from 1 to n, 1 corresponding to the lowest numerical value."
+		},
+		"Count": {
+			"Name": "Count",
+			"Syntax": "COUNT(expr)",
+			"Example": "COUNT(expr)",
+			"SyntaxHelp": "      expr is any expression.\n",
+			"Desc": "Calculates the number of rows having a non-null value for the expression."
+		},
+		"CountDistinct": {
+			"Name": "Distinct Count",
+			"Syntax": "COUNT(DISTINCT expr)",
+			"Example": "COUNT(DISTINCT expr)",
+			"SyntaxHelp": "      expr is any expression.\n",
+			"Desc": "Calculates the number of unique values for the expression."
+		},
+		"CountRows": {
+			"Name": "Count Rows",
+			"Syntax": "COUNT(*)",
+			"Example": "SELECT COUNT(*) FROM Facts",
+			"Desc": "Counts the number of rows (regardless of nulls)."
+		},
+		"Max": {
+			"Name": "Maximum",
+			"Syntax": "MAX(expr)",
+			"Example": "MAX(expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a numerical value.\n",
+			"Desc": "Calculates the maximum value (highest numeric value) of the rows satisfying the numeric expression argument."
+		},
+		"Median": {
+			"Name": "Median",
+			"Syntax": "MEDIAN(expr)",
+			"Example": "MEDIAN(expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a numerical value.\n",
+			"Desc": "Calculates the median (middle) value of the rows satisfying the numeric expression argument."
+		},
+		"NTile": {
+			"Name": "N-Tile",
+			"Syntax": "NTILE(expr, numTiles)",
+			"Example": "NTILE(expr, numTiles)",
+			"SyntaxHelp": "expr is any expression that evaluates to a numerical value.\nnumTiles is a positive, nonnull integer that represents the number of tiles.",
+			"Desc": "Determines the rank of a value in terms of a user-specified range. It returns integers to represent any range of ranks. NTile with numTiles=100 returns what is commonly called the \"percentile\" (with numbers ranging from 1 to 100, with 100 representing the high end of the sort)."
+		},
+		"Min": {
+			"Name": "Minimum",
+			"Syntax": "MIN(expr)",
+			"Example": "MIN(expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a numerical value.\n",
+			"Desc": "Calculates the minimum value (lowest numeric value) of the rows satisfying the numeric expression argument."
+		},
+		"Percentile": {
+			"Name": "Percentile",
+			"Syntax": "PERCENTILE(expr)",
+			"Example": "PERCENTILE(expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a numerical value.\n",
+			"Desc": "Calculates a percentile rank for each value satisfying the numeric expression argument. The percentile rank ranges are between 0 (0th percentile) to 1 (100th percentile)."
+		},
+		"Rank": {
+			"Name": "Rank",
+			"Syntax": "RANK(expr)",
+			"Example": "RANK(chronological_key, null, year_key_columns)",
+			"SyntaxHelp": "expr is any expression that evaluates to a numerical value.\n",
+			"Desc": "Calculates the rank for each value satisfying the numeric expression argument. The highest number is assigned a rank of 1, and each successive rank is assigned the next consecutive integer (2, 3, 4,...). If certain values are equal, they are assigned the same rank (for example, 1, 1, 1, 4, 5, 5, 7...)."
+		},
+		"StdDev": {
+			"Name": "Standard Deviation",
+			"Syntax": "STDDEV(expr)",
+			"Example": "STDDEV(expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a numerical value.\n",
+			"Desc": "Returns the standard deviation for a set of values."
+		},
+		"Sum": {
+			"Name": "Sum",
+			"Syntax": "SUM(expr)",
+			"Example": "SUM(expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a numerical value.\n",
+			"Desc": "Calculates the sum obtained by adding up all values satisfying the numeric expression argument."
+		},
+		"SumDistinct": {
+			"Name": "Distinct Sum",
+			"Syntax": "Sum(DISTINCT expr)",
+			"Example": "Sum(DISTINCT expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a numerical value.\n",
+			"Desc": "Calculates the sum obtained by adding all of the distinct values satisfying the numeric expression argument."
+		},
+		"TopN": {
+			"Name": "Top N",
+			"Syntax": "TOPN(expr, integer)",
+			"Example": "TOPN(expr, integer)",
+			"SyntaxHelp": "expr is any expression that evaluates to a numerical value.\ninteger is any positive integer. Represents the top number of rankings displayed in the result set, 1 being the highest rank.",
+			"Desc": "Ranks the highest n values of the expression argument from 1 to n, 1 corresponding to the highest numerical value."
+		}
+	},
+	"Running Aggregate": {
+		"MAVG": {
+			"Name": "Moving Average",
+			"Syntax": "MAVG (expr, integer)",
+			"Example": "MAVG (expr, integer)",
+			"SyntaxHelp": "expr is any expression that evaluates to a numerical value.\ninteger is any positive integer. Represents the average of the last n rows of data.",
+			"Desc": "Calculates a moving average (mean) for the last n rows of data in the result set, inclusive of the current row."
+		},
+		"MSUM": {
+			"Name": "Moving Sum",
+			"Syntax": "MSUM (expr, integer)",
+			"Example": "select month, revenue, MSUM(revenue, 3) as 3_MO_SUM from sales_subject_area",
+			"SyntaxHelp": "expr is any expression that evaluates to a numerical value.\ninteger is any positive integer. Represents the sum of the last n rows of data.",
+			"Desc": "This function calculates a moving sum for the last n rows of data, inclusive of the current row."
+		},
+		"RSUM": {
+			"Name": "Running Sum",
+			"Syntax": "RSUM(expr)",
+			"Example": "SELECT month, revenue, RSUM(revenue) as RUNNING_SUM from sales_subject_area",
+			"SyntaxHelp": "expr is any expression that evaluates to a numerical value.\n",
+			"Desc": "This function calculates a running sum based on records encountered so far."
+		},
+		"RCOUNT": {
+			"Name": "Running Count",
+			"Syntax": "RCOUNT(expr)",
+			"Example": "select month, profit, RCOUNT(profit) from sales_subject_area where profit > 200",
+			"SyntaxHelp": "expr is an expression of any datatype.\n",
+			"Desc": "This function takes a set of records as input and counts the number of records encountered so far."
+		},
+		"RMAX": {
+			"Name": "Running Maximum",
+			"Syntax": "RMAX(expr)",
+			"Example": "SELECT month, profit,RMAX(profit) from sales_subject_area",
+			"SyntaxHelp": "expr is an expression of any datatype.\n",
+			"Desc": "This function takes a set of records as input and shows the maximum value based on records encountered so far."
+		},
+		"RMIN": {
+			"Name": "Running Minimum",
+			"Syntax": "RMIN(expr)",
+			"Example": "select month, profit,RMIN(profit) from sales_subject_area",
+			"SyntaxHelp": "expr is an expression of any datatype.\n",
+			"Desc": "This function takes a set of records as input and shows the minimum value based on records encountered so far."
+		}
+	},
+	"String": {
+		"ASCII": {
+			"Name": "To ASCII Code",
+			"Syntax": "ASCII(expr)",
+			"Example": "ASCII(expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a character string.\n",
+			"Desc": "Converts a single character string to its corresponding ASCII code, between 0 and 255."
+		},
+		"BitLength": {
+			"Name": "Bit Length",
+			"Syntax": "BIT_LENGTH(expr)",
+			"Example": "BIT_LENGTH(expr)",
+			"Desc": "Returns the length, in bits, of a specified string. Each Unicode character is 2 bytes in length, which is equal to 16 bits."
+		},
+		"Char": {
+			"Name": "To Character",
+			"Syntax": "CHAR(expr)",
+			"Example": "CHAR(expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a numerical value between 0 and 255.\n",
+			"Desc": "Converts a numerical value between 0 and 255 to the character value corresponding to the ASCII code."
+		},
+		"CharLength": {
+			"Name": "Character Length",
+			"Syntax": "CHAR_LENGTH(expr)",
+			"Example": "CHAR_LENGTH(expr)",
+			"Desc": "Returns the length, in number of characters, of a specified string."
+		},
+		"Concat": {
+			"Name": "Concatenate",
+			"Syntax": "CONCAT(expr1, expr2)",
+			"Example": "SELECT DISTINCT CONCAT('abc', 'def') FROM employee",
+			"SyntaxHelp": "exprs are expressions that evaluate to character strings, separated by commas.\n",
+			"Desc": "Concatenates two character strings."
+		},
+		"Insert": {
+			"Name": "Insert",
+			"Syntax": "INSERT(expr1, integer1, integer2, expr2)",
+			"Example": "SELECT INSERT('123456', 2, 3, 'abcd') FROM table",
+			"SyntaxHelp": "expr1 is any expression that evaluates to a character string.\r\nIdentifies the target character string.\ninteger1 is any positive integer that represents the number of\r\ncharacters from the beginning of the target string where the second string is to be inserted.\ninteger2 is any positive integer that represents the number of\r\ncharacters in the target string to be replaced by the second string.\nexpr2 is any expression that evaluates to a character string.\r\nIdentifies the character string to be inserted into the target string.\n",
+			"Desc": "Inserts a specified character string into a specified location in another character string."
+		},
+		"Left": {
+			"Name": "Left",
+			"Syntax": "LEFT(expr, integer)",
+			"Example": "SELECT LEFT('123456', 3) FROM table",
+			"SyntaxHelp": "expr is any expression that evaluates to a character string\ninteger is any positive integer that represents the number of\r\ncharacters from the left of the string to return.",
+			"Desc": "Returns a specified number of characters from the left of a string."
+		},
+		"Length": {
+			"Name": "Length",
+			"Syntax": "LENGTH(expr)",
+			"Example": "LENGTH(expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a character string.\n",
+			"Desc": "Returns the length, in number of characters, of a specified string. The length is returned excluding any trailing blank characters."
+		},
+		"Locate": {
+			"Name": "Locate",
+			"Syntax": "LOCATE(expr1, expr2)",
+			"Example": "Locate('d', 'abcdef')",
+			"SyntaxHelp": "expr1 is any expression that evaluates to a character string.\r\nIdentifies the string for which to search.\nexpr2 is any expression that evaluates to a character string.\r\nIdentifies the string to be searched.",
+			"Desc": "Returns the numerical position of a character string in another character string."
+		},
+		"LocateN": {
+			"Name": "Locate N",
+			"Syntax": "LOCATEN(expr1, expr2, integer)",
+			"Example": "LOCATEN('b' 'abcdef', 3)",
+			"SyntaxHelp": "expr1 is any expression that evaluates to a character string.\r\nIdentifies the string for which to search.\nexpr2 is any expression that evaluates to a character string.\r\nIdentifies the string to be searched.\r\nintergeris any positive (nonzero) integer that represents the starting\r\nposition to begin to look for the character string.",
+			"Desc": "Returns the numerical position of a character string in another character string. This is identical to the Locate function, except that the search begins at the position specified by an integer argument."
+		},
+		"Lower": {
+			"Name": "Lower",
+			"Syntax": "LOWER(expr)",
+			"Example": "LOWER(expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a character string.\n",
+			"Desc": "Converts a character string to lowercase."
+		},
+		"OctetLength": {
+			"Name": "Octet Length",
+			"Syntax": "OCTET_LENGTH(expr)",
+			"Example": "OCTET_LENGTH(expr)",
+			"Desc": "Returns the number of bits, in base 8 units (number of bytes), of a specified string."
+		},
+		"Position": {
+			"Name": "Position",
+			"Syntax": "POSITION(expr1 IN expr2)",
+			"Example": "POSITION('9', '123456')",
+			"SyntaxHelp": "expr1 is any expression that evaluates to a character string.\r\nIdentifies the string to search for in the target string.\nexpr2 is any expression that evaluates to a character string. Identifies the target string to be searched.\n",
+			"Desc": "Returns the numerical position of expr1 in a character expression."
+		},
+		"Repeat": {
+			"Name": "Repeat",
+			"Syntax": "REPEAT(expr, integer)",
+			"Example": "REPEAT('abc', 4)",
+			"SyntaxHelp": "expr is any expression that evaluates to a character string\ninteger is any positive integer that represents the number of times\r\nto repeat the character string.\n",
+			"Desc": "Repeats a specified expression n times."
+		},
+		"Replace": {
+			"Name": "Replace",
+			"Syntax": "REPLACE(expr1, expr2, expr3)",
+			"Example": "Replace('abcd1234', '123', 'zz')",
+			"SyntaxHelp": "expr1 is any expression that evaluates to a character string.\r\nThis is the string in which characters are to be replaced.\nexpr2 is any expression that evaluates to a character string.\r\nThis second string identifies the characters from the first string that are to be replaced.\nexpr3 is any expression that evaluates to a character string. This third string\r\nspecifies the characters to substitute into the first string.\n",
+			"Desc": "Replaces one or more characters from a specified character expression with one or more other characters."
+		},
+		"Right": {
+			"Name": "Right",
+			"Syntax": "RIGHT(expr, integer)",
+			"Example": "SELECT right('123456', 3) FROM table",
+			"SyntaxHelp": "expr  is any expression that evaluates to a character string.\ninteger is any positive integer that represents the number of\r\ncharacters from the right of the string to return.\n",
+			"Desc": "Returns a specified number of characters from the right of a string."
+		},
+		"Space": {
+			"Name": "Space",
+			"Syntax": "SPACE(expr)",
+			"Example": "SPACE(expr)",
+			"SyntaxHelp": "integer is any positive integer that indicates the number of spaces to insert.\n",
+			"Desc": "Inserts blank spaces."
+		},
+		"Substring": {
+			"Name": "Substring",
+			"Syntax": "SUBSTRING(expr FROM startPos FOR length)",
+			"Example": "SUBSTRING(expr FROM startPos FOR length)",
+			"SyntaxHelp": "expr is any expression that evaluates to a character string.\nstartPos is any positive integer that represents the number of characters\r\nfrom the start of the left side of the string where the result is to begin.\n",
+			"Desc": "Creates a new string starting from a fixed number of characters into the original string."
+		},
+		"TrimBoth": {
+			"Name": "TrimB oth",
+			"Syntax": "TRIM(BOTH char FROM expr)",
+			"Example": "TRIM(BOTH char FROM expr)",
+			"SyntaxHelp": "char is any single character. If you omit this specification (and the required single quotes),\r\na blank character is used as the default.\nexpr is any expression that evaluates to a character string.\n",
+			"Desc": "Strips specified leading and trailing characters from a character string."
+		},
+		"TrimLeading": {
+			"Name": "Trim Leading",
+			"Syntax": "TRIM(LEADING char FROM expr)",
+			"Example": "TRIM(LEADING char FROM expr)",
+			"SyntaxHelp": "char is any single character. If you omit this specification (and the required single quotes),\r\na blank character is used as the default.\nexpr is any expression that evaluates to a character string.\n",
+			"Desc": "Strips specified leading characters from a character string."
+		},
+		"TrimTrailing": {
+			"Name": "Trim Trailing",
+			"Syntax": "TRIM(TRAILING char FROM expr)",
+			"Example": "TRIM(TRAILING char FROM expr)",
+			"SyntaxHelp": "char is any single character. If you omit this specification (and the required single quotes),\r\na blank character is used as the default.\nexpr is any expression that evaluates to a character string.\n",
+			"Desc": "Strips specified trailing characters from a character string."
+		},
+		"Upper": {
+			"Name": "Upper",
+			"Syntax": "UPPER(expr)",
+			"Example": "UPPER(expr)",
+			"SyntaxHelp": "expris any expression that evaluates to a character string.\n",
+			"Desc": "Converts a character string to uppercase."
+		}
+	},
+	"Math": {
+		"Abs": {
+			"Name": "Absolute",
+			"Syntax": "ABS(expr)",
+			"Example": "ABS(expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a numerical value.\n",
+			"Desc": "Calculates the absolute value of a numerical expression."
+		},
+		"Acos": {
+			"Name": "Arc Cosine",
+			"Syntax": "ACOS(expr)",
+			"Example": "ACOS(expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a numerical value.\n",
+			"Desc": "Calculates the arc cosine of a numerical expression."
+		},
+		"Asin": {
+			"Name": "Arc Sine",
+			"Syntax": "ASIN(expr)",
+			"Example": "ASIN(expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a numerical value.\n",
+			"Desc": "Calculates the arc sine of a numerical expression."
+		},
+		"Atan": {
+			"Name": "Arc Tan",
+			"Syntax": "ATAN(expr)",
+			"Example": "ATAN(expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a numerical value.\n",
+			"Desc": "Calculates the arc tangent of a numerical expression."
+		},
+		"Atan2": {
+			"Name": "Arc Tan 2",
+			"Syntax": "ATAN2(expr1, expr2)",
+			"Example": "ATAN2(expr1, expr2)",
+			"SyntaxHelp": "expr is any expression that evaluates to a numerical value.\n",
+			"Desc": "Calculates the arc tangent of y/x, where y is the first numerical expression and x is the second numerical expression."
+		},
+		"Ceiling": {
+			"Name": "Round Up",
+			"Syntax": "CEILING(expr)",
+			"Example": "CEILING(expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a numerical value.\n",
+			"Desc": "Rounds a noninteger numerical expression to the next highest integer."
+		},
+		"Cos": {
+			"Name": "Cosine",
+			"Syntax": "COS(expr)",
+			"Example": "COS(expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a numerical value.\n",
+			"Desc": "Calculates the cosine of a numerical expression."
+		},
+		"Cot": {
+			"Name": "Cot",
+			"Syntax": "COT(expr)",
+			"Example": "COT(expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a numerical value.\n",
+			"Desc": "Calculates the cotangent of a numerical expression."
+		},
+		"Degrees": {
+			"Name": "Degrees",
+			"Syntax": "DEGREES(expr)",
+			"Example": "DEGREES(expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a numerical value.\n",
+			"Desc": "Converts an expression from radians to degrees."
+		},
+		"Exp": {
+			"Name": "Exponential",
+			"Syntax": "EXP(expr)",
+			"Example": "EXP(expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a numerical value.\n",
+			"Desc": "Sends the value to the power specified."
+		},
+		"Floor": {
+			"Name": "Round Down",
+			"Syntax": "FLOOR(expr)",
+			"Example": "FLOOR(expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a numerical value.\n",
+			"Desc": "Rounds a noninteger numerical expression to the next lowest integer."
+		},
+		"Log": {
+			"Name": "Log",
+			"Syntax": "LOG(expr)",
+			"Example": "LOG(expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a numerical value.\n",
+			"Desc": "Calculates the natural logarithm of an expression."
+		},
+		"Log10": {
+			"Name": "Log 10",
+			"Syntax": "LOG10(expr)",
+			"Example": "LOG10(expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a numerical value.\n",
+			"Desc": "Calculates the base 10 logarithm of an expression."
+		},
+		"Mod": {
+			"Name": "Remainder",
+			"Syntax": "MOD(expr1, expr2)",
+			"Example": "MOD(expr1, expr2)",
+			"SyntaxHelp": "expr is any expression that evaluates to a numerical value.\n",
+			"Desc": "Divides the first numerical expression by the second numerical expression and returns the remainder portion of the quotient."
+		},
+		"Pi": {
+			"Name": "Pi",
+			"Syntax": "PI()",
+			"Example": "PI()",
+			"SyntaxHelp": "",
+			"Desc": "Returns the constant value of pi (the circumference of a circle divided by its diameter)."
+		},
+		"Power": {
+			"Name": "Power",
+			"Syntax": "POWER(expr1, expr2)",
+			"Example": "POWER(expr1, expr2)",
+			"SyntaxHelp": "expr is any expression that evaluates to a numerical value.\n",
+			"Desc": "Takes the first numerical expression and raises it to the power specified in the second numerical expression."
+		},
+		"Radians": {
+			"Name": "Radians",
+			"Syntax": "RADIANS(expr)",
+			"Example": "RADIANS(expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a numerical value.\n",
+			"Desc": "Converts an expression from degrees to radians."
+		},
+		"Rand": {
+			"Name": "Random",
+			"Syntax": "RAND()",
+			"Example": "RAND()",
+			"SyntaxHelp": "",
+			"Desc": "Returns a pseudo-random number between 0 and 1."
+		},
+		"RandFromSeed": {
+			"Name": "Random From Seed",
+			"Syntax": "RAND(expr)",
+			"Example": "RAND(expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a numerical value.\n",
+			"Desc": "Returns a pseudo-random number based on a seed value."
+		},
+		"Round": {
+			"Name": "Round",
+			"Syntax": "ROUND(expr, integer)",
+			"Example": "ROUND(2.166000, 2)",
+			"SyntaxHelp": "expr is any expression that evaluates to a numerical value.\ninteger is any positive integer that represents the number of digits of precision.\n",
+			"Desc": "Rounds a numerical expression to n digits of precision."
+		},
+		"Sign": {
+			"Name": "Sign",
+			"Syntax": "SIGN(expr)",
+			"Example": "SIGN(expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a numerical value.\n",
+			"Desc": "Returns: 1 if the numerical expression argument evaluates to a positive number, -1 if it evaluates to a negative number, or 0 (zero) if it evaluates to zero."
+		},
+		"Sin": {
+			"Name": "Sine",
+			"Syntax": "SIN(expr)",
+			"Example": "SIN(expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a numerical value.\n",
+			"Desc": "Calculates the sine of a numerical expression."
+		},
+		"Sqrt": {
+			"Name": "Square Root",
+			"Syntax": "SQRT(expr)",
+			"Example": "SQRT(expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a nonnegative numerical value.\n",
+			"Desc": "Calculates the square root of the numerical expression argument."
+		},
+		"Tan": {
+			"Name": "Tan",
+			"Syntax": "TAN(expr)",
+			"Example": "TAN(expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a numerical value.\n",
+			"Desc": "Calculates the tangent of a numerical expression."
+		},
+		"Truncate": {
+			"Name": "Truncate",
+			"Syntax": "TRUNCATE(expr, integer)",
+			"Example": "TRUNCATE(25.126, 2)",
+			"SyntaxHelp": "expr is any expression that evaluates to a numerical value.\ninteger is any positive integer that represents the number of characters to\r\nthe right of the decimal place to return.\n",
+			"Desc": "Truncates a decimal number to return a specified number of places from the decimal point."
+		}
+	},
+	"Calendar": {
+		"CurrentDate": {
+			"Name": "Current Date",
+			"Syntax": "CURRENT_DATE",
+			"Example": "CURRENT_DATE",
+			"Desc": "Returns the current date. The date is determined by the system in which the  is running."
+		},
+		"CurrentTime": {
+			"Name": "Current Time",
+			"Syntax": "CURRENT_TIME(expr)",
+			"Example": "CURRENT_TIME(expr)",
+			"Desc": "Returns the current time. The time is determined by the system in which the  is running."
+		},
+		"CurrentTimeStamp": {
+			"Name": "Current TimeStamp",
+			"Syntax": "CURRENT_TIMESTAMP(expr)",
+			"Example": "CURRENT_TIMESTAMP(expr)",
+			"Desc": "Returns the current date/timestamp. The timestamp is determined by the system in which the  is running."
+		},
+		"DayOfQuarter": {
+			"Name": "Day of Quarter",
+			"Syntax": "DAY_OF_QUARTER(expr)",
+			"Example": "DAY_OF_QUARTER(expr)",
+			"Desc": "Returns a number (between 1 and 92) corresponding to the day of the quarter for the specified date."
+		},
+		"DayName": {
+			"Name": "Day Name",
+			"Syntax": "DAYNAME(expr)",
+			"Example": "DAYNAME(expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a date.\n",
+			"Desc": "Returns the name of the day for a specified date."
+		},
+		"DayOfMonth": {
+			"Name": "Day Of Month",
+			"Syntax": "DAYOFMONTH(expr)",
+			"Example": "DAYOFMONTH(expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a date.\n",
+			"Desc": "Returns the number corresponding to the day of the month for a specified date."
+		},
+		"DayOfWeek": {
+			"Name": "Day Of Week",
+			"Syntax": "DAYOFWEEK(expr)",
+			"Example": "DAYOFWEEK(expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a date.\n",
+			"Desc": "Returns a number between 1 and 7 corresponding to the day of the week, Sunday through Saturday, for a specified date."
+		},
+		"DayOfYear": {
+			"Name": "Day Of Year",
+			"Syntax": "DAYOFYEAR(expr)",
+			"Example": "DAYOFYEAR(expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a date.\n",
+			"Desc": "Returns the number (between 1 and 366) corresponding to the day of the year for a specified date."
+		},
+		"Hour": {
+			"Name": "Hour",
+			"Syntax": "HOUR(expr)",
+			"Example": "HOUR(expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a time.\n",
+			"Desc": "Returns the number (between 0 and 23) corresponding to the hour for a specified time."
+		},
+		"Minute": {
+			"Name": "Minute",
+			"Syntax": "MINUTE(expr)",
+			"Example": "MINUTE(expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a time.\n",
+			"Desc": "Returns the number (between 0 and 59) corresponding to the minute for a specified time."
+		},
+		"Month": {
+			"Name": "Month",
+			"Syntax": "MONTH(expr)",
+			"Example": "MONTH(expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a date.\n",
+			"Desc": "Returns a number (between 1 and 12) corresponding to the month for a specified date."
+		},
+		"MonthOfQuarter": {
+			"Name": "Month Of Quarter",
+			"Syntax": "MONTH_OF_QUARTER(expr)",
+			"Example": "MONTH_OF_QUARTER(expr)",
+			"Desc": "Returns the number (between 1 and 3) corresponding to the month in the quarter for a specified date."
+		},
+		"MonthName": {
+			"Name": "Month Name",
+			"Syntax": "MONTHNAME(expr)",
+			"Example": "MONTHNAME(expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a date.\n",
+			"Desc": "Returns the name of the month for a specified date."
+		},
+		"Now": {
+			"Name": "Now",
+			"Syntax": "NOW()",
+			"Example": "NOW()",
+			"SyntaxHelp": "",
+			"Desc": "Returns the current timestamp. This function is equivalent to the function Current_TimeStamp."
+		},
+		"QuarterOfYear": {
+			"Name": "Quarter Of Year",
+			"Syntax": "QUARTER_OF_YEAR(expr)",
+			"Example": "QUARTER_OF_YEAR(expr)",
+			"Desc": "Returns the number (between 1 and 4) corresponding to the quarter of the year for a specified date."
+		},
+		"Second": {
+			"Name": "Second",
+			"Syntax": "SECOND(expr)",
+			"Example": "SECOND(expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a time.\n",
+			"Desc": "Returns the number (between 0 and 59) corresponding to the seconds for a specified time."
+		},
+		"TimestampAdd": {
+			"Name": "Add Time to Date",
+			"Syntax": "TIMESTAMPADD(interval, expr, timestamp)",
+			"Example": "SELECT TIMESTAMPADD(SQL_TSI_DAY, 3, TIMESTAMP'2000-02-27 14:30:00') FROM Employee WHERE employeeid = 2;",
+			"SyntaxHelp": "interval is the specified interval. Valid values are: SQL_TSI_SECOND,SQL_TSI_MINUTE,\r\nSQL_TSI_HOUR,SQL_TSI_DAY,SQL_TSI_WEEK,SQL_TSI_MONTH,SQL_TSI_QUARTER,SQL_TSI_YEAR.\nexpr is any expression that evaluates to an integer value.\ntimestamp is any valid timestamp.\n",
+			"Desc": "Adds a specified number of intervals to a specified timestamp, and returns a single timestamp."
+		},
+		"TimestampDiff": {
+			"Name": "Difference Between Dates",
+			"Syntax": "TIMESTAMPDIFF(interval, expr, timestamp2)",
+			"Example": "SELECT TIMESTAMPDIFF(SQL_TSI_DAY, TIMESTAMP'1998-07-31 23:35:00',TIMESTAMP'2000-04-01 14:24:00') FROM Employee WHERE employeeid = 2;",
+			"SyntaxHelp": "interval is the specified interval. Valid values are: SQL_TSI_SECOND,SQL_TSI_MINUTE,\r\nSQL_TSI_HOUR,SQL_TSI_DAY,SQL_TSI_WEEK,SQL_TSI_MONTH,SQL_TSI_QUARTER,SQL_TSI_YEAR.\ntimestamp1 and timestamp2 are any valid timestamp.\n",
+			"Desc": "Returns the total number of specified intervals between two timestamps."
+		},
+		"WeekOfQuarter": {
+			"Name": "Week Of Quarter",
+			"Syntax": "WEEK_OF_QUARTER(expr)",
+			"Example": "WEEK_OF_QUARTER(expr)",
+			"Desc": "Returns a number (between 1 and 13) corresponding to the week of the quarter for the specified date."
+		},
+		"WeekOfYear": {
+			"Name": "Week Of Year",
+			"Syntax": "WEEK_OF_YEAR(expr)",
+			"Example": "WEEK_OF_YEAR(expr)",
+			"Desc": "Returns a number (between 1 and 53) corresponding to the week of the year for the specified date."
+		},
+		"Year": {
+			"Name": "Year",
+			"Syntax": "YEAR(expr)",
+			"Example": "YEAR(expr)",
+			"SyntaxHelp": "expr is any expression that evaluates to a date.\n",
+			"Desc": "Returns the year for the specified date."
+		}
+	},
+	"Conversion": {
+		"Cast": {
+			"Name": "Cast",
+			"Syntax": "CAST(expr AS type)",
+			"Example": "CAST(hiredate AS CHAR(40)) FROM employee",
+			"SyntaxHelp": "expr is any expression.\ntype is any datatype.\n",
+			"Desc": "Changes the data type of a value or a null value to another data type."
+		},
+		"IfNull": {
+			"Name": "If Null",
+			"Syntax": "IFNULL(expr, value)",
+			"Example": "IFNULL(expr, value)",
+			"SyntaxHelp": "expr is the expression to evaluate.\nvalue is the value to assign if the expression evaluates to a null value.\n",
+			"Desc": "Tests if an expression evaluates to a null value, and if it does, assigns the specified value to the expression."
+		},
+		"ValueOf": {
+			"Name": "Value Of",
+			"Syntax": "VALUEOF(expr)",
+			"Example": "VALUEOF(expr)",
+			"SyntaxHelp": "expr Variables should be used as arguments of the VALUEOF function. Refer to static repository variables by name.\n",
+			"Desc": "Use the VALUEOF function in a filter to reference the value of an Oracle BI repository variable."
+		}
+	},
+	"System": {
+		"Database": {
+			"Name": "Database",
+			"Syntax": "DATABASE()",
+			"Example": "DATABASE()",
+			"SyntaxHelp": "",
+			"Desc": "Returns the name of the Oracle BI subject area to which you are logged on."
+		},
+		"User": {
+			"Name": "User",
+			"Syntax": "USER()",
+			"Example": "USER()",
+			"SyntaxHelp": "",
+			"Desc": "Returns the user name for the Oracle BI Repository to which you are logged on."
+		}
+	},
+	"Expressions": {
+		"CaseSwitch": {
+			"Name": "Case (Switch)",
+			"Syntax": "CASE expr1 WHEN expr2 THEN expr3 ELSE expr4 END",
+			"Example": "CASE expr1 WHEN expr2 THEN expr3 ELSE expr4 END",
+			"SyntaxHelp": "exprs is any valid expression.\n",
+			"Desc": "This form of the Case statement is also referred to as the CASE (Lookup) form. The value of expression1 is examined, then the WHEN expressions. If expression1 matches any WHEN expression, it assigns the value in the corresponding THEN expression.  If none of the WHEN expressions match, it assigns the default value specified in the ELSE expression. If no ELSE expression is specified, the system will automatically add an ELSE NULL."
+		},
+		"CaseIf": {
+			"Name": "Case (If)",
+			"Syntax": "CASE WHEN request_condition1 THEN expr1 ELSE expr2 END",
+			"Example": "CASE WHEN request_condition1 THEN expr1 ELSE expr2 END",
+			"SyntaxHelp": "exprs is any valid expression.\n",
+			"Desc": "This form of the Case statement evaluates each WHEN condition and if satisfied, assigns the value in the corresponding THEN expression.  If none of the WHEN conditions are satisfied, it assigns the default value specified in the ELSE expression. If no ELSE expression is specified, the system will automatically add an ELSE NULL."
+		}
+	},
+	"Database Functions": {
+		"Evaluate": {
+			"Name": "Evaluate",
+			"Syntax": "EVALUATE('db_function(%1...%N)' [AS datatype] [, column1, columnN])",
+			"Example": "EVALUATE('Rank(%1.dimension.currentmember, %2.members)' as int , Foodmart93.Time.Month)",
+			"SyntaxHelp": "db_function is any valid database function understood by the underlying datasource.\ndatatype is an optional parameter that specifies the data type of the return result. Use whenever the return data type cannot be reliably predicted from the input arguments.\ncolumn1 through columnN is an optional, comma-separated list of columns.",
+			"Desc": "Passes the specified database function with (optional) referenced columns as parameters to the back-end data source for evaluation. This function is intended for scalar and analytic calculations, and is useful when you want to use a specialized database function that is not supported by the Oracle BI Server, but that is understood by the underlying datasource.\r\nThe embedded database function may require one or more columns. These columns are referenced by %1 ... %N within the function. The actual columns must be listed after the function."
+		},
+		"EvaluateAggr": {
+			"Name": "Evaluate Aggregate",
+			"Syntax": "EVALUATE_AGGR('db_agg_function(%1...%N)' [AS datatype] [, column1, columnN])",
+			"Example": "EVALUATE_AGGR('sum(%1)', sales.quantity)",
+			"Desc": "Passes the specified database function with (optional) referenced columns as parameters to the back-end data source for evaluation. This function is intended for aggregate functions with a GROUP BY clause.\r\nThe embedded database function may require one or more columns. These columns are referenced by %1 ... %N within the function. The actual columns must be listed after the function."
+		}
+	},
+	"Time Series": {
+		"Ago": {
+			"Name": "Ago",
+			"Syntax": "AGO(expr, time_level, offset)",
+			"Example": "AGO(sales, year, 1)",
+			"SyntaxHelp": "expr is an expression that references at least one measure column.\ntime_level is the type of time period, such as quarter, month, or year.\noffset is an integer literal that represents the time shift amount.",
+			"Desc": "A time series aggregation function that calculates the aggregated value from the current time back to a specified time period. For example, Ago can produce sales for every month of the current quarter and the corresponding quarter-ago sales."
+		},
+		"Forecast": {
+			"Name": "Forecast",
+			"Syntax": "FORECAST(numeric_expr, ([series]), output_column_name, options, [runtime_binded_options])",
+			"Example": "FORECAST(",
+			"SyntaxHelp": "numeric_expr represents the measure to forecast.\nseries is the time grain at which the forecast model is built. It is a list of one or more time dimension columns. If series is omitted, the time grain is determined from the query.\ntime_dimension_alias is an optional alias. The valid alias are 'timeDay', 'timeWeek', 'timeMonth', 'timeQuarter', 'timeYear'. \noutput_column_name is the output column. The valid values are 'forecast', 'low', 'high', 'predictionInterval'. \noptions is a string list of name=value pairs separated by ';'. The value can include %1 ... %N, which can be specified using runtime_binded_options.\nruntime_binded_options is an optional comma separated list of runtime binded columns or literal expressions.\n",
+			"Desc": "This function creates a time-series model of the specified measure over the series using either Exponential Smoothing or ARIMA and outputs a forecast for the a set of periods as specified by the numPeriods."
+		},
+		"PeriodRolling": {
+			"Name": "Period Rolling",
+			"Syntax": "PERIODROLLING(measure, x [,y])",
+			"Example": "PERIODROLLING(monthly_sales, -1, 1)",
+			"SyntaxHelp": "measure is the name of a measure column.\nx x is an integer that specifies the offset from the current time.\ny specifies the number of time units over which the function will compute.\nhierarchy is an optional argument that specifies the name of a hierarchy\r\nin a time dimension, such as yr, mon, day, that you want to use to compute the time window.\n",
+			"Desc": "This function computes the sum of a measure over the period starting x units of time and ending y units of time from the current time.\r\nThe unit of time is determined by the measure level of the measures in its first argument and the query level of the query to which the function belongs. For more information, click Help."
+		},
+		"ToDate": {
+			"Name": "To Date",
+			"Syntax": "TODATE(expr, time_level)",
+			"Example": "TODATE(sales, year)",
+			"SyntaxHelp": "expr is an expression that references at least one measure column.\ntime_level is the type of time period, such as quarter, month, or year.",
+			"Desc": "A time series aggregation function that aggregates a measure attribute from the beginning of a specified time period to the current time. For example, this function can calculate Year to Date sales."
+		}
+	},
+	"Analytics": {
+		"Cluster": {
+			"Name": "Cluster",
+			"Syntax": "CLUSTER( (dimension_expr), (expr), output_column_name, options, [runtime_binded_options])",
+			"Example": "CLUSTER((",
+			"SyntaxHelp": "dimension_expr represents a list of dimensions to be clustered.\nexpr represents a list of dimension attributes or measures to be used to cluster the dimension_expr.\noutput_column_name is the output column. The valid values are 'clusterId', 'clusterName', 'clusterDescription', 'clusterSize', 'distanceFromCenter', 'centers'.\noptions is a string list of name=value pairs separated by ';'. The value can include %1 ... %N, which can be specified using runtime_binded_options. \nruntime_binded_options is an optional comma separated list of runtime binded columns or literal expressions.\n",
+			"Desc": "This function groups a set of records into groups based on one or more input expressions using K-Means or Hierarchical Clustering."
+		},
+		"EvaluateScript": {
+			"Name": "Evaluate Script",
+			"Syntax": "EVALUATE_SCRIPT(script_file_path, output_column_name, options, [runtime_binded_column_options])",
+			"Example": "EVALUATE_SCRIPT('filerepo://obiee.Outliers.xml', 'isOutlier', 'algorithm=mvoutlier;id=%1;arg1=%2;arg2=%3;useRandomSeed=False;', ",
+			"SyntaxHelp": "script_file_path represents the script XML file path. Example: filerepo://obiee.Outliers.xml\noutput_column_name is a column name that is outputted from the script execution.\noptions is a string list of name=value pairs separated by ';'. The value can include %1 ... %N, which can be specified using runtime_binded_options. \nruntime_binded_column_options is an optional comma separated list of run-time binded columns or literal expressions.\n",
+			"Desc": "This function executes a R script as specified in the script_file_path, passing in one or more columns or literal expressions as input. The output of the function is determined by the output_column_name."
+		},
+		"Outlier": {
+			"Name": "Outlier",
+			"Syntax": "OUTLIER( (dimension_expr1 , ... dimension_exprN), (expr1, .. exprN), output_column_name, options, [runtime_binded_options])",
+			"Example": "OUTLIER((",
+			"SyntaxHelp": "dimension_expr represents a list of dimensions.\nexpr represents a list of dimension attributes or measures to be used find outlier's.\noutput_column_name is the output column. The valid values are 'isOutlier', 'distance'.\noptions is a string list of name=value pairs separated by ';'. The value can include %1 ... %N, which can be specified using runtime_binded_options.\nruntime_binded_options is an optional comma separated list of run-time binded columns or literal expressions.\n",
+			"Desc": "This function classifies a record as Outlier based one or more input expressions using K-Means or Hierarchical Clustering or Multi-Variate Outlier detection Algorithms."
+		},
+		"Regression": {
+			"Name": "Regr",
+			"Syntax": "REGR(y_axis_measure_expr, (x_axis_expr), (category_expr1, ..., category_exprN), output_column_name, options, [runtime_binded_options])",
+			"Example": "REGR(",
+			"SyntaxHelp": "y_axis_measure_expr represents the measure for which the regression model is to be computed.\nx_axis_expr represents the measure to be used to determine the regression model for the y_axis_measure_expr.\ncategory_expr1, ..., category_exprN represents the dimension/dimension attributes to be used to determine the category for which the regression model for the y_axis_measure_expr is to be computed. One or more dimensions/dimension attributes, up to five, may be provided as category columns.\noutput_column_name is the output column. The valid values are 'fitted', 'intercept', 'modelDescription'.\noptions is a string list of name=value pairs separated by ';'. The value can include %1 ... %N, which can be specified using runtime_binded_options. \nruntime_binded_options is an optional comma separated list of run-time binded columns and options.\n",
+			"Desc": "This function fits a linear model, and returns the fitted values or model. This function can be used to fit a linear curve on two measures."
+		},
+		"Trendline": {
+			"Name": "Trendline",
+			"Syntax": "TRENDLINE(numeric_expr, ([series]), model_type, result_type)",
+			"Example": "TRENDLINE(Sales.Revenue, (day.cal_year, day.cal_qtr, day.cal_month), 'LINEAR', 'VALUE')",
+			"SyntaxHelp": "numeric_expr represents the data to trend. This is Y-axis. This is usually a measure column.\nseries is the X-axis. It is a list of dimension columns. If not provided, the time dimension columns are determined from the query. \nmodel_type is one of the following ('LINEAR', 'EXPONENTIAL').\nresult_type is one of the following ('VALUE', 'MODEL'). 'VALUE' will return all the regression Y values given X in the fit. 'MODEL' will return all the parameters in a JSON format string.\n",
+			"Desc": "This function fits a linear or exponential model, and returns the fitted values or model. The numeric_expr represents the Y value for the trend and the series represent the X value."
+		}
+	},
+	"Filters": {
+		"Filter": {
+			"Name": "Filter",
+			"Syntax": "FILTER(expr USING filter_expressions)",
+			"Example": "FILTER(\"Base Facts\".\"Revenue\" USING (\"Offices\".\"Office\" = 'Test'))",
+			"SyntaxHelp": "expr is any valid Column or expression. filter_expressions is a combination of expressions, operators and values that build up the filter logic.",
+			"Desc": "Filters the measure expr based on the conditions in filter_expressions."
+		}
+	}
+}

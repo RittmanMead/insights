@@ -1,0 +1,13 @@
+<div class="modal">
+	<div class="overlay" ng-click="cancel()"></div>
+	<div class="contents" style="width: 14%; left: 42%; text-align:center;">
+		<div class="header">{{ msg }}</div>
+		<md-input-container md-theme="dark">
+			<input ng-keypress="onKey($event)" aria-label="Text Input" ng-model="textVal"></input>
+		</md-input-container>
+		<div>
+			<mat-button size="mini" type="accent" icon="check" ng-click="accept()"></mat-button>
+			<mat-button size="mini" type="warn" icon="remove" ng-click="cancel()"></mat-button>
+		</div>
+	</div>
+</div>

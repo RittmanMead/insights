@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Insights Visualisation Builder</title>
+
+		<!-- Standard Libraries -->
+		<script src="/insights/js/lib/jquery.min.js"></script>
+		<script src="/insights/js/lib/jquery.xml2json.min.js"></script>
+		<script src="/insights/js/lib/d3.min.js"></script>
+		<script src="/insights/js/lib/angular.min.js"></script>
+		<script src="/insights/js/lib/angular-animate.min.js"></script>
+
+        <!-- Angular Material Library -->
+        <script src="/insights/js/lib/angular-aria.min.js"></script>
+        <script src="/insights/js/lib/angular-messages.min.js"></script>
+        <script src="/insights/js/lib/angular-material.min.js"></script>
+        <link rel="stylesheet" href="/insights/css/lib/angular-material.min.css">
+
+		<!-- Mapping Libraries -->
+		<script src="/insights/js/lib/leaflet.min.js"></script>
+		<script src="/insights/js/lib/leaflet.pip.min.js"></script>
+		<script src="/insights/js/lib/topojson.min.js"></script>
+		<link rel="stylesheet" href="/insights/css/lib/leaflet.css" />
+
+		<!-- OBIEE Integration Libraries -->
+        <script src="/insights/js/config.js"></script>
+        <script src="/insights/js/customConfig.js"></script>
+		<script src="/insights/js/obiee.js"></script>
+		<link	rel="stylesheet" type="text/css" href="/insights/css/insights.css">
+
+		<!-- UI Libraries -->
+		<script src="/insights/js/insights.js"></script>
+		<script src="/insights/js/lib/jquery-ui.min.js"></script>
+		<link	rel="stylesheet" type="text/css" href="/insights/css/lib/jquery-ui.min.css">
+		<script src="/insights/js/lib/modernizr.min.js"></script>
+		<script src="/insights/js/lib/fabric.min.js"></script>
+		<script src="/insights/js/lib/interact.min.js"></script>
+        <script src="/insights/js/lib/angular-sortable-view.min.js"></script>
+        <script src="/insights/js/lib/fontdetect.js"></script>
+		<script src="/insights/js/lib/angular-modal-service.min.js"></script>
+		<script src="/insights/js/lib/angular-selection-model.min.js"></script>
+        <script src="/insights/js/lib/tinycolor.min.js"></script>
+        <script src="/insights/js/lib/md-colour-picker.min.js"></script>
+        <link	rel="stylesheet" type="text/css" href="/insights/css/lib/md-colour-picker.min.css">
+
+		<!-- RMVPP Integration Libraries -->
+		<script src="/insights/js/rmvpp.js"></script>
+		<link	rel="stylesheet" type="text/css" href="/insights/css/rmvpp.css">
+
+		<!-- Icons -->
+        <link rel="stylesheet" href="/insights/icons/css/font-awesome.min.css">
+
+		<!-- Plugins -->
+
+		<!-- Table -->
+		<script src="/insights/plugins/table/lib/ag-grid.js"></script>
+		<script src="/insights/plugins/table/table.js"></script>
+		<link	rel="stylesheet" type="text/css" href="/insights/plugins/table/lib/ag-rm.css">
+
+		<!-- Bar Chart -->
+		<script src="/insights/plugins/bar/bar.js"></script>
+
+        <!-- Treemap -->
+		<script src="/insights/plugins/treemap/treemap.js"></script>
+
+        <!-- Chord -->
+		<script src="/insights/plugins/chord/chord.js"></script>
+
+		<!-- Word Cloud -->
+		<script src="/insights/plugins/word-cloud/lib/d3.layout.cloud.min.js"></script>
+		<script src="/insights/plugins/word-cloud/word-cloud.js"></script>
+
+		<!-- Pivot Table -->
+		<script src="/insights/plugins/pivot-table/lib/pivot.js"></script>
+		<link	rel="stylesheet" type="text/css" href="/insights/plugins/pivot-table/pivot-table.css">
+		<script src="/insights/plugins/pivot-table/pivot-table.js"></script>
+
+		<!-- Measure Tile -->
+		<script src="/insights/plugins/measure-tile/measure-tile.js"></script>
+
+        <!-- Radial Progress  -->
+        <script src="/insights/plugins/radial-progress/radial-progress.js"></script>
+
+		<!-- Pie Chart -->
+		<script src="/insights/plugins/pie/pie.js"></script>
+
+		<!-- Line Chart -->
+		<script src="/insights/plugins/line/line.js"></script>
+
+		<!-- Line/Bar Chart -->
+		<script src="/insights/plugins/line-bar/line-bar.js"></script>
+
+		<!-- Scatter Chart -->
+		<script src="/insights/plugins/scatter/scatter.js"></script>
+
+		<!-- Map (Bubbles) -->
+		<script src="/insights/plugins/map-bubbles/map-bubbles.js"></script>
+
+		<!-- Map (Heatmap) -->
+		<script src="/insights/plugins/map-heatmap/lib/leaflet-heat.min.js"></script>
+		<script src="/insights/plugins/map-heatmap/map-heatmap.js"></script>
+
+		<!-- Map (Cluster) -->
+		<script src="/insights/plugins/map-cluster/lib/leaflet.markercluster.min.js"></script>
+		<link	rel="stylesheet" type="text/css" href="/insights/plugins/map-cluster/lib/MarkerCluster.css">
+		<link	rel="stylesheet" type="text/css" href="/insights/plugins/map-cluster/lib/MarkerCluster.RM.css">
+		<script src="/insights/plugins/map-cluster/map-cluster.js"></script>
+
+		<!-- Map (Choropleth) -->
+		<script src="/insights/plugins/map-choropleth/map-choropleth.js"></script>
+
+		<!-- Sankey Chart -->
+		<script src="/insights/plugins/sankey/lib/d3.sankey.min.js"></script>
+		<script src="/insights/plugins/sankey/sankey.js"></script>
+
+        <!-- Radar Chart -->
+		<script src="/insights/plugins/radar/radar.js"></script>
+
+        <!-- Sunburst Chart -->
+		<script src="/insights/plugins/sunburst/sunburst.js"></script>
+
+		<!-- Define Angular App -->
+		<script>var app = angular.module('VisCreator', ['ngMaterial', 'ngAnimate', 'mdColorPicker', 'angular-sortable-view', 'angularModalService', 'selectionModel']);</script>
+		<script src="/insights/app/services/global.js"></script>
+        <script src="/insights/app/services/modals.js"></script>
+		<script src="/insights/app/states/visBuilder/visBuilder-controller.js"></script>
+		<script src="/insights/app/directives/directives.js"></script>
+	</head>
+	<body ng-app="VisCreator">
+		<div ng-controller="visBuilder" class="visBuilder">
+            <div class="mask overlay" style="opacity: 1; background: #FFFFFF;"></div>
+			<div loading="loading"></div>
+			<div ng-show="allowed">
+				<div class="topPane panel" ng-style="{left: leftPaneWidth + 'px', width: 'calc(100% - ' + leftPaneWidth + 'px'}">
+					<md-content md-theme="dark" layout="row">
+                        <section flex="60" layout="row">
+                            <section layout="row" style="margin-top: 3px;">
+                                <md-menu style="padding-top: 3px;" ng-if="!dashboardMode">
+                                    <md-button class="md-icon-button" style="display: inline;" aria-label="New" ng-click="openMenu($mdOpenMenu, $event)">
+                                        <md-tooltip md-theme="default">New</md-tooltip>
+                                        <md-icon style="vertical-align: inherit; font-size: 26px; color: white;" md-font-icon="fa-file" class="fa"></md-icon>
+                                    </md-button>
+                                    <md-menu-content width="3">
+                                        <md-menu-item><md-button ng-click="newVis()">Visualisation</md-button></md-menu-item>
+                                        <md-menu-item><md-button ng-click="newDB()()">Dashboard Page (Reset)</md-button></md-menu-item>
+                                    </md-menu-content>
+                                </md-menu>
+                                <mat-button flat label-pos="bottom" icon="file" label="New" ng-click="newDB()" ng-if="dashboardMode"></mat-button>
+                                <mat-button flat label-pos="bottom" icon="folder-open" label="{{ dashboardMode ? 'Open Dashboard' : 'Open Visualisation' }}" ng-click="openWebcat()"></mat-button>
+                                <mat-button ng-if="!file" flat label-pos="bottom" icon="save" label="Save" ng-click="saveToWebcat()"></mat-button>
+                                <md-menu ng-if="file" style="padding-top: 3px;">
+                                    <md-button class="md-icon-button" style="display: inline;" aria-label="Save" ng-click="openMenu($mdOpenMenu, $event)">
+                                        <md-tooltip md-theme="default">Save</md-tooltip>
+                                        <md-icon style="vertical-align: inherit; font-size: 26px; color: white;" md-font-icon="fa-save" class="fa"></md-icon>
+                                    </md-button>
+                                    <md-menu-content width="3">
+                                        <md-menu-item><md-button ng-click="saveToWebcat()">Save</md-button></md-menu-item>
+                                        <md-menu-item><md-button ng-click="saveAs()">Save As...</md-button></md-menu-item>
+                                    </md-menu-content>
+                                </md-menu>
+                            </section>
+                            <section layout="row" style="margin-top: 3px;" ng-if="!dashboardMode">
+                                <mat-button flat label-pos="bottom" icon="tachometer" label="Dashboard Mode"  ng-click="switchDashboardMode()"></mat-button>
+                                <mat-button flat label-pos="bottom" icon="cogs" label="Options" ng-click="toggleOptions()"></mat-button>
+                                <mat-button flat label-pos="bottom" icon="columns" label="New Column" ng-click="toggleNewColumn()"></mat-button>
+                                <mat-button flat label-pos="bottom" icon="play" label="Run" ng-click="renderVis()"></mat-button>
+                            </section>
+                            <section layout="row" style="margin-top: 3px;" ng-if="dashboardMode">
+                                <mat-button flat label-pos="bottom" icon="bar-chart" label="Visualisation Mode"  ng-click="switchVisMode()"></mat-button>
+                                <mat-button ng-show="!panesShown" flat label-pos="bottom" icon="eye"  ng-click="showPanes()" label="Show Panes" flat></mat-button>
+                                <mat-button ng-show="panesShown" flat label-pos="bottom" icon="eye-slash"  ng-click="hidePanes()" label="Hide Panes" flat></mat-button>
+                                <mat-button ng-show="!editMode" flat label-pos="bottom" icon="pencil" label="Edit Layout" ng-click="toggleEditMode()"></mat-button>
+                                <mat-button ng-show="editMode" flat label-pos="bottom" icon="lock" label="Lock Layout" ng-click="toggleEditMode()"></mat-button>
+                                <mat-button flat label-pos="bottom" icon="exchange" label="Interactivity" ng-click="toggleInts()"></mat-button>
+                                <mat-button flat label-pos="bottom" icon="refresh" label="Refresh" ng-click="reloadDB()"></mat-button>
+                                <mat-button flat label-pos="bottom" icon="television" label="Run Dashboard" ng-click="preview()"></mat-button>
+                                <mat-button ng-show="!designMode" flat label-pos="bottom" icon="paint-brush" label="Design Mode" ng-click="toggleDesignMode()"></mat-button>
+                                <mat-button ng-show="designMode" flat label-pos="bottom" icon="lock" label="Lock Design Mode" ng-click="toggleDesignMode()"></mat-button>
+                            </section>
+                            <section ng-if="!dashboardMode">
+                                <md-input-container md-theme="dark" style="font-size: 14px;">
+                                    <label>Plugin</label>
+                                    <md-select ng-model="$parent.plugin" ng-change="changePlugin()">
+                                        <md-option ng-repeat="p in plugins" value="{{ p.id }}">{{ p.displayName }}</md-option>
+                                    </md-select>
+                                </md-input-container>
+                                <mat-button flat label-pos="bottom" icon="info" label="Plugin Details" ng-click="pluginHelp()"></mat-button>
+                            </section>
+                        </section>
+                        <section flex="20">
+                            <md-input-container md-theme="dark" style="font-size: 14px;" ng-if="file">
+                    			<label>Current</label>
+                    			<input disabled style="font-size: 16px;" ng-model="file"></input>
+                    		</md-input-container>
+                        </section>
+                        <section flex="20" layout="row" layout-align="center start">
+                            <mat-button size="mini" label-pos="bottom" icon="home" label="Portal" ng-click="home()"></mat-button>
+                            <mat-button size="mini" label-pos="bottom" icon="question" label="Help" ng-click="dashboardMode ? dbHelp() : visHelp()"></mat-button>
+                            <mat-button size="mini" ng-if="logoffBtn" label-pos="bottom" icon="sign-out" label="Sign Out" ng-click="logoff()"></mat-button>
+                        </section>
+                    </md-content>
+				</div>
+				<div resize edge-right="true" callback="updateLeftPaneWidth" ng-style="{width: leftPaneWidth + 'px', overflow: designMode ? 'hidden' : ''}" class="leftPane panel">
+					<div ng-show="!designMode && leftPaneWidth > 60" subject-area="subjectArea" metadata="metadata" change="changeSubjectArea" subject-areas="subjectAreas"></div> <!-- Subject Area -->
+					<div ng-if="designMode" ng-show="leftPaneWidth > 60">
+						<div designer bi-canvas="db.Canvas"></div>
+					</div>
+                    <div class="expandBtn" ng-style="{'width' : leftPaneWidth + 'px'}" ng-show="leftPaneWidth <= 60" ng-click="showPanes()">
+                        <i class="fa fa-chevron-right"></i>
+                    </div>
+				</div>
+				<!-- Visualisation pane - different for vis/dashboard editors -->
+				<div ng-if="!dashboardMode" resize edge-left="true" callback="updateRightPaneWidth"
+					 ng-style="{width: rightPaneWidth + 'px', left: 'calc(100% - ' + rightPaneWidth + 'px)'}" class="rightPane scrollContainer panel">
+                    <md-content md-theme="dark">
+                        <md-subheader class="visListButton" style="text-align: center; height: 46px; overflow: hidden; cursor: pointer;" ng-click="storeVis()">
+                            <span>Visualisations<md-tooltip md-theme="default">Store</md-tooltip></span>
+                            <md-icon class="md-secondary md-accent fa" md-font-icon="fa-plus"></md-icon>
+                        </md-subheader>
+                        <md-list-item ng-repeat="v in visArray" ng-click="setCurrentVis(v.Name)">
+                            <p>
+                                <md-icon class="fa" style="margin-right: 5px;" ng-class="v.Name == currentVis ? 'md-primary' : ''" md-font-icon="{{ 'fa-' + getPluginIcon(v) }}"></md-icon>
+                                <span>{{ v.DisplayName }}</span>
+                            </p>
+                            <md-icon class="md-secondary fa small" aria-label="Rename" md-font-icon="fa-pencil" ng-click="renameVis(v)">
+                                <md-tooltip md-theme="default">Rename</md-tooltip>
+                            </md-icon>
+                            <md-icon class="md-secondary md-warn fa" md-font-icon="fa-remove" aria-label="Remove" ng-click="removeVis(v)">
+                                <md-tooltip md-theme="default">Remove</md-tooltip>
+                            </md-icon>
+                        </md-list-item>
+                    </md-content>
+				</div>
+				<div ng-if="dashboardMode" resize edge-left="true" callback="updateRightPaneWidth"
+					 ng-style="{width: rightPaneWidth + 'px', left: 'calc(100% - ' + rightPaneWidth + 'px)'}" class="rightPane panel">
+                     <div style="height:100%; width: 100%; position: absolute;">
+                         <md-content md-theme="dark" ng-show="!designMode" style="max-height: 100%;" class="scrollContainer">
+                             <md-subheader style="text-align: center;">
+                                 <span>Visualisations</span>
+                             </md-subheader>
+                             <md-list-item ng-repeat="v in visArray" drag move="'withScroll'" data-vis-name="{{ v.Name }}" class="dragVis" ng-click="dummy()">
+                                 <p>
+                                     <md-icon class="fa" style="margin-right: 5px;" md-font-icon="{{ 'fa-' + getPluginIcon(v) }}"></md-icon>
+                                     <span>{{ v.DisplayName }}</span>
+                                 </p>
+                                 <md-icon class="md-secondary fa small" aria-label="Edit" md-font-icon="fa-pencil" ng-click="editVis(v)">
+                                     <md-tooltip md-theme="default">Edit</md-tooltip>
+                                 </md-icon>
+                                 <md-icon class="md-secondary md-warn fa" aria-label="Remove" md-font-icon="fa-remove" ng-click="removeVis(v)">
+                                     <md-tooltip md-theme="default">Remove</md-tooltip>
+                                 </md-icon>
+                             </md-list-item>
+                         </md-content>
+                    </div>
+				</div>
+				<div class="mainContent" ng-style="{ 'margin-left': leftPaneWidth + 'px', 'margin-right' : rightPaneWidth + 'px'}">
+					<!-- Visualisation mode -->
+					<div ng-if="!dashboardMode">
+						<!-- New/Edit Column Dialogue -->
+						<div edit-column ng-if="editColumn.show" column="editColumn.column" metadata="metadata" in-subject-area="subjectArea" edit-mode="editColumn.show"
+							 main-panel new-mode="editColumn.newMode"></div>
+						<div column-config ng-if="editColumn.config" column="editColumn.column" config="editColumn.config" plugin="plugin"
+							 main-panel></div>
+
+						<!-- Column and Config Parameters -->
+						<div ng-show="showOptions && !editColumn.show && !editColumn.config" class="visOptions" main-panel>
+                            <div tabset="['Column Mappings', 'Configuration', 'Filters', 'Conditional Formatting']" selected-tab="$parent.visTab"></div>
+                            <div ng-show="visTab == 'Column Mappings'" column-map colmap-params="colmapParams" vis-columns="vis.ColumnMap" drop-fns="dropFunctions"></div>
+                            <div ng-show="visTab == 'Configuration'" config-form config-params="configParams" config-vals="vis.Config"></div>
+                            <div ng-show="visTab == 'Filters'" filters="filters"></div>
+                            <div ng-show="visTab == 'Conditional Formatting'" conditional-formats cond-formats="vis.ConditionalFormats" plugin="vis.Plugin" vis-columns="vis.ColumnMap"></div>
+						</div>
+						<div class="singleVis visualisation"></div>
+					</div>
+					<div ng-if="dashboardMode">
+						<div ng-show="showInteracts" main-panel>
+							<div tabset="['Interactions', 'Drilldowns', 'Column Selectors', 'Visual Selectors']" selected-tab="$parent.intOption"></div>
+							<div interactions="db.Interactions" visuals="db.Visuals" ng-if="intOption == 'Interactions'"></div>
+							<div drilldowns="db.Drilldowns" visuals="db.Visuals" edit-mode="false" db-path="db.Path" ng-if="intOption == 'Drilldowns'"></div>
+							<div col-selectors="db.ColumnSelectors" visuals="db.Visuals" edit-mode="false" db-path="db.Path"
+								 ng-if="intOption == 'Column Selectors'"></div>
+							<div vis-selectors="db.VisualSelectors" visuals="db.Visuals" edit-mode="false" db-path="db.Path"
+								 ng-if="intOption == 'Visual Selectors'"></div>
+						</div>
+						<div drop-vis callback="addVis" ng-style="{  background: 'white', position: 'fixed', height: '100%', width: 'calc(100% - ' + (leftPaneWidth + rightPaneWidth) + 'px)' }"></div>
+						<div class="dbLayout">
+							<div dashboard-page db="$parent.db" design-mode="designMode"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="error pageText" ng-show="!allowed">
+				<i class="fa fa-times-circle"></i>
+				<span>Insufficient app privileges to view this page.</span>
+			</div>
+		</div>
+	</body>
+</html>

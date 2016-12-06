@@ -1,0 +1,502 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Insights API</title>
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css"/>
+    <link type="text/css" rel="stylesheet" href="styles/insights-doc.css"/>
+    <script src="/insights/js/lib/jquery.min.js"> </script>
+    <link type="text/css" rel="stylesheet" href="/insights/icons/css/font-awesome.min.css"/>
+  </head>
+  <body>
+    <script type="text/javascript">
+			document.getElementsByTagName("body")[0].style.display = "none";
+
+			function loadFunc() {
+
+			$(".navbar .search input").keyup(function() {
+				expandAll();
+				var val = $(this).val().toLowerCase();
+				$(".navbar li>a").each(function() {
+					var link = $(this).text().toLowerCase();
+					if (link.indexOf(val) >= 0) {
+						$(this).show();
+					} else {
+						$(this).hide();
+					}
+				});
+			});
+			$("nav h3").click(function(){
+				$(this).next().animate({ height: "toggle" });
+				if ($(this).find(".toggleList").hasClass("collapse")) {
+					$(this).find(".toggleList").removeClass("collapse");
+					$(this).find(".toggleList").text("+");
+				} else {
+					$(this).find(".toggleList").addClass("collapse");
+					$(this).find(".toggleList").text("-");
+				}
+			});
+
+			function collapseAll() {
+				$(".toggleList").text("+").removeClass("collapse").parent().next().animate({height: "hide"});
+			}
+
+			function expandAll() {
+				$(".toggleList").text("-").addClass("collapse").parent().next().animate({height: "show"});
+			}
+
+			document.getElementsByTagName("body")[0].style.display = "block";
+}
+
+window.onload = loadFunc;</script>
+    <div id="main">
+      <div class="header-banner">
+        <h1 class="page-title">Class: BICanvas</h1>
+        <a class="homeBtn" href="/insights/docs">
+          <i class="fa fa-home"> </i>
+        </a>
+      </div>
+      <section>
+        <header>
+          <h2><span class="ancestors"><a href="module-obiee.html">obiee</a>.</span>BICanvas</h2>
+          <div class="class-description">
+            <p>Describes canvas element for custom drawing and annotations.</p>
+          </div>
+        </header>
+        <article>
+          <div class="container-overview">
+            <h2>Constructor</h2>
+            <hr/>
+            <h4 class="name" id="BICanvas"><span class="type-signature"/>new BICanvas<span class="signature">(json<span class="signature-attributes">opt</span>, container<span class="signature-attributes">opt</span>, width<span class="signature-attributes">opt</span>, height<span class="signature-attributes">opt</span>)</span><span class="type-signature"/></h4>
+            <h5>Parameters:</h5>
+            <table class="params">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Type</th>
+                  <th>Attributes</th>
+                  <th>Default</th>
+                  <th class="last">Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="name">
+                    <code>json</code>
+                  </td>
+                  <td class="type">
+                    <span class="param-type">object</span>
+                  </td>
+                  <td class="attributes">
+                
+                    &lt;optional><br/>
+                
+
+                
+
+                
+                </td>
+                  <td class="default">
+                
+                    {}
+                
+                </td>
+                  <td class="description last">
+                    <p>Fabric JSON export of the canvas object.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="name">
+                    <code>container</code>
+                  </td>
+                  <td class="type">
+                    <span class="param-type">DOM</span>
+                  </td>
+                  <td class="attributes">
+                
+                    &lt;optional><br/>
+                
+
+                
+
+                
+                </td>
+                  <td class="default">
+                
+                </td>
+                  <td class="description last">
+                    <p>Dashboard page container element which is the parent of the canvas.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="name">
+                    <code>width</code>
+                  </td>
+                  <td class="type">
+                    <span class="param-type">width</span>
+                  </td>
+                  <td class="attributes">
+                
+                    &lt;optional><br/>
+                
+
+                
+
+                
+                </td>
+                  <td class="default">
+                
+                    0
+                
+                </td>
+                  <td class="description last">
+                    <p>Canvas width in pixels.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="name">
+                    <code>height</code>
+                  </td>
+                  <td class="type">
+                    <span class="param-type">height</span>
+                  </td>
+                  <td class="attributes">
+                
+                    &lt;optional><br/>
+                
+
+                
+
+                
+                </td>
+                  <td class="default">
+                
+                    0
+                
+                </td>
+                  <td class="description last">
+                    <p>Canvas height in pixels.</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <dl class="details">
+              <dt class="tag-source">Source:</dt>
+              <dd class="tag-source">
+                <ul class="dummy">
+                  <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line4171">line 4171</a></li>
+                </ul>
+              </dd>
+            </dl>
+          </div>
+          <h3 class="subsection-title">Members</h3>
+          <hr/>
+          <h4 class="name" id="Container"><span class="type-signature"/>Container<span class="type-signature"/></h4>
+          <div class="description">
+            <p>DOM container element for the canvas.</p>
+          </div>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line4183">line 4183</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id="Element"><span class="type-signature"/>Element<span class="type-signature"/></h4>
+          <div class="description">
+            <p>Fabric canvas element containing all custom text and images on the dashboard.</p>
+          </div>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line4186">line 4186</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id="Height"><span class="type-signature"/>Height<span class="type-signature"/></h4>
+          <div class="description">
+            <p>Gives the height of the canvas in pixels.</p>
+          </div>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line4180">line 4180</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id="Width"><span class="type-signature"/>Width<span class="type-signature"/></h4>
+          <div class="description">
+            <p>Gives the width of the canvas in pixels.</p>
+          </div>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line4177">line 4177</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <h3 class="subsection-title">Methods</h3>
+          <hr/>
+          <h4 class="name" id="create"><span class="type-signature"/>create<span class="signature">(container, Width, Height)</span><span class="type-signature"/></h4>
+          <div class="description">
+            <p>Create a FabricJS canvas element and attaches it to <code>this.Element</code>. If it already exists, the function resizes and refreshes it.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>container</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">DOM</span>
+                </td>
+                <td class="description last">
+                  <p>Container element for the canvas</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>Width</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">width</span>
+                </td>
+                <td class="description last">
+                  <p>of the canvas in pixels.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>Height</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">height</span>
+                </td>
+                <td class="description last">
+                  <p>of the canvas in pixels.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line4195">line 4195</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <h5>Returns:</h5>
+          <div class="param-desc">
+            <p>canvas</p>
+          </div>
+          <hr/>
+          <h4 class="name" id="deselectAll"><span class="type-signature"/>deselectAll<span class="signature">()</span><span class="type-signature"/></h4>
+          <div class="description">
+            <p>Deselects all canvas objects.</p>
+          </div>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line4234">line 4234</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id="refresh"><span class="type-signature"/>refresh<span class="signature">(Width, Height)</span><span class="type-signature"/></h4>
+          <div class="description">
+            <p>Refreshes and resizes canvas element. Automatically expands canvas to contain all canvas objects.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>Width</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">width</span>
+                </td>
+                <td class="description last">
+                  <p>of the canvas in pixels.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>Height</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">height</span>
+                </td>
+                <td class="description last">
+                  <p>of the canvas in pixels.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line4220">line 4220</a></li>
+              </ul>
+            </dd>
+          </dl>
+        </article>
+      </section>
+    </div>
+    <nav>
+      <div class="navbar">
+        <h2>
+          <a href="index.html">Home</a>
+        </h2>
+        <div class="search">
+          <span>Search</span>
+          <input/>
+        </div>
+        <h3>Modules<span class="toggleList collapse">-</span></h3>
+        <ul>
+          <li>
+            <a href="module-insights.html">insights</a>
+          </li>
+          <li>
+            <a href="module-InsightsConfig.html">InsightsConfig</a>
+          </li>
+          <li>
+            <a href="module-obiee.html">obiee</a>
+          </li>
+          <li>
+            <a href="module-rmvpp.html">rmvpp</a>
+          </li>
+        </ul>
+        <h3>Classes<span class="toggleList collapse">-</span></h3>
+        <ul>
+          <li>
+            <a href="module-obiee.BIBreadcrumb.html">BIBreadcrumb</a>
+          </li>
+          <li>
+            <a href="module-obiee.BICanvas.html">BICanvas</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIColumn.html">BIColumn</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIColumnSelector.html">BIColumnSelector</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIConditionalFormat.html">BIConditionalFormat</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIDashboardPage.html">BIDashboardPage</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIDrilldown.html">BIDrilldown</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIFilter.html">BIFilter</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIFilterGroup.html">BIFilterGroup</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIInteraction.html">BIInteraction</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIPermission.html">BIPermission</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIPres.html">BIPres</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIPrompt.html">BIPrompt</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIQuery.html">BIQuery</a>
+          </li>
+          <li>
+            <a href="module-obiee.BISort.html">BISort</a>
+          </li>
+          <li>
+            <a href="module-obiee.BITable.html">BITable</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIVariable.html">BIVariable</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIVisual.html">BIVisual</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIVisualSelector.html">BIVisualSelector</a>
+          </li>
+          <li>
+            <a href="module-rmvpp.Chart.html">Chart</a>
+          </li>
+          <li>
+            <a href="module-rmvpp.Legend.html">Legend</a>
+          </li>
+          <li>
+            <a href="module-rmvpp.Tooltip.html">Tooltip</a>
+          </li>
+        </ul>
+        <h3>Members<span class="toggleList collapse">-</span></h3>
+        <ul>
+          <li>
+            <a href="#Container">Container</a>
+          </li>
+          <li>
+            <a href="#Element">Element</a>
+          </li>
+          <li>
+            <a href="#Height">Height</a>
+          </li>
+          <li>
+            <a href="#Width">Width</a>
+          </li>
+        </ul>
+        <h3>Methods<span class="toggleList collapse">-</span></h3>
+        <ul>
+          <li>
+            <a href="#create">create</a>
+          </li>
+          <li>
+            <a href="#deselectAll">deselectAll</a>
+          </li>
+          <li>
+            <a href="#refresh">refresh</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <br class="clear"/>
+    <script> prettyPrint(); </script>
+    <script src="scripts/linenumber.js"> </script>
+  </body>
+</html>
+

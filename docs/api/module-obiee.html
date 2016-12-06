@@ -1,0 +1,3644 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Insights API</title>
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css"/>
+    <link type="text/css" rel="stylesheet" href="styles/insights-doc.css"/>
+    <script src="/insights/js/lib/jquery.min.js"> </script>
+    <link type="text/css" rel="stylesheet" href="/insights/icons/css/font-awesome.min.css"/>
+  </head>
+  <body>
+    <script type="text/javascript">
+			document.getElementsByTagName("body")[0].style.display = "none";
+
+			function loadFunc() {
+
+			$(".navbar .search input").keyup(function() {
+				expandAll();
+				var val = $(this).val().toLowerCase();
+				$(".navbar li>a").each(function() {
+					var link = $(this).text().toLowerCase();
+					if (link.indexOf(val) >= 0) {
+						$(this).show();
+					} else {
+						$(this).hide();
+					}
+				});
+			});
+			$("nav h3").click(function(){
+				$(this).next().animate({ height: "toggle" });
+				if ($(this).find(".toggleList").hasClass("collapse")) {
+					$(this).find(".toggleList").removeClass("collapse");
+					$(this).find(".toggleList").text("+");
+				} else {
+					$(this).find(".toggleList").addClass("collapse");
+					$(this).find(".toggleList").text("-");
+				}
+			});
+
+			function collapseAll() {
+				$(".toggleList").text("+").removeClass("collapse").parent().next().animate({height: "hide"});
+			}
+
+			function expandAll() {
+				$(".toggleList").text("-").addClass("collapse").parent().next().animate({height: "show"});
+			}
+
+			document.getElementsByTagName("body")[0].style.display = "block";
+}
+
+window.onload = loadFunc;</script>
+    <div id="main">
+      <div class="header-banner">
+        <h1 class="page-title">Module: obiee</h1>
+        <a class="homeBtn" href="/insights/docs">
+          <i class="fa fa-home"> </i>
+        </a>
+      </div>
+      <section>
+        <header>
+    
+        
+            
+        
+    
+</header>
+        <article>
+          <div class="container-overview">
+            <div class="description">
+              <p>OBIEE integration module containing all of the functions required to interface with the BI server. This
+includes session management, dynamic querying, metadata management and catalogue interface.</p>
+            </div>
+            <dl class="details">
+              <dt class="tag-source">Source:</dt>
+              <dd class="tag-source">
+                <ul class="dummy">
+                  <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line12">line 12</a></li>
+                </ul>
+              </dd>
+            </dl>
+          </div>
+          <h3 class="subsection-title">Classes</h3>
+          <dl>
+            <dt>
+              <a href="module-obiee.BIBreadcrumb.html">BIBreadcrumb</a>
+            </dt>
+            <dd/>
+            <dt>
+              <a href="module-obiee.BICanvas.html">BICanvas</a>
+            </dt>
+            <dd/>
+            <dt>
+              <a href="module-obiee.BIColumn.html">BIColumn</a>
+            </dt>
+            <dd/>
+            <dt>
+              <a href="module-obiee.BIColumnSelector.html">BIColumnSelector</a>
+            </dt>
+            <dd/>
+            <dt>
+              <a href="module-obiee.BIConditionalFormat.html">BIConditionalFormat</a>
+            </dt>
+            <dd/>
+            <dt>
+              <a href="module-obiee.BIDashboardPage.html">BIDashboardPage</a>
+            </dt>
+            <dd/>
+            <dt>
+              <a href="module-obiee.BIDrilldown.html">BIDrilldown</a>
+            </dt>
+            <dd/>
+            <dt>
+              <a href="module-obiee.BIFilter.html">BIFilter</a>
+            </dt>
+            <dd/>
+            <dt>
+              <a href="module-obiee.BIFilterGroup.html">BIFilterGroup</a>
+            </dt>
+            <dd/>
+            <dt>
+              <a href="module-obiee.BIInteraction.html">BIInteraction</a>
+            </dt>
+            <dd/>
+            <dt>
+              <a href="module-obiee.BIPermission.html">BIPermission</a>
+            </dt>
+            <dd/>
+            <dt>
+              <a href="module-obiee.BIPres.html">BIPres</a>
+            </dt>
+            <dd/>
+            <dt>
+              <a href="module-obiee.BIPrompt.html">BIPrompt</a>
+            </dt>
+            <dd/>
+            <dt>
+              <a href="module-obiee.BIQuery.html">BIQuery</a>
+            </dt>
+            <dd/>
+            <dt>
+              <a href="module-obiee.BISort.html">BISort</a>
+            </dt>
+            <dd/>
+            <dt>
+              <a href="module-obiee.BITable.html">BITable</a>
+            </dt>
+            <dd/>
+            <dt>
+              <a href="module-obiee.BIVariable.html">BIVariable</a>
+            </dt>
+            <dd/>
+            <dt>
+              <a href="module-obiee.BIVisual.html">BIVisual</a>
+            </dt>
+            <dd/>
+            <dt>
+              <a href="module-obiee.BIVisualSelector.html">BIVisualSelector</a>
+            </dt>
+            <dd/>
+          </dl>
+          <h3 class="subsection-title">Members</h3>
+          <hr/>
+          <h4 class="name" id=".BIVariables"><span class="type-signature">(static) </span>BIVariables<span class="type-signature"/></h4>
+          <div class="description">
+            <p>Stores BI server and session variables on page load based on the user's session.</p>
+          </div>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line4332">line 4332</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".wsdl"><span class="type-signature">(static) </span>wsdl<span class="type-signature"/></h4>
+          <div class="description">
+            <p>Holds version of OBIEE WSDL file, containing SOAP structure for all available methods.
+11.1.1.7 has v8 as the latest, 11.1.1.9 has v9 and 12c has v12. These are generally compatible with
+each other but the version can be changed/overidden here if necessary.</p>
+          </div>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line26">line 26</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <h3 class="subsection-title">Methods</h3>
+          <hr/>
+          <h4 class="name" id=".applyToColumnMap"><span class="type-signature">(static) </span>applyToColumnMap<span class="signature">(columnMap, func)</span><span class="type-signature"/></h4>
+          <div class="description">
+            <p>Applies a function to all columns in column map.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>columnMap</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">object</span>
+                </td>
+                <td class="description last">
+                  <p>Column Map objects have properties containing <code>BIColumn</code> objects or arrays of them.
+The precise structure is determined by the plugin itself.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>func</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="description last">
+                  <p>The function to apply to each of the <code>BIColumn</code> objects.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2466">line 2466</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".copyWebcatItem"><span class="type-signature">(static) </span>copyWebcatItem<span class="signature">(srcPath, destPath, successFunc, errFunc)</span><span class="type-signature"/></h4>
+          <div class="description">
+            <p>Copies a web catalogue item or folder from a given path to another.
+Security permission of the object is retained through the copy.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>srcPath</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">String</span>
+                </td>
+                <td class="description last">
+                  <p>Web catalogue path to move from.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>destPath</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">String</span>
+                </td>
+                <td class="description last">
+                  <p>Web catalogue path to move to.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>successFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="description last">
+                  <p>Callback function to execute on success</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>errFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="description last">
+                  <p>Callback function to execute on failure</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line856">line 856</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".createInteraction"><span class="type-signature">(static) </span>createInteraction<span class="signature">(interaction, Angular)</span><span class="type-signature"/></h4>
+          <div class="description">
+            <p>Activate triggers and functions for interactions.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>interaction</code>
+                </td>
+                <td class="type"><span class="param-type">BIInteraction</span>
+|
+
+<span class="param-type">BIDrilldown</span>
+
+
+            
+            </td>
+                <td class="description last">
+                  <p>Interaction or drilldown to activate.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>Angular</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">scope</span>
+                </td>
+                <td class="description last">
+                  <p>scope to pass through for triggering dashboard wide events.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2786">line 2786</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".createWebcatFolder"><span class="type-signature">(static) </span>createWebcatFolder<span class="signature">(path, successFunc, errFunc)</span><span class="type-signature"/></h4>
+          <div class="description">
+            <p>Creates a web catalogue folder at a given path. Creates intermediate folders if they do not exist.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>path</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">String</span>
+                </td>
+                <td class="description last">
+                  <p>Web catalogue path to fetch objects from</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>successFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="description last">
+                  <p>Callback function to execute on success</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>errFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="description last">
+                  <p>Callback function to execute on failure</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line832">line 832</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".deleteWebcatItem"><span class="type-signature">(static) </span>deleteWebcatItem<span class="signature">(path, successFunc, errFunc)</span><span class="type-signature"/></h4>
+          <div class="description">
+            <p>Deletes a web catalogue item or folder at a given path.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>path</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">String</span>
+                </td>
+                <td class="description last">
+                  <p>Web catalogue path to fetch objects from.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>successFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="description last">
+                  <p>Callback function to execute on success.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>errFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="description last">
+                  <p>Callback function to execute on failure.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line811">line 811</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".executeLSQL"><span class="type-signature">(static) </span>executeLSQL<span class="signature">(lsql, successFunc, biQuery, errFunc)</span><span class="type-signature"> &rarr; {Array}</span></h4>
+          <div class="description">
+            <p>Executes a logical SQL statement against the BI Server.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>lsql</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">String</span>
+                </td>
+                <td class="description last">
+                  <p>Logical SQL to execute</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>successFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="description last">
+                  <p>Callback function to execute on success</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>biQuery</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">BIQuery</span>
+                </td>
+                <td class="description last">
+                  <p>BIQuery object which can be used to name columns on the resulting dataset</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>errFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="description last">
+                  <p>Callback function to execute on failure</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line391">line 391</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <h5>Returns:</h5>
+          <div class="param-desc">
+            <p>Resulting dataset from the BI Server. Each element represents a row, and contains an object where each property is a column.
+If a BIQuery object was provided, column names will be used for object property names.</p>
+          </div>
+          <dl>
+            <dt>
+        Type
+    </dt>
+            <dd>
+              <span class="param-type">Array</span>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".executeXMLFile"><span class="type-signature">(static) </span>executeXMLFile<span class="signature">(xmlFile, successFunc)</span><span class="type-signature"> &rarr; {Array}</span></h4>
+          <div class="description">
+            <p>Executes a query from a file containing OBIEE analysis XML.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>xmlFile</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">String</span>
+                </td>
+                <td class="description last">
+                  <p>URL to XML file containing an OBIEE analysis</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>successFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="description last">
+                  <p>Callback function to execute on success</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line371">line 371</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <h5>Returns:</h5>
+          <div class="param-desc">
+            <p>Resulting dataset from the BI Server. Each element represents a row, and contains an object where each property is a column.</p>
+          </div>
+          <dl>
+            <dt>
+        Type
+    </dt>
+            <dd>
+              <span class="param-type">Array</span>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".fetchVariables"><span class="type-signature">(static) </span>fetchVariables<span class="signature">()</span><span class="type-signature"/></h4>
+          <div class="description">
+            <p>Fetches and cleans variables, then stores them in <code>obiee.BIVariables</code></p>
+          </div>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2716">line 2716</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".fetchWebcatObjects"><span class="type-signature">(static) </span>fetchWebcatObjects<span class="signature">(path, successFunc, errFunc, mask, permMask, includeACL, rmOnly)</span><span class="type-signature"> &rarr; {Array.&lt;object>}</span></h4>
+          <div class="description">
+            <p>Fetches object definitions from a single web catalogue path or folder. Folders will return all of the child
+elements if required.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>path</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">string</span>
+                </td>
+                <td class="description last">
+                  <p>Web catalogue path to fetch objects from.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>successFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="description last">
+                  <p>Callback function to execute on success.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>errFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="description last">
+                  <p>Callback function to execute on failure.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>mask</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">string</span>
+                </td>
+                <td class="description last">
+                  <p>Filters on object name, using <code>*</code> as a wildcard.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>permMask</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">integer</span>
+                </td>
+                <td class="description last">
+                  <p>Integer representing binary interpretation of object permissions for the user. E.g. 3 for read, 65535 for full control.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>includeACL</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">boolean</span>
+                </td>
+                <td class="description last">
+                  <p>Retrieves the catalogue permissions for the user and attaches it to a property, <code>permissions</code>.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>rmOnly</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">boolean</span>
+                </td>
+                <td class="description last">
+                  <p>Only rerieves objects saved by RM Insights. This is identified by the item having a property with name 'RM-Version'.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line681">line 681</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <h5>Returns:</h5>
+          <div class="param-desc">
+            <p>Array of web catalogue definitions. Among other things, elements contain: caption (name), description, path, type (object or folder), signature (object type), properties (like version number).</p>
+          </div>
+          <dl>
+            <dt>
+        Type
+    </dt>
+            <dd>
+              <span class="param-type">Array.&lt;object></span>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".getAccounts"><span class="type-signature">(static) </span>getAccounts<span class="signature">(successFunc, errFunc, mask<span class="signature-attributes">opt</span>, type<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Array.&lt;object>}</span></h4>
+          <div class="description">
+            <p>Fetches all application roles or users defined in OBIEE</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Attributes</th>
+                <th>Default</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>successFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+                <td class="default">
+                
+                </td>
+                <td class="description last">
+                  <p>Success function passing the returned output.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>errFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+                <td class="default">
+                
+                </td>
+                <td class="description last">
+                  <p>Error handling function passing the error message.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>mask</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">string</span>
+                </td>
+                <td class="attributes">
+                
+                    &lt;optional><br/>
+                
+
+                
+
+                
+                </td>
+                <td class="default">
+                
+                    *
+                
+                </td>
+                <td class="description last">
+                  <p>Search string to only fetch certain records</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>type</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">string</span>
+                </td>
+                <td class="attributes">
+                
+                    &lt;optional><br/>
+                
+
+                
+
+                
+                </td>
+                <td class="default">
+                
+                    2
+                
+                </td>
+                <td class="description last">
+                  <p>Choose 1 for users and 2 for application roles.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line975">line 975</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <h5>Returns:</h5>
+          <div class="param-desc">
+            <p>Array of objects describing the true name, GUID and display name for each account.</p>
+          </div>
+          <dl>
+            <dt>
+        Type
+    </dt>
+            <dd>
+              <span class="param-type">Array.&lt;object></span>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".getAppRoles"><span class="type-signature">(static) </span>getAppRoles<span class="signature">(successFunc, errFunc)</span><span class="type-signature"> &rarr; {Array.&lt;string>}</span></h4>
+          <div class="description">
+            <p>Gets a list of all application roles belonging to the current user.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>successFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="description last">
+                  <p>Callback function upon successful retrieval of application roles.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>errFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="description last">
+                  <p>Callback function to execute upon failure.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line196">line 196</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <h5>Returns:</h5>
+          <div class="param-desc">
+            <p>List of application roles belonging to the user.</p>
+          </div>
+          <dl>
+            <dt>
+        Type
+    </dt>
+            <dd>
+              <span class="param-type">Array.&lt;string></span>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".getColIDFromName"><span class="type-signature">(static) </span>getColIDFromName<span class="signature">(name, columnMap)</span><span class="type-signature"> &rarr; {string}</span></h4>
+          <div class="description">
+            <p>Get simplified column map ID from a true column name.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>name</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">string</span>
+                </td>
+                <td class="description last">
+                  <p>Column name as specified by the <code>Name</code> attribute of the <code>BIColumn</code> object.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>columnMap</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">Object</span>
+                </td>
+                <td class="description last">
+                  <p>Column Map objects have properties containing <code>BIColumn</code> objects or arrays of them.
+The precise structure is determined by the plugin itself.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2561">line 2561</a></li>
+              </ul>
+            </dd>
+            <dt class="tag-see">See:</dt>
+            <dd class="tag-see">
+              <ul>
+                <li>
+                  <a href="#.simplifyColumnMap">simplifyColumnMap</a>
+                </li>
+                <li>
+                  <a href="#.getColIDFromID">getColIDFromID</a>
+                </li>
+              </ul>
+            </dd>
+          </dl>
+          <h5>Returns:</h5>
+          <div class="param-desc">
+            <p>Column ID as represented by the simplified column map.</p>
+          </div>
+          <dl>
+            <dt>
+        Type
+    </dt>
+            <dd>
+              <span class="param-type">string</span>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".getColNameFromID"><span class="type-signature">(static) </span>getColNameFromID<span class="signature">(id, columnMap)</span><span class="type-signature"> &rarr; {string}</span></h4>
+          <div class="description">
+            <p>Get true column name from a simplified column map ID.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>id</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">string</span>
+                </td>
+                <td class="description last">
+                  <p>Simplified column map ID to retrieve.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>columnMap</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">Object</span>
+                </td>
+                <td class="description last">
+                  <p>Column Map objects have properties containing <code>BIColumn</code> objects or arrays of them.
+The precise structure is determined by the plugin itself.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2533">line 2533</a></li>
+              </ul>
+            </dd>
+            <dt class="tag-see">See:</dt>
+            <dd class="tag-see">
+              <ul>
+                <li>
+                  <a href="#.simplifyColumnMap">simplifyColumnMap</a>
+                </li>
+                <li>
+                  <a href="#.getColIDFromName">getColIDFromName</a>
+                </li>
+              </ul>
+            </dd>
+          </dl>
+          <h5>Returns:</h5>
+          <div class="param-desc">
+            <p>Column name as specified by the <code>Name</code> attribute of the <code>BIColumn</code> object.</p>
+          </div>
+          <dl>
+            <dt>
+        Type
+    </dt>
+            <dd>
+              <span class="param-type">string</span>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".getErrorDetail"><span class="type-signature">(static) </span>getErrorDetail<span class="signature">(response)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+          <div class="description">
+            <p>Gets the relevant error objects from a BI Server web service response. Assumes there is an error in the input at <code>response.detail.Error.Error.Error</code>.
+Uses RegEx to clean up response, removing some unnecessary information like HY000 codes.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>response</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">Object</span>
+                </td>
+                <td class="description last"/>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2155">line 2155</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <h5>Returns:</h5>
+          <div class="param-desc">
+            <p>Object describing the error. Has two properties: <code>basic</code>, a short description and <code>sql</code>, the logical SQL executed.</p>
+          </div>
+          <dl>
+            <dt>
+        Type
+    </dt>
+            <dd>
+              <span class="param-type">Object</span>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".getPropFromID"><span class="type-signature">(static) </span>getPropFromID<span class="signature">()</span><span class="type-signature"> &rarr; {string}</span></h4>
+          <div class="description">
+            <p>Returns the property code from a column ID. Strips the index away if it is defined as a multiple.</p>
+          </div>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2545">line 2545</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <h5>Returns:</h5>
+          <dl>
+            <dt>
+        Type
+    </dt>
+            <dd>
+              <span class="param-type">string</span>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".getPublishedDBs"><span class="type-signature">(static) </span>getPublishedDBs<span class="signature">(successFunc, securityFilter, Array)</span><span class="type-signature"/></h4>
+          <div class="description">
+            <p>Retrieves list of published dashboards from the catalogue.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>successFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="description last">
+                  <p>Success callback function.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>securityFilter</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">boolean</span>
+                </td>
+                <td class="description last">
+                  <p>If true, the function will only return paths
+the user has access to.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>Array</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">Array.&lt;object></span>
+                </td>
+                <td class="description last">
+                  <p>of objects describing the published dashboards.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line1182">line 1182</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".getSubjectAreas"><span class="type-signature">(static) </span>getSubjectAreas<span class="signature">(successFunc, errFunc)</span><span class="type-signature"> &rarr; {Array}</span></h4>
+          <div class="description">
+            <p>Get available subject areas for the current session.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>successFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="description last">
+                  <p>Callback function to execute on success</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>errFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="description last">
+                  <p>Callback function to execute on failure</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line272">line 272</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <h5>Returns:</h5>
+          <div class="param-desc">
+            <p>List of subject area names</p>
+          </div>
+          <dl>
+            <dt>
+        Type
+    </dt>
+            <dd>
+              <span class="param-type">Array</span>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".getTablesAndCols"><span class="type-signature">(static) </span>getTablesAndCols<span class="signature">(subjectArea, successFunc)</span><span class="type-signature"> &rarr; {BIPres}</span></h4>
+          <div class="description">
+            <p>Get metadata object describing presentation tables and columns for a given subject area.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>subjectArea</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">String</span>
+                </td>
+                <td class="description last">
+                  <p>Subject area to retrieve metadata for</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>successFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="description last">
+                  <p>Callback function to execute on success</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line293">line 293</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <h5>Returns:</h5>
+          <div class="param-desc">
+            <p>List of subject area names</p>
+          </div>
+          <dl>
+            <dt>
+        Type
+    </dt>
+            <dd>
+              <span class="param-type">BIPres</span>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".getUsername"><span class="type-signature">(static) </span>getUsername<span class="signature">(successFunc, errFunc)</span><span class="type-signature"> &rarr; {String}</span></h4>
+          <div class="description">
+            <p>Get OBIEE username for the current session.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>successFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="description last">
+                  <p>Callback function to execute on success</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>errFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="description last">
+                  <p>Callback function to execute upon failure.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line175">line 175</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <h5>Returns:</h5>
+          <div class="param-desc">
+            <p>Current session's OBIEE username.</p>
+          </div>
+          <dl>
+            <dt>
+        Type
+    </dt>
+            <dd>
+              <span class="param-type">String</span>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".getVariable"><span class="type-signature">(static) </span>getVariable<span class="signature">(name, type)</span><span class="type-signature"> &rarr; {string|Array}</span></h4>
+          <div class="description">
+            <p>Get variable value by name and type.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>name</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">string</span>
+                </td>
+                <td class="description last">
+                  <p>Variable name, should be in CAPS for session/repository variables.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>type</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">string</span>
+                </td>
+                <td class="description last">
+                  <p>Variable type, should be one of 'Repository', 'Session'.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2770">line 2770</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <h5>Returns:</h5>
+          <div class="param-desc">
+            <p>Array of values for the variable. Repository variables will only have one element maximum.</p>
+          </div>
+          <dl>
+            <dt>
+        Type
+    </dt>
+            <dd><span class="param-type">string</span>
+|
+
+<span class="param-type">Array</span>
+
+
+    </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".getWebcatItem"><span class="type-signature">(static) </span>getWebcatItem<span class="signature">(path, successFunc, errFunc)</span><span class="type-signature"> &rarr; {object}</span></h4>
+          <div class="description">
+            <p>Retrieves information for a single web catalogue item.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>path</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">string</span>
+                </td>
+                <td class="description last">
+                  <p>Web catalogue path to fetch objects from.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>successFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="description last">
+                  <p>Callback function to execute on success.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>errFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="description last">
+                  <p>Callback function to execute on failure.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line789">line 789</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <h5>Returns:</h5>
+          <div class="param-desc">
+            <p>Single web catalogue definition.</p>
+          </div>
+          <dl>
+            <dt>
+        Type
+    </dt>
+            <dd>
+              <span class="param-type">object</span>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".hasRMRole"><span class="type-signature">(static) </span>hasRMRole<span class="signature">(role)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+          <div class="description">
+            <p>Checks against session storage to see if the current user has a given RM web app privilege.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>role</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">string</span>
+                </td>
+                <td class="description last">
+                  <p>RM web app role to check for. Can be any of the properties in InsightsConfig.Security.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line258">line 258</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <h5>Returns:</h5>
+          <div class="param-desc">
+            <p>Indicates whether or not the privilege is present.</p>
+          </div>
+          <dl>
+            <dt>
+        Type
+    </dt>
+            <dd>
+              <span class="param-type">boolean</span>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".isPrompted"><span class="type-signature">(static) </span>isPrompted<span class="signature">(vis, prompts)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+          <div class="description">
+            <p>Identifies if a visualisation is affected by any of the dashboard prompt filters on a page.
+Will match if <em>any</em> filter that is a member of prompts.Filters has a matching subject area to the visualisation.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>vis</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">BIVisual</span>
+                </td>
+                <td class="description last">
+                  <p>Visualisation to check if prompted.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>prompts</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">BIPrompt</span>
+                </td>
+                <td class="description last">
+                  <p>Prompt object containing all dashboard prompt filters.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2216">line 2216</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <h5>Returns:</h5>
+          <div class="param-desc">
+            <p>Indicates whether or not the visaulisation is prompted.</p>
+          </div>
+          <dl>
+            <dt>
+        Type
+    </dt>
+            <dd>
+              <span class="param-type">boolean</span>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".listWebcatPaths"><span class="type-signature">(static) </span>listWebcatPaths<span class="signature">(paths, successFunc, errFunc)</span><span class="type-signature"> &rarr; {Array.&lt;string>}</span></h4>
+          <div class="description">
+            <p>Fetches available paths from the web catalogue from a list of input paths. Paths will not be returned if there
+is an error in finding them or if the user does not have read permissions for the respective item.
+This is useful for identifying permissions when accessing a master list of objects.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>paths</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">Array.&lt;string></span>
+                </td>
+                <td class="description last">
+                  <p>Web catlaogue paths to retrieve.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>successFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="description last">
+                  <p>Callback function to execute on success.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>errFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="description last">
+                  <p>Callback function to execute on failure.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line746">line 746</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <h5>Returns:</h5>
+          <div class="param-desc">
+            <p>List of paths describing the web catalogue objects that could be fetched.</p>
+          </div>
+          <dl>
+            <dt>
+        Type
+    </dt>
+            <dd>
+              <span class="param-type">Array.&lt;string></span>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".loadDB"><span class="type-signature">(static) </span>loadDB<span class="signature">(path, successFunc, successFunc)</span><span class="type-signature"> &rarr; {BIDashboardPage}</span></h4>
+          <div class="description">
+            <p>Asynchronously loads a visualisation from the catalogue as a <code>BIDashboardPage</code> object.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>path</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">String</span>
+                </td>
+                <td class="description last">
+                  <p>Web catalogue path to load RM Analytics dashboard from.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>successFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="description last">
+                  <p>Callback function to execute upon success.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>successFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="description last">
+                  <p>Callback function to execute upon error.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line1542">line 1542</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <h5>Returns:</h5>
+          <div class="param-desc">
+            <p>Object describing  an entire analytics dashboard, including interactivity.</p>
+          </div>
+          <dl>
+            <dt>
+        Type
+    </dt>
+            <dd>
+              <span class="param-type">BIDashboardPage</span>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".logoff"><span class="type-signature">(static) </span>logoff<span class="signature">(successFunc)</span><span class="type-signature"/></h4>
+          <div class="description">
+            <p>Logs off an OBIEE session. Also clears the <code>ORA_BIPS_NQID</code> cookie and removes <code>obieeSessionId</code> from storage.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>successFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="description last">
+                  <p>Callback function to execute on success</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line158">line 158</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".logon"><span class="type-signature">(static) </span>logon<span class="signature">(user, pass, successFunc, errFunc)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+          <div class="description">
+            <p>Asynchronously logs into OBIEE and saves the session ID to <code>sessionStorage.obieeSessionId</code>.
+Also Clears <code>ORA_BIPS_NQID</code> cookie if it has already been set.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>user</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">String</span>
+                </td>
+                <td class="description last">
+                  <p>OBIEE username</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>pass</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">String</span>
+                </td>
+                <td class="description last">
+                  <p>OBIEE password</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>successFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="description last">
+                  <p>Callback function on successful login</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>errFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="description last">
+                  <p>Callback function on login failure</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line133">line 133</a></li>
+              </ul>
+            </dd>
+            <dt class="tag-see">See:</dt>
+            <dd class="tag-see">
+              <ul>
+                <li>
+                  <a href="#.obieeSessionId">obieeSessionId</a>
+                </li>
+              </ul>
+            </dd>
+          </dl>
+          <h5>Returns:</h5>
+          <div class="param-desc">
+            <p>The web service response to the callback function</p>
+          </div>
+          <dl>
+            <dt>
+        Type
+    </dt>
+            <dd>
+              <span class="param-type">Object</span>
+            </dd>
+          </dl>
+          <h5>Example</h5>
+          <pre class="prettyprint">
+            <code>obiee.logon('weblogic', 'Password01', function(response) {
+	console.log(sessionStorage.obieeSessionId); // OBIEE session ID stored here
+}</code>
+          </pre>
+          <hr/>
+          <h4 class="name" id=".moveWebcatItem"><span class="type-signature">(static) </span>moveWebcatItem<span class="signature">(srcPath, destPath, successFunc, errFunc)</span><span class="type-signature"/></h4>
+          <div class="description">
+            <p>Moves a web catalogue item or folder from a given path to another, this can be used for renaming also.
+Security permission of the object is retained through the move.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>srcPath</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">String</span>
+                </td>
+                <td class="description last">
+                  <p>Web catalogue path to move from.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>destPath</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">String</span>
+                </td>
+                <td class="description last">
+                  <p>Web catalogue path to move to.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>successFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="description last">
+                  <p>Callback function to execute on success</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>errFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="description last">
+                  <p>Callback function to execute on failure</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line881">line 881</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".nullDatum"><span class="type-signature">(static) </span>nullDatum<span class="signature">(columnMap)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+          <div class="description">
+            <p>Generates a null datum based on a column map. This will have the same structure as the
+        real dataset but 0s for measures and null values for attributes</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>columnMap</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">Object</span>
+                </td>
+                <td class="description last">
+                  <p>Column Map objects have properties containing <code>BIColumn</code> objects or arrays of them.
+The precise structure is determined by the plugin itself.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2508">line 2508</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <h5>Returns:</h5>
+          <div class="param-desc">
+            <p>Single object matching the data structure produced by the column map but with null values.</p>
+          </div>
+          <dl>
+            <dt>
+        Type
+    </dt>
+            <dd>
+              <span class="param-type">Object</span>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".operatorToText"><span class="type-signature">(static) </span>operatorToText<span class="signature">(op)</span><span class="type-signature"> &rarr; {string}</span></h4>
+          <div class="description">
+            <p>Translation function for filter operators.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>op</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">string</span>
+                </td>
+                <td class="description last">
+                  <p>Textual operator ID, e.g. equal, less, notEqual, greater, lessOrEqual, heatmap etc.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2575">line 2575</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <h5>Returns:</h5>
+          <div class="param-desc">
+            <p>Readable operator name, e.g. ==, &lt;, !=, >, &lt;=, Heatmap etc.</p>
+          </div>
+          <dl>
+            <dt>
+        Type
+    </dt>
+            <dd>
+              <span class="param-type">string</span>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".permMaskToObj"><span class="type-signature">(static) </span>permMaskToObj<span class="signature">(mask)</span><span class="type-signature"> &rarr; {object}</span></h4>
+          <div class="description">
+            <p>Converts a web catalogue permission mask to a readable object with properties for each permission type.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>mask</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">integer</span>
+                </td>
+                <td class="description last">
+                  <p>Integer version of binary describing the permissions</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line916">line 916</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <h5>Returns:</h5>
+          <div class="param-desc">
+            <p>Object with boolean properties <code>read</code>, <code>write</code>, <code>delete</code> etc.</p>
+          </div>
+          <dl>
+            <dt>
+        Type
+    </dt>
+            <dd>
+              <span class="param-type">object</span>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".permObjToMask"><span class="type-signature">(static) </span>permObjToMask<span class="signature">(obj)</span><span class="type-signature"/></h4>
+          <div class="description">
+            <p>Converts a JSON web catalogue permissions object (see <code>obiee.permMaskToObj</code>) into
+the integer equivalent for using with OBIEE web services.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>obj</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">object</span>
+                </td>
+                <td class="description last">
+                  <p>Permissions object with boolean properties describing possible actions.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line945">line 945</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".publishDB"><span class="type-signature">(static) </span>publishDB<span class="signature">(path<span class="signature-attributes">opt</span>, desc<span class="signature-attributes">opt</span>, tags<span class="signature-attributes">opt</span>, icon<span class="signature-attributes">opt</span>, successFunc<span class="signature-attributes">opt</span>, errFunc<span class="signature-attributes">opt</span>)</span><span class="type-signature"/></h4>
+          <div class="description">
+            <p>Adds a web catlaogue folder to the master list of published dashboards.
+This list (JSON) is stored in the web catalogue at /shared/RM-Insights/Published-Dashboards.
+This is hidden by default but all users have read access and any users with the RM 'create' permission
+have write access. All available files in the directory are presented as dashboard pages.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Attributes</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>path</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">string</span>
+                </td>
+                <td class="attributes">
+                
+                    &lt;optional><br/>
+                
+
+                
+
+                
+                </td>
+                <td class="description last">
+                  <p>Web catalogue path of the dashboard to publish.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>desc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">string</span>
+                </td>
+                <td class="attributes">
+                
+                    &lt;optional><br/>
+                
+
+                
+
+                
+                </td>
+                <td class="description last">
+                  <p>Description of the dashboard. Note that this is separate to the
+catalogue description and essentially renders that one irrelevant for Insights dashboards.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>tags</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">object</span>
+                </td>
+                <td class="attributes">
+                
+                    &lt;optional><br/>
+                
+
+                
+
+                
+                </td>
+                <td class="description last">
+                  <p>Array of words indicating the tags for the dashboard.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>icon</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">string</span>
+                </td>
+                <td class="attributes">
+                
+                    &lt;optional><br/>
+                
+
+                
+
+                
+                </td>
+                <td class="description last">
+                  <p>Font Awesome icon reference for the dashboard.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>successFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="attributes">
+                
+                    &lt;optional><br/>
+                
+
+                
+
+                
+                </td>
+                <td class="description last">
+                  <p>Success callback function.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>errFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="attributes">
+                
+                    &lt;optional><br/>
+                
+
+                
+
+                
+                </td>
+                <td class="description last">
+                  <p>Error handling function passing the error message.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line1108">line 1108</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".removeFromColumnMap"><span class="type-signature">(static) </span>removeFromColumnMap<span class="signature">(columnMap, findCol)</span><span class="type-signature"/></h4>
+          <div class="description">
+            <p>Removes a column from a column map - either removing from an array for a multiple, or setting to a null <code>BIColumn</code> for a single.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>columnMap</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">object</span>
+                </td>
+                <td class="description last">
+                  <p>Column Map objects have properties containing <code>BIColumn</code> objects or arrays of them.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>findCol</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">BIColumn</span>
+                </td>
+                <td class="description last">
+                  <p>Column to remove from the map.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2484">line 2484</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".removeInteraction"><span class="type-signature">(static) </span>removeInteraction<span class="signature">(action)</span><span class="type-signature"/></h4>
+          <div class="description">
+            <p>Remove an interaction from a visualisation container.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>action</code>
+                </td>
+                <td class="type"><span class="param-type">BIInteraction</span>
+|
+
+<span class="param-type">BIDrilldown</span>
+
+
+            
+            </td>
+                <td class="description last">
+                  <p>Interaction or drilldown to deactivate.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2810">line 2810</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".removePromptedFilters"><span class="type-signature">(static) </span>removePromptedFilters<span class="signature">(filters, changed)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+          <div class="description">
+            <p>Remove explicit global filters from visualisations.
+This prevents a prompt from being created and ran, and then persisted after removal in design mode.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>filters</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">Array.&lt;BIFilter></span>
+                </td>
+                <td class="description last">
+                  <p>Filter array from a prompt object</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>changed</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">boolean</span>
+                </td>
+                <td class="description last">
+                  <p>Indicates whether this filter array has been modified.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2302">line 2302</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <h5>Returns:</h5>
+          <div class="param-desc">
+            <p>True if the filter hierarchy has been modified by the function.</p>
+          </div>
+          <dl>
+            <dt>
+        Type
+    </dt>
+            <dd>
+              <span class="param-type">boolean</span>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".renameWebcatItem"><span class="type-signature">(static) </span>renameWebcatItem<span class="signature">(srcPath, newName, successFunc, errFunc)</span><span class="type-signature"/></h4>
+          <div class="description">
+            <p>Renames a web catalogue item or folder, only required a new name to be entered, rather than the full path.
+Security permission of the object is retained through the move.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>srcPath</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">String</span>
+                </td>
+                <td class="description last">
+                  <p>Full web catalogue path to move from.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>newName</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">String</span>
+                </td>
+                <td class="description last">
+                  <p>New name for the web catalogue item.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>successFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="description last">
+                  <p>Callback function to execute on success</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>errFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="description last">
+                  <p>Callback function to execute on failure</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line906">line 906</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".replaceFilter"><span class="type-signature">(static) </span>replaceFilter<span class="signature">(filters, filter, changed)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+          <div class="description">
+            <p>Search for filter using a <code>BIFilter</code> object and replace it.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>filters</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">Array.&lt;BIFilter></span>
+                </td>
+                <td class="description last">
+                  <p>Filter array to iterate over. Can include <code>BIFilterGroup</code> objects as function will recurse if necessary.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>filter</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">BIFilter</span>
+                </td>
+                <td class="description last">
+                  <p>New filter to replace if a match is found in the array/hierarchy.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>changed</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">boolean</span>
+                </td>
+                <td class="description last">
+                  <p>Indicates whether this filter array has been modified.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2192">line 2192</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <h5>Returns:</h5>
+          <div class="param-desc">
+            <p>True if the filter hierarchy has been modified by the function.</p>
+          </div>
+          <dl>
+            <dt>
+        Type
+    </dt>
+            <dd>
+              <span class="param-type">boolean</span>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".replaceFilterByID"><span class="type-signature">(static) </span>replaceFilterByID<span class="signature">(filters, filterID, filterOp, filterValue, changed)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+          <div class="description">
+            <p>Similar to <code>obiee.replaceFilter</code> but matches filters using the <code>ID</code> property instead of the code.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>filters</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">Array.&lt;BIFilter></span>
+                </td>
+                <td class="description last">
+                  <p>Filter array to iterate over. Can include <code>BIFilterGroup</code> objects as function will recurse if necessary.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>filterID</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">string</span>
+                </td>
+                <td class="description last">
+                  <p>ID of the filter to replace if a match is found in the array/hierarchy.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>filterOp</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">string</span>
+                </td>
+                <td class="description last">
+                  <p>New operator to assign if a match is found.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>filterValue</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">string</span>
+                </td>
+                <td class="description last">
+                  <p>New value to assign if a match is found.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>changed</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">boolean</span>
+                </td>
+                <td class="description last">
+                  <p>Indicates whether this filter array has been modified.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2236">line 2236</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <h5>Returns:</h5>
+          <div class="param-desc">
+            <p>True if the filter hierarchy has been modified by the function.</p>
+          </div>
+          <dl>
+            <dt>
+        Type
+    </dt>
+            <dd>
+              <span class="param-type">boolean</span>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".setRMPermissions"><span class="type-signature">(static) </span>setRMPermissions<span class="signature">(successFunc, errFunc)</span><span class="type-signature"/></h4>
+          <div class="description">
+            <p>Executes necessary OBIEE calls to fetch web app permissions if not already obtained and save them to <code>RMAppRoles</code>.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>successFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="description last">
+                  <p>Callback function to execute once the permissions have been saved.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>errFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="description last">
+                  <p>Callback function to execute once the permissions have been saved.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line225">line 225</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".setWebcatAttribute"><span class="type-signature">(static) </span>setWebcatAttribute<span class="signature">(path, set<span class="signature-attributes">opt</span>, unset<span class="signature-attributes">opt</span>, successFunc<span class="signature-attributes">opt</span>, errFunc<span class="signature-attributes">opt</span>)</span><span class="type-signature"/></h4>
+          <div class="description">
+            <p>Sets or unsets item attribtues for a web catalogue item using the following index:
+1 = Read Only, 2 = Archive 4 = Hidden 8 = System. A combination can be used, e.g.
+12 for hidden and system.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Attributes</th>
+                <th>Default</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>path</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">string</span>
+                </td>
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+                <td class="default">
+                
+                </td>
+                <td class="description last">
+                  <p>Web catalogue path of the item or folder to update.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>set</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">integer</span>
+                </td>
+                <td class="attributes">
+                
+                    &lt;optional><br/>
+                
+
+                
+
+                
+                </td>
+                <td class="default">
+                
+                    0
+                
+                </td>
+                <td class="description last">
+                  <p>Attribute index to apply using the index described above.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>unset</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">integer</span>
+                </td>
+                <td class="attributes">
+                
+                    &lt;optional><br/>
+                
+
+                
+
+                
+                </td>
+                <td class="default">
+                
+                    0
+                
+                </td>
+                <td class="description last">
+                  <p>Attribute index to remove using the index described above.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>successFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="attributes">
+                
+                    &lt;optional><br/>
+                
+
+                
+
+                
+                </td>
+                <td class="default">
+                
+                </td>
+                <td class="description last">
+                  <p>Success function passing the returned output.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>errFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="attributes">
+                
+                    &lt;optional><br/>
+                
+
+                
+
+                
+                </td>
+                <td class="default">
+                
+                </td>
+                <td class="description last">
+                  <p>Error handling function passing the error message.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line1049">line 1049</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".setWebcatProperty"><span class="type-signature">(static) </span>setWebcatProperty<span class="signature">(path, name, value, successFunc<span class="signature-attributes">opt</span>, errFunc<span class="signature-attributes">opt</span>)</span><span class="type-signature"/></h4>
+          <div class="description">
+            <p>Sets or unsets item property for a web catalogue item using a key-value pair.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Attributes</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>path</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">string</span>
+                </td>
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+                <td class="description last">
+                  <p>Web catalogue path of the item or folder to update.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>name</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">integer</span>
+                </td>
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+                <td class="description last">
+                  <p>Name of the property to apply.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>value</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">integer</span>
+                </td>
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+                <td class="description last">
+                  <p>Value of the property to apply;</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>successFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="attributes">
+                
+                    &lt;optional><br/>
+                
+
+                
+
+                
+                </td>
+                <td class="description last">
+                  <p>Success function passing the returned output.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>errFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="attributes">
+                
+                    &lt;optional><br/>
+                
+
+                
+
+                
+                </td>
+                <td class="description last">
+                  <p>Error handling function passing the error message.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line1077">line 1077</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".showOrHideVis"><span class="type-signature">(static) </span>showOrHideVis<span class="signature">(visSelectors, vis)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+          <div class="description">
+            <p>Show visualisation unless it is included in a visual selector.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>visSelectors</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">Array.&lt;BIVisualSelector></span>
+                </td>
+                <td class="description last">
+                  <p>Array of visualisation selectors</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>vis</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">BIVisual</span>
+                </td>
+                <td class="description last">
+                  <p>Visualisation to check</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2408">line 2408</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <h5>Returns:</h5>
+          <div class="param-desc">
+            <p>True if the visualisation can be shown, false if hidden</p>
+          </div>
+          <dl>
+            <dt>
+        Type
+    </dt>
+            <dd>
+              <span class="param-type">boolean</span>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".simplifyColumnMap"><span class="type-signature">(static) </span>simplifyColumnMap<span class="signature">(columnMap, dimOnly)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+          <div class="description">
+            <p>Flattens column map object (containing a mixture of properties and arrays) to an object of just properties.
+Multiple columns use the property suffixed with a numeric index. Excludes null columns (columns without a Code defined).</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>columnMap</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">Object</span>
+                </td>
+                <td class="description last">
+                  <p>Column Map objects have properties containing <code>BIColumn</code> objects or arrays of them.
+The precise structure is determined by the plugin itself.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>dimOnly</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">boolean</span>
+                </td>
+                <td class="description last">
+                  <p>Indicates whether or not to exclude measure attributes.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2430">line 2430</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <h5>Returns:</h5>
+          <div class="param-desc">
+            <p>Object where properties are column IDs (specfied by the plugin)</p>
+          </div>
+          <dl>
+            <dt>
+        Type
+    </dt>
+            <dd>
+              <span class="param-type">Object</span>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".unpublishDB"><span class="type-signature">(static) </span>unpublishDB<span class="signature">(path, successFunc<span class="signature-attributes">opt</span>, errFunc<span class="signature-attributes">opt</span>)</span><span class="type-signature"/></h4>
+          <div class="description">
+            <p>Unpublish dashboard by removing the path from the master list.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Attributes</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>path</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">string</span>
+                </td>
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+                <td class="description last">
+                  <p>Web catalogue path of the dashboard to unpublish.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>successFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="attributes">
+                
+                    &lt;optional><br/>
+                
+
+                
+
+                
+                </td>
+                <td class="description last">
+                  <p>Success callback function.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>errFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="attributes">
+                
+                    &lt;optional><br/>
+                
+
+                
+
+                
+                </td>
+                <td class="description last">
+                  <p>Error handling function passing the error message.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line1156">line 1156</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".updatePresVar"><span class="type-signature">(static) </span>updatePresVar<span class="signature">(name, value)</span><span class="type-signature"/></h4>
+          <div class="description">
+            <p>Updates or adds a presentation variable to <code>obiee.BIVariables</code>.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>name</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">string</span>
+                </td>
+                <td class="description last">
+                  <p>Name for the variable.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>value</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">string</span>
+                </td>
+                <td class="description last">
+                  <p>Value the presentation variable should take. This needs to parse verbatim as logical SQL,
+for example strings should be encased in single quotes.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2754">line 2754</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".updateWebcatPerms"><span class="type-signature">(static) </span>updateWebcatPerms<span class="signature">(path, acls, recursive<span class="signature-attributes">opt</span>, successFunc, errFunc)</span><span class="type-signature"/></h4>
+          <div class="description">
+            <p>Updates catalogue item permissions. Completely overwrites the object's permissions.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Attributes</th>
+                <th>Default</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>path</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">string</span>
+                </td>
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+                <td class="default">
+                
+                </td>
+                <td class="description last">
+                  <p>Web catalogue path of the item or folder to update.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>acls</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">Array.&lt;object></span>
+                </td>
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+                <td class="default">
+                
+                </td>
+                <td class="description last">
+                  <p>Array of objects describing the name (<code>name</code>), GUID (<code>guid</code>) and
+permissions (<code>perms</code>) by application role. Property names indicated in brackets.
+Permissions can be of object form (see <code>obiee.permMaskToObj</code>) or integer.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>recursive</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">boolean</span>
+                </td>
+                <td class="attributes">
+                
+                    &lt;optional><br/>
+                
+
+                
+
+                
+                </td>
+                <td class="default">
+                
+                    true
+                
+                </td>
+                <td class="description last">
+                  <p>Recursively applies the permissions if it is a folder.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>successFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+                <td class="default">
+                
+                </td>
+                <td class="description last">
+                  <p>Success function passing the returned output.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>errFunc</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+                <td class="default">
+                
+                </td>
+                <td class="description last">
+                  <p>Error handling function passing the error message.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line1005">line 1005</a></li>
+              </ul>
+            </dd>
+          </dl>
+        </article>
+      </section>
+    </div>
+    <nav>
+      <div class="navbar">
+        <h2>
+          <a href="index.html">Home</a>
+        </h2>
+        <div class="search">
+          <span>Search</span>
+          <input/>
+        </div>
+        <h3>Modules<span class="toggleList collapse">-</span></h3>
+        <ul>
+          <li>
+            <a href="module-insights.html">insights</a>
+          </li>
+          <li>
+            <a href="module-InsightsConfig.html">InsightsConfig</a>
+          </li>
+          <li>
+            <a href="module-obiee.html">obiee</a>
+          </li>
+          <li>
+            <a href="module-rmvpp.html">rmvpp</a>
+          </li>
+        </ul>
+        <h3>Classes<span class="toggleList collapse">-</span></h3>
+        <ul>
+          <li>
+            <a href="module-obiee.BIBreadcrumb.html">BIBreadcrumb</a>
+          </li>
+          <li>
+            <a href="module-obiee.BICanvas.html">BICanvas</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIColumn.html">BIColumn</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIColumnSelector.html">BIColumnSelector</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIConditionalFormat.html">BIConditionalFormat</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIDashboardPage.html">BIDashboardPage</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIDrilldown.html">BIDrilldown</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIFilter.html">BIFilter</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIFilterGroup.html">BIFilterGroup</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIInteraction.html">BIInteraction</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIPermission.html">BIPermission</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIPres.html">BIPres</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIPrompt.html">BIPrompt</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIQuery.html">BIQuery</a>
+          </li>
+          <li>
+            <a href="module-obiee.BISort.html">BISort</a>
+          </li>
+          <li>
+            <a href="module-obiee.BITable.html">BITable</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIVariable.html">BIVariable</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIVisual.html">BIVisual</a>
+          </li>
+          <li>
+            <a href="module-obiee.BIVisualSelector.html">BIVisualSelector</a>
+          </li>
+          <li>
+            <a href="module-rmvpp.Chart.html">Chart</a>
+          </li>
+          <li>
+            <a href="module-rmvpp.Legend.html">Legend</a>
+          </li>
+          <li>
+            <a href="module-rmvpp.Tooltip.html">Tooltip</a>
+          </li>
+        </ul>
+        <h3>Members<span class="toggleList collapse">-</span></h3>
+        <ul>
+          <li>
+            <a href="#.BIVariables">BIVariables</a>
+          </li>
+          <li>
+            <a href="#.wsdl">wsdl</a>
+          </li>
+        </ul>
+        <h3>Methods<span class="toggleList collapse">-</span></h3>
+        <ul>
+          <li>
+            <a href="#.applyToColumnMap">applyToColumnMap</a>
+          </li>
+          <li>
+            <a href="#.copyWebcatItem">copyWebcatItem</a>
+          </li>
+          <li>
+            <a href="#.createInteraction">createInteraction</a>
+          </li>
+          <li>
+            <a href="#.createWebcatFolder">createWebcatFolder</a>
+          </li>
+          <li>
+            <a href="#.deleteWebcatItem">deleteWebcatItem</a>
+          </li>
+          <li>
+            <a href="#.executeLSQL">executeLSQL</a>
+          </li>
+          <li>
+            <a href="#.executeXMLFile">executeXMLFile</a>
+          </li>
+          <li>
+            <a href="#.fetchVariables">fetchVariables</a>
+          </li>
+          <li>
+            <a href="#.fetchWebcatObjects">fetchWebcatObjects</a>
+          </li>
+          <li>
+            <a href="#.getAccounts">getAccounts</a>
+          </li>
+          <li>
+            <a href="#.getAppRoles">getAppRoles</a>
+          </li>
+          <li>
+            <a href="#.getColIDFromName">getColIDFromName</a>
+          </li>
+          <li>
+            <a href="#.getColNameFromID">getColNameFromID</a>
+          </li>
+          <li>
+            <a href="#.getErrorDetail">getErrorDetail</a>
+          </li>
+          <li>
+            <a href="#.getPropFromID">getPropFromID</a>
+          </li>
+          <li>
+            <a href="#.getPublishedDBs">getPublishedDBs</a>
+          </li>
+          <li>
+            <a href="#.getSubjectAreas">getSubjectAreas</a>
+          </li>
+          <li>
+            <a href="#.getTablesAndCols">getTablesAndCols</a>
+          </li>
+          <li>
+            <a href="#.getUsername">getUsername</a>
+          </li>
+          <li>
+            <a href="#.getVariable">getVariable</a>
+          </li>
+          <li>
+            <a href="#.getWebcatItem">getWebcatItem</a>
+          </li>
+          <li>
+            <a href="#.hasRMRole">hasRMRole</a>
+          </li>
+          <li>
+            <a href="#.isPrompted">isPrompted</a>
+          </li>
+          <li>
+            <a href="#.listWebcatPaths">listWebcatPaths</a>
+          </li>
+          <li>
+            <a href="#.loadDB">loadDB</a>
+          </li>
+          <li>
+            <a href="#.logoff">logoff</a>
+          </li>
+          <li>
+            <a href="#.logon">logon</a>
+          </li>
+          <li>
+            <a href="#.moveWebcatItem">moveWebcatItem</a>
+          </li>
+          <li>
+            <a href="#.nullDatum">nullDatum</a>
+          </li>
+          <li>
+            <a href="#.operatorToText">operatorToText</a>
+          </li>
+          <li>
+            <a href="#.permMaskToObj">permMaskToObj</a>
+          </li>
+          <li>
+            <a href="#.permObjToMask">permObjToMask</a>
+          </li>
+          <li>
+            <a href="#.publishDB">publishDB</a>
+          </li>
+          <li>
+            <a href="#.removeFromColumnMap">removeFromColumnMap</a>
+          </li>
+          <li>
+            <a href="#.removeInteraction">removeInteraction</a>
+          </li>
+          <li>
+            <a href="#.removePromptedFilters">removePromptedFilters</a>
+          </li>
+          <li>
+            <a href="#.renameWebcatItem">renameWebcatItem</a>
+          </li>
+          <li>
+            <a href="#.replaceFilter">replaceFilter</a>
+          </li>
+          <li>
+            <a href="#.replaceFilterByID">replaceFilterByID</a>
+          </li>
+          <li>
+            <a href="#.setRMPermissions">setRMPermissions</a>
+          </li>
+          <li>
+            <a href="#.setWebcatAttribute">setWebcatAttribute</a>
+          </li>
+          <li>
+            <a href="#.setWebcatProperty">setWebcatProperty</a>
+          </li>
+          <li>
+            <a href="#.showOrHideVis">showOrHideVis</a>
+          </li>
+          <li>
+            <a href="#.simplifyColumnMap">simplifyColumnMap</a>
+          </li>
+          <li>
+            <a href="#.unpublishDB">unpublishDB</a>
+          </li>
+          <li>
+            <a href="#.updatePresVar">updatePresVar</a>
+          </li>
+          <li>
+            <a href="#.updateWebcatPerms">updateWebcatPerms</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <br class="clear"/>
+    <script> prettyPrint(); </script>
+    <script src="scripts/linenumber.js"> </script>
+  </body>
+</html>
+

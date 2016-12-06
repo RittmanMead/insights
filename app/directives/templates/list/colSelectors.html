@@ -1,0 +1,23 @@
+<div>
+	<mat-button ng-show="visuals.length > 0" size="mini" type="accent" icon="plus" ng-click="newSelector()" label="New Column Selector"></mat-button>
+	<md-list>
+		<md-list-item ng-repeat="cs in colSelectors" layout="row">
+			<div flex="35" layout="row" layout-align="start center">
+				<md-icon style="font-size: 20px; margin-left: 10px; margin-right: 5px;" class="md-primary fa" md-font-icon="fa-columns"></md-icon>
+				<span class="textOverflow" style="color: #777;">{{ cols(cs) }}</span>
+			</div>
+			<div flex="35" layout="row" layout-align="start center">
+				<md-icon style="font-size: 20px; margin-left: 10px; margin-right: 5px;" class="md-primary fa" md-font-icon="fa-bar-chart"></md-icon>
+				<span class="textOverflow" style="color: #777;">{{ vis(cs) }}</span>
+			</div>
+			<div flex="20" layout="row" layout-align="start center">
+				<md-icon style="font-size: 20px; margin-left: 10px; margin-right: 5px;" class="md-primary fa" md-font-icon="fa-paint-brush"></md-icon>
+				<span class="textOverflow" style="color: #777;">{{ cs.Style }}</span>
+			</div>
+			<div flex="10">
+				<md-icon class="md-secondary fa" style="font-size: 20px;" ng-click="editSelector(cs, $index)" aria-label="Edit" md-font-icon="fa-wrench"><md-tooltip>Edit</md-tooltip></md-icon>
+				<md-icon class="md-secondary md-warn fa" style="font-size: 20px;" ng-click="removeSelector(cs)" aria-label="Remove" md-font-icon="fa-remove"><md-tooltip>Remove</md-tooltip></md-icon>
+			</div>
+		</md-list-item>
+	</md-list>
+</div>

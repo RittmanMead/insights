@@ -1,0 +1,6 @@
+<div style="margin-left: 10px;">
+	<md-radio-group class="md-primary" ng-model="configVals[cp.targetProperty]">
+		<label style="font-size: 12px; margin-bottom: 5px; display: block; color: rgba(0,0,0,0.54);">{{ cp.label }}</label>
+    	<md-radio-button ng-repeat="val in cp.inputOptions.values" value="{{ val }}">{{ val }}</md-radio-button>
+	</md-radio-group>
+</div>

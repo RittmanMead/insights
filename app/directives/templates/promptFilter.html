@@ -1,0 +1,48 @@
+<md-list-item>
+	<span style="width: 100px; text-align: left;" class="textOverflow md-caption">{{ filter.Column.Name }}</span>
+	<div layout="row" layout-align="start center" class="md-caption">
+		<md-input-container style="margin: 0px;">
+			<md-select aria-label="Prompt Operator" ng-model="filter.Operator">
+				<md-option value="in">=</md-option>
+				<md-option value="notIn">!=</md-option>
+				<md-option value="greater">></md-option>
+				<md-option value="greaterOrEqual">>=</md-option>
+				<md-option value="less"><</md-option>
+				<md-option value="lessOrEqual"><=</md-option>
+				<md-option value="isNull">Null</md-option>
+				<md-option value="isNotNull">!Null</md-option>
+				<md-option value="top">↑</md-option>
+				<md-option value="bottom">↓</md-option>
+			</md-select>
+		</md-input-container>
+		<md-icon ng-if="filter.PromptOptions.Style == 'picklist'" class="fa" style="margin-left: 15px; cursor: pointer; font-size: 20px;" ng-click="search()" aria-label="Search" md-font-icon="fa-search">
+			<md-tooltip md-direction="top">Search</md-tooltip>
+		</md-icon>
+		<div ng-if="filter.PromptOptions.Style == 'picklist'" class="picklist" filter-picklist filter="filter" change="update" load="load" style="width: 125px;"></div>
+		<div ng-if="filter.PromptOptions.Style == 'radio'" style="margin-left: 15px;">
+			<md-radio-group ng-model="filter.Value" ng-change="update()">
+				<md-radio-button ng-repeat="choice in filter.PromptOptions.SubOptions.choices" ng-value="choice" class="md-primary" style="text-align: left; white-space: nowrap">{{ choice }}</md-radio-button>
+			</md-radio-group>
+		</div>
+		<div ng-if="filter.PromptOptions.Style == 'checkboxes'" style="margin-left: 15px;" layout="column">
+			<md-checkbox ng-repeat="choice in filter.PromptOptions.SubOptions.choices" style="text-align: left;" class="md-primary" ng-checked="exists(choice)" ng-click="toggle(choice)">{{ choice }}</md-checkbox>
+        </div>
+		<md-datepicker flex style="padding: 0px;" ng-change="update()" ng-if="filter.PromptOptions.Style == 'datepicker'" md-open-on-focus ng-model="filter.Value"></md-datepicker>
+		<md-input-container ng-if="filter.PromptOptions.Style == 'numbox'" class="numbox">
+			<md-icon class="fa" style="color: rgba(0,0,0,0.54); font-size: 20px;" md-font-icon="fa-hashtag"></md-icon>
+			<input type="number" ng-change="update()" aria-label="Prompt Value" ng-model="filter.Value" style="margin-left: 15px; width: 120px;"></input>
+		</md-input-container>
+		<md-slider-container ng-if="filter.PromptOptions.Style == 'slider'" style="margin-left: 10px; margin-right: 0px;">
+      		<md-slider style="min-width: 91px;" class="md-primary" ng-mouseup="update()" min="{{ filter.PromptOptions.SubOptions.min }}" max="{{ filter.PromptOptions.SubOptions.max }}" ng-model="filter.Value" aria-label="{{ filter.Column.Name }}"></md-slider>
+			<md-input-container style="max-width: 67px; margin-left: 10px; margin-right: 0px;">
+				<input type="number" ng-change="update()" ng-model="filter.Value" aria-label="{{ filter.Column.Name }}" min="{{ filter.PromptOptions.SubOptions.min }}" max="{{ filter.PromptOptions.SubOptions.max }}"></input>
+			</md-input-container>
+		</md-slider-container>
+	</div>
+	<md-icon ng-if="editFilter" class="fa md-secondary" style="font-size: 20px;" ng-click="editPromptFilter()" aria-label="Edit" md-font-icon="fa-cog">
+		<md-tooltip md-direction="right">Edit</md-tooltip>
+	</md-icon>
+	<md-icon ng-if="editFilter" class="fa md-warn md-secondary" style="font-size: 20px;" ng-click="removeFilter()" aria-label="Remove" md-font-icon="fa-remove">
+		<md-tooltip md-direction="right">Remove</md-tooltip>
+	</md-icon>
+</md-list-item>

@@ -1,0 +1,16 @@
+<div class="modal">
+	<div class="overlay" ng-click="cancel()"></div>
+	<div class="contents" style="width: 70%; left: 15%; text-align:center; max-height: 500px; overflow: auto;">
+		<md-input-container md-theme="dark" style="width: 80%; text-align: left;">
+			<label>Image URL</label>
+			<input ng-keypress="onKey($event)" ng-model="imageVal"></input>
+		</md-input-container>
+		<div>
+			<img style="border-radius: 10px;" ng-src="{{ imageVal }}" alt="Preview" on-error-src="/insights/images/noImage.png">
+		</div>
+		<div>
+			<mat-button size="mini" type="accent" icon="check" ng-click="accept()"></mat-button>
+			<mat-button size="mini" type="warn" icon="remove" ng-click="cancel()"></mat-button>
+		</div>
+	</div>
+</div>

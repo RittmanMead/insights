@@ -1,0 +1,11 @@
+<div class="loading" ng-show="loading.show">
+	<div class="overlay" ng-style="{'background-color' : loading.background, 'opacity' : loading.opacity}"></div>
+	<div class="contents nonSelect"  ng-style="{color: loading.colour, cursor: 'default'}">
+		<div class="spinner">
+			<div class="bounce1" ng-style="{'background-color': loading.colour}"></div>
+			<div class="bounce2" ng-style="{'background-color': loading.colour}"></div>
+			<div class="bounce3" ng-style="{'background-color': loading.colour}"></div>
+		</div>
+		<div class="text">{{loading.msg}}</div>
+	</div>
+</div>

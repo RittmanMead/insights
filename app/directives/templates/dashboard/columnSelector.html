@@ -1,0 +1,22 @@
+<div>
+	<div ng-if="editMode" class="remove" ng-style="{ 'transform': 'translate(' + cs.X + 'px, ' + cs.Y + 'px)' }">
+		<mat-button type="warn" label="Remove" ng-click="removeCS()" icon="remove" size="mini-x"></mat-button>
+	</div>
+	<div		ng-class="editMode ? 'edit' : ''"
+				ng-style="{ 'transform': 'translate(' + cs.X + 'px, ' + cs.Y + 'px)' }"
+				data-x="{{ cs.X }}"
+				data-y="{{ cs.Y }}"
+				class="selector dbObject">
+		<div layout="row">
+			<md-icon class="md-primary fa" style="margin-left: 10px; line-height: 30px; font-size: 20px;" md-font-icon="fa-columns"></md-icon>
+			<md-input-container ng-if="cs.Style == 'Dropdown'">
+				<md-select ng-model="selectedCol" ng-change="applySelect(selectedCol)" aria-label="Choose Column">
+					<md-option ng-value="col.ID" ng-repeat="col in cs.Columns">{{ col.Name}}</md-option>
+				</md-select>
+			</md-input-container>
+			<md-radio-group ng-if="cs.Style == 'Radio'" ng-model="selectedCol" ng-change="applySelect(selectedCol)" style="margin-top: 10px; margin-left: 10px; margin-right: 15px;">
+				<md-radio-button ng-repeat="cs in cs.Columns" ng-value="cs.ID" class="md-primary">{{ cs.Name }}</md-radio-button>
+			</md-radio-group>
+		</div>
+	</div>
+</div>

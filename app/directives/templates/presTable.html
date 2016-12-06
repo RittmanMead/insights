@@ -1,0 +1,18 @@
+<div>
+	<div class="pres-table" ng-click="togglePresTable(table)">
+		<i ng-if="!(table.Show || $parent.presSearch.length > 0)" class="fa fa-chevron-right expandList"></i>
+		<i ng-if="table.Show || $parent.presSearch.length > 0" class="fa fa-chevron-down expandList"></i>
+		<span style="font-weight: bold; font-size: 14px; white-space: nowrap">{{ table.Name }}</span>
+	</div>
+	<div ng-if="table.Show || $parent.presSearch.length > 0">
+		<div class="parent" ng-repeat="table in table.Children" ng-include="'/insights/app/directives/templates/presTable.html'"></div>
+		<div ng-repeat="column in table.Columns | presTableSearch:$parent.presSearch"
+			 add-column="column" class="pres-col dragColumn"
+			 drag move="'withScroll'" ng-attr-code="{{ column.ID }}">
+			<div class="label">{{ column.Name }}</div>
+			<div style="display: inline-block;">
+				<i class="fa fa-filter" ng-click="addFilter(column)"></i>
+			</div>
+		</div>
+	</div>
+</div>

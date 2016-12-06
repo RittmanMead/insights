@@ -1,0 +1,99 @@
+<div class="modal">
+	<div class="overlay" ng-click="cancel()"></div>
+	<div class="contents" style="width: 70%; left: 15%;" md-theme="dark">
+		<div class="header">Choose Filter Criteria</div>
+		<md-content layout="column" layout-wrap>
+			<section layout="row">
+				<md-input-container>
+					<label>Column</label>
+					<input disabled ng-model="filter.Name"></input>
+				</md-input-container>
+				<md-input-container>
+					<label>Value Type</label>
+					<md-select ng-model="filter.ValueType">
+						<md-option value="value">Value</md-option>
+						<md-option value="repVar">Repository Variable</md-option>
+						<md-option value="sessionVar">Session Variable</md-option>
+						<md-option value="expression">LSQL Expression</md-option>
+					</md-select>
+				</md-input-container>
+			</section>
+		</md-content>
+
+		<!-- Search box for picking multiple values -->
+		<div ng-show="filter.DataType != 'date' && filter.Column.Measure == 'none' && filter.ValueType == 'value'">
+			<md-content layout="row">
+				<md-input-container>
+					<label>Search Operator</label>
+					<md-select ng-model="searchOp">
+						<md-option value="contains">Contains</md-option>
+						<md-option value="starts">Starts</md-option>
+						<md-option value="ends">Ends</md-option>
+						<md-option value="like">Is Like</md-option>
+					</md-select>
+				</md-input-container>
+				<md-input-container style="min-width: 200px;">
+					<label>Search (Case sensitive)</label>
+					<input aria-label="Search" ng-model="searchTerm" code="13" on-key="search()"></input>
+					<md-icon md-font-icon="fa-search" class="fa" ng-click="search()" style="cursor: pointer;"></md-icon>
+				</md-input-container>
+			</md-content>
+			<section class="shuttle" layout="row">
+				<div class="dark panel" flex="45">
+					<div ng-show="loading" style="margin-left: calc(50% - 25px); margin-top: 20%;">
+						<md-progress-circular md-mode="indeterminate"></md-progress-circular>
+					</div>
+					<ul ng-show="!loading">
+						<li 	selection-model
+								selection-model-mode="'multiple-additive'"
+								ng-repeat="value in allValues"
+								ng-dblclick="addValue(value)">{{ value.val }}</li>
+					</ul>
+				</div>
+				<section layout="column" flex="10" layout-align="center center">
+					<mat-button flat icon="angle-right" ng-click="addValues()" label="Add Single"></mat-button>
+					<mat-button flat icon="angle-double-right" ng-click="addAllValues()" label="Add All"></mat-button>
+					<mat-button flat icon="angle-left" ng-click="removeValues()" label="Remove Single"></mat-button>
+					<mat-button flat icon="angle-double-left" ng-click="removeAllValues()" label="Remove All"></mat-button>
+				</section>
+				<div class="dark panel" flex="45">
+					<ul>
+						<li 	selection-model
+								selection-model-mode="'multiple-additive'"
+								ng-repeat="value in selectedValues"
+								ng-dblclick="removeValue(value)">{{ value.val }}</li>
+					</ul>
+				</div>
+			</section>
+		</div>
+		<!-- Date picker -->
+		<div ng-if="filter.DataType == 'date' && filter.ValueType == 'value'">
+			<md-datepicker md-open-on-focus ng-model="filter.Value"></md-datepicker>
+		</div>
+
+		<!-- Number input -->
+		<div ng-if="filter.Column.Measure != 'none' && filter.ValueType == 'value'">
+			<md-input-container>
+				<label>Value</label>
+				<input type="number" string-to-number ng-model="filter.Value"></input>
+				<md-icon md-font-icon="fa-hashtag" class="fa"></md-icon>
+			</md-input-container>
+		</div>
+
+		<!-- Input box for expression value -->
+		<md-input-container style="width: calc(100% - 30px);" ng-show="filter.ValueType == 'expression'">
+			<label>Expression</label>
+			<textarea class="code" ng-model="filter.Value"></textarea>
+		</md-input-container>
+		<div ng-show="filter.ValueType == 'repVar'" style="margin-left: 10px;">
+			<div rep-vars val="filter.Value"></div>
+		</div>
+		<div ng-show="filter.ValueType == 'sessionVar'" style="margin-left: 10px;">
+			<div session-vars val="filter.Value"></div>
+		</div>
+		<div style="text-align: center;">
+			<mat-button size="mini" type="accent" icon="check" label="Accept Changes" label-pos="bottom" ng-click="accept()"></mat-button>
+			<mat-button size="mini" type="warn" icon="remove" label="Cancel Changes" label-pos="bottom" ng-click="cancel()"></mat-button>
+		</div>
+	</div>
+</div>

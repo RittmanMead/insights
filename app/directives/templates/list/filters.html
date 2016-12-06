@@ -1,0 +1,33 @@
+<md-content class="filters">
+	<md-list>
+		<md-list-item ng-repeat="filter in filters | noGlobalFilters">
+			<div layout="row" layout-align="center center" style="width: 100%;">
+				<div flex="30">{{ filter.Name }}</div>
+				<md-select flex="20" aria-label="Operator" ng-model="filter.Operator" style="margin-right: 20px;">
+					<md-option value="in">Equal/In</md-option>
+					<md-option value="notIn">Not Equal/In</md-option>
+					<md-option value="greater">></md-option>
+					<md-option value="greaterOrEqual">>=</md-option>
+					<md-option value="less"><</md-option>
+					<md-option value="lessOrEqual"><=</md-option>
+					<md-option value="isNull">Is Null</md-option>
+					<md-option value="isNotNull">Is Not Null</md-option>
+					<md-option value="top">Top</md-option>
+					<md-option value="bottom">Bottom</md-option>
+					<md-option value="like">Like</md-option>
+				</md-select>
+				<div flex="50" ng-if="filter.DataType != 'date' && filter.Column.Measure == 'none' && filter.ValueType == 'value' && filter.Operator != 'like'">
+					<span filter-picklist filter="filter"></span>
+				</div>
+				<md-input-container flex="50" ng-if="(filter.DataType != 'date' && filter.Column.Measure != 'none' && filter.ValueType == 'value' && filter.Operator != 'isNull' && filter.Operator != 'isNotNull') || filter.Operator == 'like'">
+					<input type="number" string-to-number aria-label="Filter Value" ng-model="filter.Value"></input>
+				</md-input-container>
+				<md-datepicker flex="50" md-open-on-focus ng-if="filter.Operator != 'isNull' && filter.Operator != 'isNotNull' && filter.DataType == 'date' && filter.ValueType == 'value'" ng-model="filter.Value"></md-datepicker>
+				<div flex="50" ng-if="filter.ValueType == 'repVar' || filter.ValueType == 'sessionVar' || filter.ValueType == 'expression'">{{ getFilterVal(filter) }}</div>
+			</div>
+			<md-icon class="fa md-secondary" style="font-size: 20px;" ng-click="search(filter)" ng-if="filter.Operator != 'like' && filter.Operator != 'isNull' && filter.Operator != 'isNotNull'" aria-label="Search" md-font-icon="fa-search"><md-tooltip>Search</md-tooltip></md-icon>
+			<md-icon class="fa md-secondary" style="font-size: 20px;" ng-click="toggleProtected(filter)" ng-style="{ color: filter.Protected ? 'rgb(239, 175, 0)' : '' }" aria-label="Protect" md-font-icon="fa-key"><md-tooltip>Protect</md-tooltip></md-icon>
+			<md-icon class="fa md-warn md-secondary" style="font-size: 20px;" ng-click="remove(filter)" aria-label="Remove" md-font-icon="fa-remove"><md-tooltip>Remove</md-tooltip></md-icon>
+		</md-list-item>
+	</md-list>
+</md-content>

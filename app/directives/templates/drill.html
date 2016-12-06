@@ -1,0 +1,10 @@
+<div class="set">
+	<div class="subHeading">
+		<i icon-button fn="removeDrilldown" icon="'times'" colour="negativeColour"></i>
+		<i icon-button fn="editDrilldown" icon="'wrench'" colour="'#537EA2'"></i> 
+		<span>{{ 'Drilldown ' + index }}</span>
+	</div>
+	<div><span style="font-weight: bold;">Mapping: </span><span>{{ drill.SourcePath + ' to ' + drill.DrillPath }}</span></div>
+	<div><span style="font-weight: bold;">Source Visualisation: </span><span>{{ drill.SourceVis.Name }}</span></div>
+	<div><span style="font-weight: bold;">Trigger: </span><span>{{ drill.triggerName() }}</span></div>
+</div>

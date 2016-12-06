@@ -1,0 +1,19 @@
+<div class="modal">
+	<div class="overlay" ng-click="cancel()"></div>
+	<div class="contents" style="width: 88%; left: 4%; text-align:center;">
+		<div class="header">{{ msg }}</div>
+
+		<div style="margin-bottom: 10px;">
+			<md-input-container md-theme="dark" style="width: 50%; text-align: left; font-size: 16px; margin-right: 0px;">
+		        <label>Icon Search</label>
+		        <input class="md-primary md-hue-1" ng-model="search"></input>
+				<md-icon md-font-icon="fa-search" class="fa"></md-icon>
+		    </md-input-container>
+		</div>
+
+		<div class="iconPicker dark">
+			<i  ng-repeat="icon in icons | filter:search" class="fa" ng-click="selectIcon(icon)"
+				ng-class="'fa-' + icon + (selected == icon ? ' selected' : '')"></i>
+		</div>
+	</div>
+</div>

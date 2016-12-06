@@ -1,0 +1,44 @@
+a {
+  color: #EE2B25;
+}
+.header-banner {
+	background: #304049;
+}
+
+hr {
+  border-bottom: 1px solid #304049;
+}
+
+nav {
+	background: #304049;
+}
+
+h3 > .toggleList {
+    color: #EE2B25;
+}
+
+.navbar .search input {
+	border: 1px solid #637E8E;
+	background-color: #202A2F;
+}
+.navbar .search input:focus {
+	border-color: #66afe9;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+.content_button {
+	background: #304049;
+}
+
+h2, h3 {
+    color: #304049;
+}
+
+nav h2, nav h3 {
+	color: #FFFFFF;
+}
+
+.type-signature {
+    color: #EE2B25;
+}

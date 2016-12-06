@@ -1,0 +1,13 @@
+<md-input-container class="md-block">
+    <label>Palette</label>
+    <md-select flex="45" ng-model="value" style="font-size: 16px; display:inline-block;" aria-label="Colour Palette">
+        <md-option ng-repeat="(k, v) in palettes">{{ k }}</md-option>
+    </md-select>
+    <div flex="45" style="display: inline-block; vertical-align: middle;">
+        <div ng-repeat="colour in current()" style="display: inline-block; width: 25px; height: 25px;" ng-style="{ background: colour}"></div>
+    </div>
+    <md-button class="md-primary md-fab md-mini" ng-click="openPicker()">
+        <md-tooltip md-direction="right">Edit</md-tooltip>
+        <md-icon style="color: white;" md-font-icon="fa-pencil" class="fa"></md-icon>
+    </md-button>
+</md-input-container>

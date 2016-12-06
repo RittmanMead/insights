@@ -1,0 +1,22 @@
+<div>
+	<div ng-show="allowsCFs()">
+		<mat-button icon="plus" size="mini" type="accent" label="New Format Rule" ng-click="newCF()"></mat-button>
+		<md-list>
+			<md-list-item ng-repeat="cf in condFormats">
+				<md-icon class="md-primary fa" style="font-size: 20px;" md-font-icon="fa-columns"></md-icon>
+				<span style="color: #777;">{{ targetName(cf) }}</span>
+				<md-icon class="md-primary fa" style="margin-left: 32px; margin-right: 32px; font-size: 20px;" md-font-icon="fa-calculator"></md-icon>
+				<span style="color: #777;">{{ cf.SourceName + ' ' + opTranslate(cf.Operator) + ' ' + cf.Value }}</span>
+				<md-icon class="md-primary fa" style="margin-left: 32px; margin-right: 32px; font-size: 20px;" md-font-icon="fa-paint-brush"></md-icon>
+				<div style="width: 20px; height: 20px; border-radius: 3px;" ng-style="{ background: cf.Style.colour }"></div>
+				<md-icon ng-if="cf.Style.icon" ng-style="{ color: cf.Style.colour }" class="md-primary fa" style="margin-left: 10px; font-size: 20px;" md-font-icon="{{ 'fa-' + cf.Style.icon }}"></md-icon>
+				<md-icon class="md-secondary fa" style="font-size: 20px;" ng-click="editCF(cf, $index)" aria-label="Edit" md-font-icon="fa-wrench"><md-tooltip>Edit</md-tooltip></md-icon>
+				<md-icon class="md-secondary md-warn fa" style="font-size: 20px;" ng-click="removeCF(cf)" aria-label="Remove" md-font-icon="fa-remove"><md-tooltip>Remove</md-tooltip></md-icon>
+			</md-list-item>
+		</md-list>
+	</div>
+	<div ng-show="!allowsCFs()" class="error">
+		<i class="fa fa-times-circle"></i>
+		<span>No conditional formatting available for this plugin.</span>
+	</div>
+</div>

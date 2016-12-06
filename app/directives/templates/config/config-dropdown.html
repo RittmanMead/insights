@@ -1,0 +1,6 @@
+<md-input-container style="margin-bottom: 18px;" class="md-block">
+    <label>{{ cp.label }}</label>
+    <md-select ng-model="configVals[cp.targetProperty]" style="font-size: 16px;">
+        <md-option ng-repeat="val in cp.inputOptions.values">{{ val }}</md-option>
+    </md-select>
+</md-input-container>

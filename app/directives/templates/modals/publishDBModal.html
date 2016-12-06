@@ -1,0 +1,26 @@
+<div class="modal">
+	<div class="overlay" ng-click="cancel()"></div>
+	<div class="contents" style="width: 50%; left: 25%;">
+		<div class="header">Publish Dashboard</div>
+		<md-content md-theme="dark" layout="column">
+			<md-input-container>
+				<label>Catalogue Folder</label>
+				<input disabled value="{{ pathName() }}"></input>
+			</md-input-container>
+			<div icon-picker value="db.icon"></div>
+			<md-input-container>
+				<label>Description</label>
+				<textarea ng-model="db.desc"></textarea>
+			</md-input-container>
+			<md-input-container>
+				<label>Tags</label>
+				<md-chips placeholder="Enter tag" ng-model="db.tags"></md-chips>
+			</md-input-container>
+			<div ng-if="error" class="error" style="margin-top: 5px;">{{ error }}</div>
+		</md-content>
+		<div style="text-align: center;">
+			<mat-button size="mini" type="accent" icon="check" ng-click="accept()" label="Accept Changes" label-pos="bottom"></mat-button>
+			<mat-button size="mini" type="warn" icon="remove" ng-click="cancel()" label="Cancel Changes" label-pos="bottom"></mat-button>
+		</div>
+	</div>
+</div>

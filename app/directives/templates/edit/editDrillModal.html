@@ -1,0 +1,44 @@
+<div class="modal">
+	<div class="overlay" ng-click="cancel()"></div>
+	<div class="contents" ng-style="{ width: width + '%', left: ((100-width)/2)+'%' }">
+		<div class="header">Drilldown</div>
+		<md-content md-theme="dark" layout="row">
+			<section flex="33" style="border-right: 1px solid #CCC;">
+				<div class="subHeading">Columns</div>
+				<md-content layout="row" layout-wrap style="margin-top: 10px; max-height: 300px; font-size: 14px;">
+					<div ng-repeat="(k, val) in edit.Columns">
+						<md-checkbox style="margin-left: 10px;"	ng-model="edit.Columns[k]" class="md-primary"
+									 aria-label="Pass Column">{{ getColNameFromID(k) }}</md-checkbox>
+					</div>
+				</md-content>
+			</section>
+			<section flex="33" style="border-right: 1px solid #CCC;">
+				<div class="subHeading">Source</div>
+				<md-content style="max-height: 200px; font-size: 14px;">
+					<md-radio-group ng-model="edit.SourceVis" class="md-primary" ng-change="resetTrigger()">
+						<md-radio-button style="margin-left: 10px;" ng-repeat="vis in visuals" ng-value="vis">{{ vis.DisplayName }}</md-radio-button>
+					</md-radio-group>
+				</md-content>
+				<md-input-container style="width: calc(100% - 30px)">
+					<label>Trigger</label>
+					<md-select aria-label="Trigger" ng-model="edit.Trigger">
+						<md-option ng-value="trig.trigger" ng-repeat="trig in triggers()">{{ trig.name }}</md-option>
+					</md-select>
+				</md-input-container>
+				<div style="margin-left: 10px; margin-right: 5px; font-size: 14px;">{{ triggerDesc() }}</div>
+			</section>
+			<section flex="33">
+				<div class="subHeading">Catalogue Target</div>
+				<md-input-container style="width: calc(100% - 60px);">
+					<label>Drill Path</label>
+					<input ng-model="edit.DrillPath"></input>
+					<md-icon class="fa" md-font-icon="fa-folder-open" ng-click="openWebcat()" style="cursor: pointer;"></md-icon>
+				</md-input-container>
+			</section>
+		</md-content>
+		<div style="text-align: center; margin-top: 10px;">
+			<mat-button size="mini" type="accent" icon="check" ng-click="accept()" label="Accept Changes" label-pos="bottom"></mat-button>
+			<mat-button size="mini" type="warn" icon="remove" ng-click="cancel()" label="Cancel Changes" label-pos="bottom"></mat-button>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,32 @@
+<div>
+	<!-- Subject Areas -->
+	<div ng-show="loading" layout="row" layout="center center">
+		<md-progress-circular style="margin: calc(50% - 25px)" md-mode="indeterminate"></md-progress-circular>
+	</div>
+	<div ng-show="!loading">
+		<div flex layout="column" md-theme="dark" class="subjectAreaContainer">
+			<div class="subject-area">
+				<i class="fa fa-database" style="font-size: 30px; vertical-align: middle;"></i>
+				<md-input-container class="small" md-theme="dark">
+					<label>Subject Area</label>
+					<md-select ng-model="subjectArea" ng-change="changeSA(true)">
+						<md-option ng-repeat="sa in subjectAreas"> {{ sa }} </md-option>
+					</md-select>
+				</md-input-container>
+			</div>
+			<div class="search">
+				<md-input-container style="font-size: 14px; margin-right: 0px;">
+					<label>Search</label>
+					<input ng-model="presSearch"></input>
+					<md-icon style="margin-right: 10px;" md-font-icon="fa-search" class="fa"></md-icon>
+				</md-input-container>
+			</div>
+			<!-- Presentation Tables and Columns -->
+			<md-content class="scrollContainer pres-table-container" flex>
+				<div style="direction: ltr;">
+					<div ng-repeat="table in metadata[subjectArea].Tables | presTableSearch:presSearch"><span pres-table></span></div>
+				</div>
+			</md-content>
+		</div>
+	</div>
+</div>

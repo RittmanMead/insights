@@ -1,0 +1,22 @@
+<div>
+	<div ng-if="editMode" class="remove" ng-style="{ 'transform': 'translate(' + vs.X + 'px, ' + vs.Y + 'px)' }">
+		<mat-button type="warn" label="Remove" ng-click="removeVS()" icon="remove" size="mini-x"></mat-button>
+	</div>
+	<div		ng-class="editMode ? 'edit' : ''"
+				ng-style="{ 'transform': 'translate(' + vs.X + 'px, ' + vs.Y + 'px)' }"
+				data-x="{{ vs.X }}"
+				data-y="{{ vs.Y }}"
+				class="selector dbObject">
+		<div layout="row">
+			<md-icon class="md-primary fa" style="margin-left: 10px; line-height: 30px; font-size: 20px;" md-font-icon="fa-bar-chart"></md-icon>
+			<md-input-container ng-if="vs.Style == 'Dropdown'">
+				<md-select ng-change="changeVis()" ng-model="vs.Selected" aria-label="Choose Visualisation">
+					<md-option ng-value="vis.name" ng-repeat="vis in vs.Visuals | filter: {enabled: true}">{{ vis.displayName}}</md-option>
+				</md-select>
+			</md-input-container>
+			<md-radio-group ng-model="vs.Selected" ng-if="vs.Style == 'Radio'" style="margin-top: 10px; margin-left: 10px; margin-right: 15px;">
+				<md-radio-button ng-repeat="vis in vs.Visuals  | filter: {enabled: true}" aria-label="Visual Selector" ng-value="vis.name" class="md-primary">{{ vis.displayName }}</md-radio-button>
+			</md-radio-group>
+		</div>
+	</div>
+<div>

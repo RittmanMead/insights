@@ -1,0 +1,3 @@
+<section layout="row" layout-align="center center" layout-wrap>
+    <md-button ng-repeat="tab in tabset" ng-click="changeTab(tab)" class="md-primary" ng-class="tab == selectedTab ? 'md-raised' : ''" >{{ tab }}</md-button>
+</section>

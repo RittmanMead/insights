@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html style="margin: 0; height: 100%;">
+    <head>
+        <meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Insights</title>
+
+		<!-- Standard Libraries -->
+		<script src="/insights/js/lib/d3.min.js"></script>
+		<script src="/insights/js/lib/jquery.min.js"></script>
+		<script src="/insights/js/lib/jquery.xml2json.min.js"></script>
+		<script src="/insights/js/lib/angular.min.js"></script>
+		<script src="/insights/js/lib/angular-animate.min.js"></script>
+
+        <!-- Angular Material Library -->
+        <script src="/insights/js/lib/angular-aria.min.js"></script>
+        <script src="/insights/js/lib/angular-messages.min.js"></script>
+        <script src="/insights/js/lib/angular-material.min.js"></script>
+        <link rel="stylesheet" href="/insights/css/lib/angular-material.min.css">
+
+		<!-- OBIEE Integration and Styles -->
+        <script src="/insights/js/config.js"></script>
+        <script src="/insights/js/customConfig.js"></script>
+		<script src="/insights/js/obiee.js"></script>
+		<link	rel="stylesheet" type="text/css" href="/insights/css/insights.css">
+
+		<!-- UI Libraries -->
+		<script src="/insights/js/insights.js"></script>
+		<script src="/insights/js/lib/angular-modal-service.min.js"></script>
+		<script src="/insights/js/lib/angular-selection-model.min.js"></script>
+
+		<!-- RMVPP Integration Libraries -->
+		<script src="/insights/js/rmvpp.js"></script>
+
+		<!-- Icons -->
+        <link rel="stylesheet" href="/insights/icons/css/font-awesome.min.css">
+
+		<!-- Angular Specific Code -->
+		<script>var app = angular.module('Login', ['ngMaterial', 'ngAnimate', 'angularModalService']);</script>
+		<script src="/insights/app/services/global.js"></script>
+		<script src="/insights/app/states/login/login-controller.js"></script>
+		<script src="/insights/app/directives/directives.js"></script>
+    </head>
+	<body class="login" ng-app="Login" style="margin: 0; height: 100%;" ng-controller="loginForm">
+		<div loading="loading"></div>
+		<div class="header">
+			<div style="padding-top: 18px;">Insights</div>
+		</div>
+
+		<div style="text-align: left; margin-top: 20px; width: 33%; margin-left: 33%; border-radius: 15px;" >
+            <md-content layout="column" md-theme="dark" style="border-radius: 5px;">
+                <md-input-container style="margin-top: 30px; margin-left: 25px; margin-right: 25px; margin-bottom: 0px;">
+                    <label>Username</label>
+                    <input ng-model="username" ng-keypress="keyLogin($event)">
+                </md-input-container>
+                <md-input-container style="margin-left: 25px; margin-right: 25px; margin-bottom: 0px; margin-top: 0px;">
+                    <label>Password</label>
+                    <input ng-keypress="keyLogin($event)" ng-model="password" type="password">
+                </md-input-container>
+                <mat-button size="mini" style="margin-bottom: 5px; text-align: center;" icon="sign-in" label="Login" ng-click="login()"></mat-button>
+            </md-content>
+		</div>
+		<div ng-show="error" class="error" style="margin-top: 10px;">
+			<i class="fa fa-times-circle"></i>
+			<span>{{ error }}</span>
+		</div>
+    </body>
+</html>

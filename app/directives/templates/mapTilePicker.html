@@ -1,0 +1,10 @@
+<section layout="row">
+    <md-input-container flex="80" class="md-block md-primary md-hue-1">
+        <label>{{ label }}</label>
+        <input class="md-primary md-hue-1" ng-model="value" disabled />
+    </md-input-container>
+    <md-button class="md-primary md-fab md-mini" ng-click="openPicker()">
+        <md-tooltip md-direction="top">Choose</md-tooltip>
+        <md-icon style="color: white;" md-font-icon="fa-map" class="fa"></md-icon>
+    </md-button>
+</section>

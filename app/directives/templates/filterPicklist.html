@@ -1,0 +1,16 @@
+<div>
+		<md-select  ng-if="filter.PromptOptions.MultipleValues" multiple md-selected-text="getSelectedText()" ng-model="filter.Value" aria-label="{{ filter.Column.Name }}"
+					md-on-open="loadChoices()" data-md-container-class="selectSelectHeader" ng-change="change({{ filter.Value }})">
+			<md-select-header class="select-header">
+				<input aria-label="Search" placeholder="Search" ng-model="search.name" class="header-searchbox _md-text" ng-keydown="stopProp($event)">
+			</md-select-header>
+			<md-option ng-value="choice.name" ng-repeat="choice in filterChoices | filter:search.name">{{ choice.name }}</md-option>
+		</md-select>
+		<md-select  ng-if="!filter.PromptOptions.MultipleValues" md-selected-text="getSelectedText()" ng-model="filter.Value" aria-label="{{ filter.Column.Name }}"
+					md-on-open="loadChoices()" data-md-container-class="selectSelectHeader" ng-change="change()">
+			<md-select-header class="select-header">
+				<input aria-label="Search" placeholder="Search" ng-model="search.name" class="header-searchbox _md-text" ng-keydown="stopProp($event)">
+			</md-select-header>
+			<md-option ng-value="choice.name" ng-repeat="choice in filterChoices | filter:search.name">{{ choice.name }}</md-option>
+		</md-select>
+</div>
