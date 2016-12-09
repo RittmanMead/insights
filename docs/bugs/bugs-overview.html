@@ -161,8 +161,7 @@
 </ul></li>
 <li><a href="#compatibility"><span class="toc-section-number">3</span> Compatibility</a><ul>
 <li><a href="#obiee"><span class="toc-section-number">3.1</span> OBIEE</a></li>
-<li><a href="#angularjs"><span class="toc-section-number">3.2</span> AngularJS</a></li>
-<li><a href="#browser"><span class="toc-section-number">3.3</span> Browser</a></li>
+<li><a href="#browser"><span class="toc-section-number">3.2</span> Browser</a></li>
 </ul></li>
 <li><a href="#vanilla-obiee-interoperability"><span class="toc-section-number">4</span> Vanilla OBIEE Interoperability</a></li>
 <li><a href="#client-side-vs-server-side"><span class="toc-section-number">5</span> Client-side vs Server-side</a><ul>
@@ -185,9 +184,7 @@
 <h2 id="obiee"><span class="header-section-number">3.1</span> OBIEE</h2>
 <p>Using <a href="api-reference.html#obiee.executelsql"><code>executeLSQL</code></a> in versions prior to 11.1.1.9, will cause decimals to come through as integers. This is recognised by <a href="https://community.oracle.com/message/13232471">Oracle</a> and while there is no publicly available patch, a backport can be requested via an SR with Oracle. This can be somewhat overcome by using using the XML query web service, but that in turn has some issues, regarding returning full result sets and error handling.</p>
 <p>Additionally, versions prior to 11.1.1.9 will limit session/repository variable functionality. This is because the app relies on using <a href="http://gerardnico.com/wiki/dat/obiee/odbc_function#nqsgetsessionvalues"><code>NQSGetSessionValues('%')</code></a> to fetch all defined variables and their values. In older versions this function does not accept a wildcard and so does not allow retrieval of variables <em>without</em> knowing the variable name first. Variables can still be used by using the LSQL expression feature in the UI.</p>
-<h2 id="angularjs"><span class="header-section-number">3.2</span> AngularJS</h2>
-<p>The application has been built using <a href="https://angularjs.org/">AngularJS</a>, a web application framework developed by Google. The application stops functioning (interaction editing screens fail) when using the latest version (1.5.0). It is not clear as of yet what the issue is, but has been identified that the problem comes in with version 1.4.9. As such, 1.4.8 is being used until this problem can be resolved. Also, <a href="https://angular.io/">AngularJS 2</a> has been released but is a significantly different framework that would require an almost total rewrite of the app.</p>
-<h2 id="browser"><span class="header-section-number">3.3</span> Browser</h2>
+<h2 id="browser"><span class="header-section-number">3.2</span> Browser</h2>
 <p>IE11 experiences some cosmetic issues regarding fade transitions on the screen. It is also expected that older versions of IE will not function correctly.</p>
 <h1 id="vanilla-obiee-interoperability"><span class="header-section-number">4</span> Vanilla OBIEE Interoperability</h1>
 <p>The current setup as a client side deployment on Weblogic has some major limitations, due to the cookie sharing. If a user logs in using the web API first, this will cause vanilla OBIEE to fail as it attempts to retrieve resources from <code>analytics-ws</code> instead of <code>analytics</code>. The reverse situation where the user begins their session in vanilla OBIEE works successfully. If SSO has been configured on OBIEE, this bug could potentially be overcome.</p>

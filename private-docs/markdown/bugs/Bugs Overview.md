@@ -23,10 +23,6 @@ Using [`executeLSQL`](api-reference.html#obiee.executelsql) in versions prior to
 
 Additionally, versions prior to 11.1.1.9 will limit session/repository variable functionality. This is because the app relies on using [`NQSGetSessionValues('%')`](http://gerardnico.com/wiki/dat/obiee/odbc_function#nqsgetsessionvalues) to fetch all defined variables and their values. In older versions this function does not accept a wildcard and so does not allow retrieval of variables *without* knowing the variable name first. Variables can still be used by using the LSQL expression feature in the UI.
 
-## AngularJS
-
-The application has been built using [AngularJS](https://angularjs.org/), a web application framework developed by Google. The application stops functioning (interaction editing screens fail) when using the latest version (1.5.0). It is not clear as of yet what the issue is, but has been identified that the problem comes in with version 1.4.9. As such, 1.4.8 is being used until this problem can be resolved. Also, [AngularJS 2](https://angular.io/) has been released but is a significantly different framework that would require an almost total rewrite of the app.
-
 ## Browser
 
 IE11 experiences some cosmetic issues regarding fade transitions on the screen. It is also expected that older versions of IE will not function correctly.
