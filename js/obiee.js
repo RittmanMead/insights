@@ -2837,7 +2837,7 @@ var obiee = (function() {
 		/** Column description. */
 		this.Description;
 
-		/** Data type. Can be one of `varchar`, `integer`, `double`, `date`. */
+		/** Data type. Can be one of `varchar`, `integer`, `double`, `date`, `timestamp`. */
 		this.DataType = dataType || 'varchar';
 
 		/** Presentation table name. */
@@ -2873,6 +2873,10 @@ var obiee = (function() {
 					break;
 				case 'date':
 					formatString = InsightsConfig.DataFormats.date;
+					break;
+				case 'timestamp':
+					formatString = InsightsConfig.DataFormats.timestamp;
+					console.log(formatString);
 					break;
 				case 'varchar':
 					formatString = InsightsConfig.DataFormats.varchar;
@@ -2932,7 +2936,6 @@ var obiee = (function() {
 
 			// console.log(this.Name, this.DataType);
 			switch(this.DataType) {
-
 			    case 'double': formatted = numFormat(formatString, value); break;
 			    case 'integer': formatted = numFormat(formatString, value); break;
 			    case 'numeric': formatted = numFormat(formatString, value); break;
@@ -2942,6 +2945,15 @@ var obiee = (function() {
 						dateValue = value;
 					else
 						dateValue = rmvpp.locales[this.Locale].timeFormat("%Y-%m-%d").parse(value); // Returns a Date
+					formatted = rmvpp.locales[this.Locale].timeFormat(formatString)(dateValue);
+					break;
+				case 'timestamp':
+					var dateValue;
+					if (value instanceof Date) {
+						dateValue = value;
+					} else {
+						dateValue = rmvpp.locales[this.Locale].timeFormat("%Y-%m-%dT%H:%M:%S").parse(value); // Returns a Date
+					}
 					formatted = rmvpp.locales[this.Locale].timeFormat(formatString)(dateValue);
 					break;
 				case 'varchar':
@@ -2975,7 +2987,9 @@ var obiee = (function() {
 					column.Verified = true;
 					column.Measure = columnInfo.aggRule;
 					column.SortKey = columnInfo.hasSortKey;
-					column.DataType = columnInfo.dataType;
+					if (column.DataType != 'timestamp') { // Timestamp not returned as a data type from this function
+						column.DataType = columnInfo.dataType;
+					}
 					successFunc(columnInfo);
 				}
 			}, false, errorFunc);
@@ -3828,7 +3842,7 @@ var obiee = (function() {
 				findVis = cs.Visuals.filter(function(tv) {
 					return tv.name == vis.Name;
 				});
-				
+
 				if (findVis.length > 0) {
 					findVis[0].displayName = vis.DisplayName;
 				} else {
