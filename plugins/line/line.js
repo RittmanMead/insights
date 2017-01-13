@@ -82,7 +82,7 @@
 		},
 		{
 			targetProperty:"horizontal",
-			label: "Horizontal",
+			label: "Vertical",
 			inputType: "checkbox",
 			inputOptions: {
 				defaultValue : false

@@ -2876,7 +2876,6 @@ var obiee = (function() {
 					break;
 				case 'timestamp':
 					formatString = InsightsConfig.DataFormats.timestamp;
-					console.log(formatString);
 					break;
 				case 'varchar':
 					formatString = InsightsConfig.DataFormats.varchar;
