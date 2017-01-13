@@ -6,7 +6,7 @@ At a high level, the installation is to deploy the code base as a web applicatio
 
 # Manual
 
-1. Unzip the source code archive and rename the output directory to `web-api`. If necessary, move the directory to a desired location on the server and make a note of it.
+1. Unzip the source code archive and rename the output directory to `insights`. If necessary, move the directory to a desired location on the server and make a note of it.
 2. Navigate to the WebLogic Console (`biserver:7001/console` on 11g, `biserver:9500/console` on 12c).
 3. On the left side of the screen, navigate to **Deployments** under *Domain Structure*.
 
@@ -23,7 +23,7 @@ At a high level, the installation is to deploy the code base as a web applicatio
 
 7. Choose **Install this directory as an application** and click **Next**.
 8. Select to deploy the application on **All servers in the cluster**.
-9. Under *Source Accessibility*, select **I will make this deployment available from the the following location** and make sure the path matches the code directory. Also ensure that the name of the deployment is **web-api** as files in the project will expect to reference this path once it is deployed.
+9. Under *Source Accessibility*, select **I will make this deployment available from the the following location** and make sure the path matches the code directory. Also ensure that the name of the deployment is **insights** as files in the project will expect to reference this path once it is deployed.
 
 ![](../images/install/4.png)
 
@@ -39,7 +39,7 @@ At a high level, the installation is to deploy the code base as a web applicatio
 12. Click **Save** at the top and accept the creation of `Plan.xml`.
 13. On the left hand side of the screen, click **Activate Changes**.
 14. Navigate back to the **Deployments** screen by using the link on the left hand side under *Domain Structure*.
-15. Change to the **Control** tab and find your application, `web-api`. It should be in state *Prepared*. Click the **Start** button and choose **Servicing all requests** from the dropdown.
+15. Change to the **Control** tab and find your application, `insights`. It should be in state *Prepared*. Click the **Start** button and choose **Servicing all requests** from the dropdown.
 16. Find and open `instanceconfig.xml`.
 
 	* On 11g this is in `$MW_HOME/instances/instance1/config/OracleBIPresentationServicesComponent/`.
