@@ -133,8 +133,8 @@ Uses the [D3 time](https://github.com/mbostock/d3/wiki/Time-Formatting) specific
 * `%d` - zero-padded day of the month as a decimal number [01,31].
 * `%e` - space-padded day of the month as a decimal number [ 1,31]; equivalent to `%_d`.
 * `%H` - hour (24-hour clock) as a decimal number [00,23].
-* `%I`` - hour (12-hour clock) as a decimal number [01,12].
-* `%j - day of the year as a decimal number [001,366].
+* `%I` - hour (12-hour clock) as a decimal number [01,12].
+* `%j` - day of the year as a decimal number [001,366].
 * `%m` - month as a decimal number [01,12].
 * `%M` - minute as a decimal number [00,59].
 * `%L` - milliseconds as a decimal number [000, 999].

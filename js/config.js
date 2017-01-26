@@ -81,6 +81,7 @@ var InsightsConfig = (function() {
         'numeric' : '.3s',
         'integer' : '.0f',
         'date' : '%d/%m/%Y',
+        'timestamp' : '%d/%m/%Y %H:%M',
         'varchar' : '%s'
     }
 
