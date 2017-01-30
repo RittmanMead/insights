@@ -193,16 +193,15 @@
 	];
 
     rmvpp.Plugins[pluginName].render = function(data, columnMap, config, container)   {
-        if (data.length == 1)
-            rmvpp.displayError(container, 'Need more than one data point to render the map.');
-
         var varyColour = false; // Check if vary by colour has been defined
-		if (columnMap.vary && columnMap.vary.Code != "")
+		if (columnMap.vary && columnMap.vary.Code != "") {
 			varyColour = true;
+        }
 
         // Throw error if incompatible options set
-		if (varyColour && columnMap.measure.length > 1)
+		if (varyColour && columnMap.measure.length > 1) {
 			rmvpp.displayError(container, 'Cannot render visualisation. Accepts multiple measure columns or a single measure and vary by colour dimension.');
+        }
 
 
         // Store visualisation number (if it exists), so that unique IDs can be created
@@ -275,6 +274,11 @@
 
 		var group = new L.featureGroup(markers);
 		map.fitBounds(group.getBounds());
+
+        if (data.length == 1) {
+            map.setZoom(13);
+        }
+
 		tileLayer.addTo(map);
 
         $(mapContainer).data({ 'mapObject' : map }); // Add map object to the map itself
@@ -550,8 +554,11 @@
 				bottomLeft = project([leftBnd, bottomBnd]);
 				topRight = project([rightBnd, topBnd]);
 
-				svg.attr('width', topRight[0] - bottomLeft[0])
-					.attr('height', bottomLeft[1] - topRight[1])
+                var svgWidth = data.length == 1 ? +config.bubbleHigh : topRight[0] - bottomLeft[0];
+                var svgHeight = data.length == 1 ? +config.bubbleHigh : bottomLeft[1] - topRight[1]
+
+				svg.attr('width', svgWidth)
+					.attr('height', svgHeight)
 					.style('margin-left', bottomLeft[0] + 'px' )
 					.style('margin-top', topRight[1] + 'px')
 					.attr('overflow', 'visible');
