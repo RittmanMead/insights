@@ -1152,7 +1152,7 @@ var rmvpp = (function(rmvpp) {
 				.classed('legend', true);
 
 			legendContainer.append('g')
-				.attr('transform', 'translate(0,0)')
+				.attr('transform', 'translate(0, 0)')
 				.append('text')
 					.classed('title', true)
                     .style({
