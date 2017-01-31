@@ -394,15 +394,26 @@ app.controller('visBuilder', function($scope, $timeout, $window, $mdToast, Modal
 		}
 	}
 
+	function resetFilters() {
+		$scope.filters = obiee.applyToColumnSets({}, $scope.vis.Plugin, function() { return []; });
+	}
+
 	// Update the visualisation query when a new filter is added
 	$scope.filters = [];
 	$scope.$on('newFilter', function(event, filter) {
 		if (!$scope.dashboardMode) { // Add filter to visualisation
 			$scope.visTab = 'Filters';
-			if (!$.isArray($scope.filters)) {
-				$scope.filters = [];
+
+			// Reset filter object
+			if (typeof($scope.filters) == 'undefined') {
+				resetFilters();
 			}
-			$scope.filters.push(filter);
+
+			$scope.filters = obiee.applyToColumnSets($scope.filters, $scope.vis.Plugin, function(item, dataset) {
+				item.push(filter);
+				return item;
+			});
+			// $scope.filters.push(filter);
 		} else { // Add dashboard prompt
 			if (!$scope.db.Prompts.Filters) {
 				$scope.db.Prompts = new obiee.BIPrompt();
@@ -466,6 +477,7 @@ app.controller('visBuilder', function($scope, $timeout, $window, $mdToast, Modal
 		if ($scope.vis) {
 			var prevCM = angular.copy($scope.vis.ColumnMap);
 			var prevFilters = angular.copy($scope.filters);
+			var prevMulti = rmvpp.Plugins[$scope.vis.Plugin].multipleDatasets;
 		}
 
 		$scope.vis = new obiee.BIVisual($scope.plugin);
@@ -473,10 +485,15 @@ app.controller('visBuilder', function($scope, $timeout, $window, $mdToast, Modal
 		// Force reset gets passed in by the subject area dropdown
 		if ($scope.vis && !forceReset) {
 			$scope.vis.ColumnMap = rmvpp.importColumnMap(prevCM, $scope.plugin);
-			$scope.filters = prevFilters;
+			if (rmvpp.Plugins[$scope.vis.Plugin].multipleDatasets == prevMulti) {
+				$scope.filters = prevFilters;
+			} else { // TODO: Implement some filter sharing for multiple datasets
+				// console.log('there');
+				resetFilters();
+			}
 		} else if ($scope.vis) {
 			$scope.vis.ColumnMap = rmvpp.getDefaultColumnMap($scope.plugin);
-			$scope.filters = [];
+			resetFilters();
 		}
 
 		$scope.vis.Config = rmvpp.getDefaultConfig($scope.plugin);
@@ -500,7 +517,8 @@ app.controller('visBuilder', function($scope, $timeout, $window, $mdToast, Modal
 
 		$scope.vis.Query = obiee.applyToColumnSets({}, $scope.vis.Plugin, function(query, dataset) {
 			var cm = dataset ? $scope.vis.ColumnMap[dataset] : $scope.vis.ColumnMap;
-			query = createNewQuery(cm, $scope.subjectArea, $scope.filters);
+			var filters = dataset ? $scope.filters[dataset] : $scope.filters;
+			query = createNewQuery(cm, $scope.subjectArea, filters);
 			return query;
 		});
 	}

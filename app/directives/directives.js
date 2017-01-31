@@ -417,9 +417,9 @@ app.directive('columnMap', ['Global', function(Global) {
 			scope.hideTooltip = function() { Global.tooltip.hide();	}
 
 			scope.remove = function(column, subColumn, multiple) {
-				if (!multiple)
+				if (!multiple) {
 					scope.columns[column] = new obiee.BIColumn('', '');
-				else {
+				} else {
 					$.removeFromArray(subColumn, column);
 				};
 			};

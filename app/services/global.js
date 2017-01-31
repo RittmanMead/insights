@@ -587,6 +587,8 @@ app.filter('presTableSearch', function() {
 app.filter('noGlobalFilters', function() {
     return function(objs, search) {
 		if (!objs) return objs;
+		if (!$.isArray(objs)) return objs;
+
 		var result = [];
 		objs.forEach(function(filter) {
 			if (!filter.Global)
