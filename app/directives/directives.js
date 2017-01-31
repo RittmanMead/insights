@@ -383,6 +383,26 @@ app.directive('presTable', function() {
 });
 
 // Parameter Form directives
+app.directive('columnMapContainer', ['Global', function(Global) {
+	return {
+		restrict: 'A',
+		replace: true,
+		templateUrl: '/insights/app/directives/templates/columnMapContainer.html',
+		scope: {
+			'columns': '=visColumns',
+			'colmapParams': '=',
+			'dropFns' : '=',
+			'plugin': '='
+		},
+		link: function(scope, element, attrs) {
+			scope.$watch('plugin', function() {
+				scope.multipleDatasets = rmvpp.Plugins[scope.plugin].multipleDatasets;
+			});
+
+		}
+	}
+}]);
+
 app.directive('columnMap', ['Global', function(Global) {
 	return {
 		restrict: 'A',
@@ -485,10 +505,14 @@ app.directive('conditionalFormats', ['Global', function(Global) {
 		},
 		link: function(scope, element, attrs) {
 			scope.allowsCFs = function() {
-				hasCF = rmvpp.Plugins[scope.plugin].columnMappingParameters.filter(function(cm) {
-					return cm.conditionalFormat;
-				});
-				return hasCF.length > 0;
+				if (!rmvpp.Plugins[scope.plugin].multipleDatasets) {
+					hasCF = rmvpp.Plugins[scope.plugin].columnMappingParameters.filter(function(cm) {
+						return cm.conditionalFormat;
+					});
+					return hasCF.length > 0;
+				} else {
+					return false;
+				}
 			}
 
 			scope.opTranslate = function(op) {
@@ -1025,12 +1049,14 @@ app.directive('dropColumn', ['Global', function(Global) {
 			var dropFunction;
 
 			var addSingleCol = function(column) {
+				console.log(scope.column);
 				scope.column = column;
 				scope.$apply();
 			}
 
 			var addMultiCol = function(column) {
 				if ($.inArray(column, scope.column) == -1) {
+					console.log(scope.column);
 					scope.column.push(column);
 					scope.$apply();
 				}
