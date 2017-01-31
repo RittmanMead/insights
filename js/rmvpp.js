@@ -100,41 +100,41 @@ var rmvpp = (function(rmvpp) {
         * @returns {object} Column map of the target plugin with  the original columns mapped.
     */
 	rmvpp.importColumnMap = function(sourceMap, targetPlugin) {
-		var targetMap = rmvpp.getDefaultColumnMap(targetPlugin);
-		var targetParams = rmvpp.Plugins[targetPlugin].columnMappingParameters;
-
-		function matchColumnToMap(allowedTypes, targetMap, col) {
+		function matchColumnToMap(allowedTypes, targetParams, colMap, col) {
 			var filtered = targetParams.filter(function(p) { return $.inArray(p.type, allowedTypes) > -1; });
 			var populated = false;
 			filtered.forEach(function(fp) {
 				if (!populated) { // Break when populated
 					if (fp.multiple) {
-						targetMap[fp.targetProperty].push(col);
+						colMap[fp.targetProperty].push(col);
 						populated = true;
-					} else if (!targetMap[fp.targetProperty].Code) {
-						targetMap[fp.targetProperty] = col;
+					} else if (!colMap[fp.targetProperty].Code) {
+						colMap[fp.targetProperty] = col;
 						populated = true;
 					}
 				}
 			});
-			return targetMap;
+			return colMap;
 		}
 
         // Only allow single dataset plugins to work with column map transferrence
+        var targetMap = rmvpp.getDefaultColumnMap(targetPlugin);
+        var targetParams = rmvpp.Plugins[targetPlugin].columnMappingParameters;
         if (!rmvpp.Plugins[targetPlugin].multipleDatasets) {
             obiee.applyToColumnMap(sourceMap, function(col, id) {
     			if (col.Code) {
     				if (id.indexOf('hidden') == 0) { // Map hidden columns between plugins
-    					targetMap = matchColumnToMap(['hidden'], targetMap, col);
+    					targetMap = matchColumnToMap(['hidden'], targetParams, targetMap, col);
     				} else if (col.Measure == 'none') {
-    					targetMap = matchColumnToMap(['dim', 'any'], targetMap, col);
+    					targetMap = matchColumnToMap(['dim', 'any'], targetParams, targetMap, col);
     				} else {
-    					targetMap = matchColumnToMap(['fact', 'any'], targetMap, col);
+    					targetMap = matchColumnToMap(['fact', 'any'], targetParams, targetMap, col);
     				}
     			}
     		});
         } else {
-            // TODO: Make this work with multiple datasets
+            // TODO: Build funcitonality to map columns automatically when switching from multiple dataset plugins
+            // to single dataset plugins.
         }
 		return targetMap;
 	}
