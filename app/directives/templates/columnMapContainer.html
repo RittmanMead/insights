@@ -6,6 +6,6 @@
     <!-- Multiple dataset column map form -->
     <div ng-if="multipleDatasets" ng-repeat="(dataset, colMap) in colmapParams" style="margin-bottom: 10px;">
         <div style="font-weight: bold; color: #666; font-size: 14px;">{{ 'Query: ' + dataset }}</div>
-        <div column-map colmap-params="colMap" vis-columns="columns[dataset]" drop-fns="$parent.dropFunctions"></div>
+        <div column-map colmap-params="colMap" dataset="dataset" vis-columns="columns[dataset]" drop-fns="$parent.dropFunctions"></div>
     </div>
 <div>

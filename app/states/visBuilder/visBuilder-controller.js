@@ -400,7 +400,7 @@ app.controller('visBuilder', function($scope, $timeout, $window, $mdToast, Modal
 
 	// Update the visualisation query when a new filter is added
 	$scope.filters = [];
-	$scope.$on('newFilter', function(event, filter) {
+	$scope.$on('newFilter', function(event, filter, dataset) {
 		if (!$scope.dashboardMode) { // Add filter to visualisation
 			$scope.visTab = 'Filters';
 
@@ -409,11 +409,14 @@ app.controller('visBuilder', function($scope, $timeout, $window, $mdToast, Modal
 				resetFilters();
 			}
 
-			$scope.filters = obiee.applyToColumnSets($scope.filters, $scope.vis.Plugin, function(item, dataset) {
-				item.push(filter);
-				return item;
-			});
-			// $scope.filters.push(filter);
+			if (!dataset) { // Add filter to all queries if dataset not specified
+				$scope.filters = obiee.applyToColumnSets($scope.filters, $scope.vis.Plugin, function(item, dataset) {
+					item.push(filter);
+					return item;
+				});
+			} else { // Otherwise add the filter to the specific query (assumes it is a multi-dataset)
+				$scope.filters[dataset].push(filter);
+			}
 		} else { // Add dashboard prompt
 			if (!$scope.db.Prompts.Filters) {
 				$scope.db.Prompts = new obiee.BIPrompt();

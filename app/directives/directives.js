@@ -410,7 +410,8 @@ app.directive('columnMap', ['Global', function(Global) {
 		scope: {
 			'columns': '=visColumns',
 			'colmapParams': '=',
-			'dropFns' : '='
+			'dropFns' : '=',
+			'dataset': '='
 		},
 		link: function(scope, element, attrs) {
 			scope.tooltip = function(desc, e) { Global.tooltip.displayHTML(desc, e); }
@@ -434,7 +435,7 @@ app.directive('columnMap', ['Global', function(Global) {
 
 			scope.filter = function(col) {
 				var filter = new obiee.BIFilter(col);
-				scope.$emit('newFilter', filter);
+				scope.$emit('newFilter', filter, scope.dataset);
 			}
 
 			scope.edit = function() {
