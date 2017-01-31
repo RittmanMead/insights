@@ -67,13 +67,27 @@ var rmvpp = (function(rmvpp) {
         * @returns {object} Column map object describing the input format for the plugin.
     */
 	rmvpp.getDefaultColumnMap = function(plugin) {
-		var columnMap = {}, colMap = rmvpp.Plugins[plugin].columnMappingParameters;
-		for (var i=0; i < colMap.length; i++) {
-			if (colMap[i].multiple)
-				columnMap[colMap[i].targetProperty] = [];
-			else
-				columnMap[colMap[i].targetProperty] = new obiee.BIColumn ('','');
-		}
+		var colMap = rmvpp.Plugins[plugin].columnMappingParameters;
+
+        function newDefaults(colMap) {
+            var newCM = {};
+            for (var i=0; i < colMap.length; i++) {
+    			if (colMap[i].multiple)
+    				newCM[colMap[i].targetProperty] = [];
+    			else
+    				newCM[colMap[i].targetProperty] = new obiee.BIColumn ('','');
+    		}
+            return newCM;
+        }
+
+        if (!rmvpp.Plugins[plugin].multipleDatasets) {
+            var columnMap = newDefaults(colMap);
+        } else {
+            var columnMap = {};
+            for (dataset in colMap) {
+                columnMap[dataset] = newDefaults(colMap[dataset]);
+            }
+        }
 		return columnMap;
 	}
 
