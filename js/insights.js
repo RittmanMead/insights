@@ -186,9 +186,10 @@ var insights = (function(insights) {
 			}
 			filter.Value = insights.valsFromChoices(choices);
 
-			$.when.apply(null, dfdArray).done(function() {
-				if (callback)
+			$.when.apply($, dfdArray).done(function() {
+				if (callback) {
 					callback();
+				}
 			});
 		}, biQuery);
 	}
@@ -703,7 +704,7 @@ interact(element[0]).dropzone({
 		});
 
 		// When all rendered, stitch them together
-		$.when.apply(null, dfdArray).done(function() {
+		$.when.apply($, dfdArray).done(function() {
 			// Get overall dashboard size
 			dbHeight = db.getHeight();
 			dbWidth = db.getWidth();
@@ -748,8 +749,9 @@ interact(element[0]).dropzone({
 						saveAsPDF(masterCanvas.lowerCanvasEl, filename + '.pdf'); // Save as PDF
 						break;
 				}
-				if (callback)
+				if (callback) {
 					callback();
+				}
 			})
 		});
 	}
@@ -908,7 +910,7 @@ interact(element[0]).dropzone({
 		});
 
 		// Resolve when all recurses complete
-		$.when.apply(null, dfdArray).done(function() {
+		$.when.apply($, dfdArray).done(function() {
 			mainDFD.resolve();
 		});
 
@@ -1001,7 +1003,7 @@ interact(element[0]).dropzone({
 				canvasDFDArray[1].resolve();
 			}
 
-			$.when.apply(null, canvasDFDArray).done(function() {
+			$.when.apply($, canvasDFDArray).done(function() {
 				$('#'+masterCanvasID).parent().append('<canvas class="tempCanvas ' + masterCanvasID + ' lower-canvas" canvas-id="' + i + '" id="tempCanvas-' + i + '-' + masterCanvasID + '"></canvas>');
 
 				$('#tempCanvas-' + i + '-' + masterCanvasID).attr({width: elem.width(), height: elem.height()});

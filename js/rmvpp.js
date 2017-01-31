@@ -2091,6 +2091,23 @@ jQuery.getSelectedText = function() {
     return text;
 }
 
+// Adds a $.when.all function which can be used to elegantly receive the output of a deferred
+// array as an array of arguments for both success and failure.
+if (jQuery.when.all===undefined) {
+    jQuery.when.all = function(deferreds) {
+        var deferred = new jQuery.Deferred();
+        $.when.apply(jQuery, deferreds).then(
+            function() {
+                deferred.resolve(Array.prototype.slice.call(arguments));
+            },
+            function() {
+                deferred.fail(Array.prototype.slice.call(arguments));
+            });
+
+        return deferred;
+    }
+}
+
 /* ------ END OF JQUERY EXTENSIONS ------- */
 
 /* ------ FABRIC EXTENSIONS ------ */

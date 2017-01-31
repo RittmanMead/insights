@@ -20,6 +20,10 @@ app.controller('visBuilder', function($scope, $timeout, $window, $mdToast, Modal
 
 	$scope.dummy = function() {};
 
+	$scope.test = function() {
+		console.log($scope.vis);
+	}
+
 	// Hide left and right panels
 	$scope.hidePanes = function() {
 		$scope.lastLeftPaneWidth = $scope.leftPaneWidth;
@@ -467,12 +471,23 @@ app.controller('visBuilder', function($scope, $timeout, $window, $mdToast, Modal
 
 	// Construct Query from UI objects
 	function constructQuery() {
-		var columns = [];
-		obiee.applyToColumnMap($scope.vis.ColumnMap, function(col) {
-			if (col.Code)
-				columns.push(col);
+		function createNewQuery(colMap, subjectArea, filters) {
+			var columns = [];
+			obiee.applyToColumnMap(colMap, function(col) {
+				if (col.Code) {
+					columns.push(col);
+				}
+			});
+			var query = new obiee.BIQuery(subjectArea, columns, filters);
+			return query;
+		}
+
+
+		$scope.vis.Query = obiee.applyToColumnSets({}, $scope.vis.Plugin, function(query, dataset) {
+			var cm = dataset ? $scope.vis.ColumnMap[dataset] : $scope.vis.ColumnMap;
+			query = createNewQuery(cm, $scope.subjectArea, $scope.filters);
+			return query;
 		});
-		$scope.vis.Query = new obiee.BIQuery($scope.subjectArea, columns, $scope.filters);
 	}
 
 	// Render visualisation
