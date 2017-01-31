@@ -119,17 +119,20 @@ var rmvpp = (function(rmvpp) {
 			return targetMap;
 		}
 
-		obiee.applyToColumnMap(sourceMap, function(col, id) {
-			if (col.Code) {
-				if (id.indexOf('hidden') == 0) { // Map hidden columns between plugins
-					targetMap = matchColumnToMap(['hidden'], targetMap, col);
-				} else if (col.Measure == 'none') {
-					targetMap = matchColumnToMap(['dim', 'any'], targetMap, col);
-				} else {
-					targetMap = matchColumnToMap(['fact', 'any'], targetMap, col);
-				}
-			}
-		});
+        // Only allow single dataset plugins to work with column map transferrence
+        if (rmvpp.Plugins[targetPlugin].multipleDatasets) {
+            obiee.applyToColumnMap(sourceMap, function(col, id) {
+    			if (col.Code) {
+    				if (id.indexOf('hidden') == 0) { // Map hidden columns between plugins
+    					targetMap = matchColumnToMap(['hidden'], targetMap, col);
+    				} else if (col.Measure == 'none') {
+    					targetMap = matchColumnToMap(['dim', 'any'], targetMap, col);
+    				} else {
+    					targetMap = matchColumnToMap(['fact', 'any'], targetMap, col);
+    				}
+    			}
+    		});
+        }
 		return targetMap;
 	}
 
