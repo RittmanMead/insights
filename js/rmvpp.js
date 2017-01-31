@@ -120,7 +120,7 @@ var rmvpp = (function(rmvpp) {
 		}
 
         // Only allow single dataset plugins to work with column map transferrence
-        if (rmvpp.Plugins[targetPlugin].multipleDatasets) {
+        if (!rmvpp.Plugins[targetPlugin].multipleDatasets) {
             obiee.applyToColumnMap(sourceMap, function(col, id) {
     			if (col.Code) {
     				if (id.indexOf('hidden') == 0) { // Map hidden columns between plugins
@@ -132,6 +132,8 @@ var rmvpp = (function(rmvpp) {
     				}
     			}
     		});
+        } else {
+            // TODO: Make this work with multiple datasets
         }
 		return targetMap;
 	}
