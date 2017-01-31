@@ -398,7 +398,6 @@ app.directive('columnMapContainer', ['Global', function(Global) {
 			scope.$watch('plugin', function() {
 				scope.multipleDatasets = rmvpp.Plugins[scope.plugin].multipleDatasets;
 			});
-
 		}
 	}
 }]);
@@ -1209,6 +1208,23 @@ app.directive('editColumnBtn', ['UIConfig', function(UIConfig) {
 }]);
 
 // Filter UI representation
+app.directive('filtersContainer', ['Global', function(Global) {
+	return {
+		restrict: 'A',
+		replace: true,
+		scope: {
+			'filters': '=filtersContainer',
+			'plugin': '='
+		},
+		link: function(scope, element, attrs) {
+			scope.$watch('plugin', function() {
+				scope.multipleDatasets = rmvpp.Plugins[scope.plugin].multipleDatasets;
+			});
+		},
+		templateUrl: '/insights/app/directives/templates/list/filtersContainer.html'
+	};
+}]);
+
 app.directive('filters', ['Global', function(Global) {
 	return {
 		restrict: 'A',

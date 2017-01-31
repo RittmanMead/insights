@@ -3349,8 +3349,9 @@ var obiee = (function() {
 		this.Criteria = cols;
 
 		filters = filters || [];
-		if (Object.prototype.toString.call( filters ) != '[object Array]')
+		if (!$.isArray(filters)) {
 			throw 'Filters not passed through as an array to query.'
+		}
 
 		/** Array of BIFilter objects used to build the `WHERE` clause. */
 		this.Filters = filters;

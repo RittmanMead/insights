@@ -508,7 +508,7 @@ app.factory('Visuals', function() {
 				obiee.applyToColumnSets(v.Query, v.Plugin, function(item) {
 					criteriaLength.push(item.Criteria.length);
 				});
-				
+
 				if ($.inArray(v, visArray) == -1 && criteriaLength.some(function(v) { return v > 0; })) {
 					v.ID = visArray.length;
 					v.Name = v.defaultName();

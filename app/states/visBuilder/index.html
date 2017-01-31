@@ -273,7 +273,7 @@
                             <div tabset="['Column Mappings', 'Configuration', 'Filters', 'Conditional Formatting']" selected-tab="$parent.visTab"></div>
                             <div ng-show="visTab == 'Column Mappings'" column-map-container plugin="vis.Plugin" colmap-params="colmapParams" vis-columns="vis.ColumnMap" drop-fns="dropFunctions"></div>
                             <div ng-show="visTab == 'Configuration'" config-form config-params="configParams" config-vals="vis.Config"></div>
-                            <div ng-show="visTab == 'Filters'" filters="filters"></div>
+                            <div ng-show="visTab == 'Filters'" filters-container="filters" plugin="vis.Plugin"></div>
                             <div ng-show="visTab == 'Conditional Formatting'" conditional-formats cond-formats="vis.ConditionalFormats" plugin="vis.Plugin" vis-columns="vis.ColumnMap"></div>
 						</div>
 						<div class="singleVis visualisation"></div>

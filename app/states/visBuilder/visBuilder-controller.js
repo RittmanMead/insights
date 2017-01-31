@@ -238,16 +238,29 @@ app.controller('visBuilder', function($scope, $timeout, $window, $mdToast, Modal
 	// Set the current scope visualisation to a BIVisual object
 	function setScopeVis(vis) {
 		if (vis) {
-			$scope.subjectArea = vis.Query.SubjectArea;
-			$scope.changeSubjectArea(false);
+			if (!rmvpp.Plugins[vis.Plugin].multipleDatasets) {
+				$scope.subjectArea = vis.Query.SubjectArea;
+			} else {
+				$scope.subjectArea = vis.Query[Object.keys(vis.Query)[0]].SubjectArea;
+			}
 
-			if (vis.Query.Filters.length > 0) {
-				if (vis.Query.Filters[0].Type == 'FilterGroup')
-					$scope.filters = vis.Query.Filters[0].Filters;
-				else
-					$scope.filters = vis.Query.Filters;
-			} else
-				$scope.filters = [];
+			$scope.changeSubjectArea(false);
+			$scope.filters = obiee.applyToColumnSets({}, vis.Plugin, function(item, dataset) {
+				var query = vis.Query;
+				if (dataset) {
+					query = vis.Query[dataset];
+				}
+
+				if (query.Filters.length > 0) {
+					if (query.Filters[0].Type == 'FilterGroup') {
+						return query.Filters[0].Filters;
+					} else {
+						return query.Filters;
+					}
+				} else {
+					return [];
+				}
+			});
 
 			$scope.plugin = vis.Plugin;
 			$scope.vis = vis;
@@ -386,12 +399,14 @@ app.controller('visBuilder', function($scope, $timeout, $window, $mdToast, Modal
 	$scope.$on('newFilter', function(event, filter) {
 		if (!$scope.dashboardMode) { // Add filter to visualisation
 			$scope.visTab = 'Filters';
-			if (!$.isArray($scope.filters))
+			if (!$.isArray($scope.filters)) {
 				$scope.filters = [];
+			}
 			$scope.filters.push(filter);
 		} else { // Add dashboard prompt
-			if (!$scope.db.Prompts.Filters)
+			if (!$scope.db.Prompts.Filters) {
 				$scope.db.Prompts = new obiee.BIPrompt();
+			}
 			$scope.db.Prompts.Filters.push(filter);
 		}
 	});
