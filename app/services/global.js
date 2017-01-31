@@ -504,7 +504,12 @@ app.factory('Visuals', function() {
 	var Visuals = {
 		storeVis: function(vis, visArray) {
 			vis.forEach(function(v) {
-				if ($.inArray(v, visArray) == -1 && v.Query.Criteria.length > 0) {
+				var criteriaLength = []
+				obiee.applyToColumnSets(v.Query, v.Plugin, function(item) {
+					criteriaLength.push(item.Criteria.length);
+				});
+				
+				if ($.inArray(v, visArray) == -1 && criteriaLength.some(function(v) { return v > 0; })) {
 					v.ID = visArray.length;
 					v.Name = v.defaultName();
 					v.resetName();
