@@ -1480,6 +1480,10 @@ var obiee = (function() {
 
 	/** Function to rename data properties based on column map for a specific visualisation */
 	function mapData(data, columnMap) {
+		if (!$.isArray(data)) {
+			data = [];
+		}
+
 		for (var i=0; i < data.length; i++) {
 			for (prop in columnMap) {
 				if ($.isArray(columnMap[prop])) { // For grouped attributes, transform to sub-array
@@ -3563,9 +3567,19 @@ var obiee = (function() {
 			}
 
 			/** Executes query returning a deferred object so that multiple queries can be handled nicely. */
-			function runQuery(query) {
+			function runQuery(query, dataset) {
 				var dfd = $.Deferred(); // Deferred for multiple asynchronous execution
-				query.run(dfd.resolve, dfd.reject);
+				query.run(function(results) {
+					if (dataset) {
+						results = {'results': results, 'dataset' : dataset};
+					}
+					dfd.resolve(results);
+				}, function(err) {
+					if (dataset) {
+						err = {'error': err, 'dataset' : dataset};
+					}
+					dfd.reject(err);
+				});
 				return dfd.promise();
 			}
 
@@ -3579,6 +3593,11 @@ var obiee = (function() {
 				}
 			}
 
+			function errorRender(error, query) {
+				var err = obiee.getErrorDetail(error);
+				rmvpp.displayError($(vis.Container)[0], err.basic + '\n\n' + query.lsql());
+			}
+
 			if (allCriteria.length > 0) { // Don't attempt to render visualisation if no columns passed
 				$(vis.Container).empty().off(); // Clear and disable interactions
 				$(vis.Container).addClass('visualisation');
@@ -3587,7 +3606,7 @@ var obiee = (function() {
 				rmvpp.loadingScreen(vis.Container); // Add loading animation
 				vis.resetColumnConfig();
 
-				if (!rmvpp.Plugins[vis.Plugin].multipleDatasets) {
+				if (!rmvpp.Plugins[vis.Plugin].multipleDatasets) { // Single dataset handler
 					if (vis.Data.length == 0 || (vis.Refresh > 0)) {
 						dfdArray.push(runQuery(vis.Query));
 						$.when.apply($, dfdArray).then(function(results) {
@@ -3606,35 +3625,34 @@ var obiee = (function() {
 								callback();
 							}
 						}, function(err) {
-							var err = obiee.getErrorDetail(err);
-							rmvpp.displayError($(vis.Container)[0], err.basic + '\n\n' + vis.Query.lsql());
+							errorRender(err, vis.Query);
 						});
 					} else {  // Don't re-run the queries if we have data already. Refresh property will override this.
 						staticRender(vis, scope, callback);
 					}
-				} else {
+				} else { // Multiple dataset handler
 					if (Object.values(vis.Data).every(function(v) { return v.length == 0; }) || (vis.Refresh > 0)) {
 						for (dataset in vis.Query) {
 							if (vis.Query[dataset].Criteria.length > 0) {
-								dfdArray.push(runQuery(vis.Query[dataset]));
+								dfdArray.push(runQuery(vis.Query[dataset], dataset));
 							}
 						}
 
 						$.when.all(dfdArray).then(function(results) {
-							Object.keys(vis.Data).forEach(function(key, i) {
-								vis.Data[key] = angular.copy(results[i]);
+							results.forEach(function(resultSet) {
+								vis.Data[resultSet.dataset] = angular.copy(resultSet.results);
 							});
 
 							preVisRender(vis);
 							var data = obiee.applyToColumnSets({}, vis.Plugin, function(item, dataset) {
 								if (dataset) {
-									 return mapData(vis.Data[dataset], vis.ColumnMap[dataset]);
+									return mapData(vis.Data[dataset], vis.ColumnMap[dataset]);
 								} else {
 									return mapData(vis.Data, vis.ColumnMap);
 								}
 							});
 
-							if (Object.values(vis.Data).some(function(v) { return v.length > 0; })) {
+							if (Object.values(vis.Data).some(function(v) { return v.length > 0; })) { // Check if any result sets are present
 								rmvpp.Plugins[vis.Plugin].render(data, vis.ColumnMap, vis.Config, $(vis.Container)[0], vis.ConditionalFormats);
 								postVisRender(vis, scope);
 							} else {
@@ -3645,7 +3663,7 @@ var obiee = (function() {
 								callback();
 							}
 						}, function(err) {
-						     console.log(err);
+						     errorRender(err[0].error, vis.Query[err[0].dataset]); // Report on the first error
 						});
 					} else {  // Don't re-run the queries if we have data already. Refresh property will override this.
 						staticRender(vis, scope, callback);

@@ -2101,9 +2101,8 @@ if (jQuery.when.all===undefined) {
                 deferred.resolve(Array.prototype.slice.call(arguments));
             },
             function() {
-                deferred.fail(Array.prototype.slice.call(arguments));
+                deferred.reject(Array.prototype.slice.call(arguments));
             });
-
         return deferred;
     }
 }
