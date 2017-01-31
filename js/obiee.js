@@ -2477,6 +2477,28 @@ var obiee = (function() {
 	}
 
 	/**
+		Applies a funciton to all column maps in a column set. This performs no special action unless
+		the `multipleDatasets` property of the plugin is set to `true`.
+		* @param {object} columnMap Column Map objects have properties containing `BIColumn` objects or arrays of them.
+		* The precise structure is determined by the plugin itself.
+		* @param {string} plugin ID of the plugin to which the column map applies. Used to get the `multipleDatasets` property.
+		* @param {function} func The function to apply to each of the column **sets**.
+		* If `multipleDatasets` is `false`, the column set is just a regular column map Object.
+		* If `multipleDatasets` is `true`, the column set is an object where each key is a different query containing
+		* individual column maps.
+	*/
+	obiee.applyToColumnSets = function(columnSet, plugin, func) {
+		if (rmvpp.Plugins[plugin].multipleDatasets) {
+			for (dataset in columnSet) {
+				columnSet[dataset] = func(columnSet[dataset]);
+			}
+		} else {
+			columnSet = func(columnSet);
+		}
+		return columnSet;
+	}
+
+	/**
 		Removes a column from a column map - either removing from an array for a multiple, or setting to a null `BIColumn` for a single.
 		* @param {object}  columnMap Column Map objects have properties containing `BIColumn` objects or arrays of them.
 		* @param {BIColumn} findCol Column to remove from the map.

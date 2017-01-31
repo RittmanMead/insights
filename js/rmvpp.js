@@ -68,22 +68,23 @@ var rmvpp = (function(rmvpp) {
     */
 	rmvpp.getDefaultColumnMap = function(plugin) {
 		var colMap = rmvpp.Plugins[plugin].columnMappingParameters;
+        var columnMap = {};
 
         function newDefaults(colMap) {
             var newCM = {};
             for (var i=0; i < colMap.length; i++) {
-    			if (colMap[i].multiple)
+    			if (colMap[i].multiple) {
     				newCM[colMap[i].targetProperty] = [];
-    			else
+    			} else {
     				newCM[colMap[i].targetProperty] = new obiee.BIColumn ('','');
+                }
     		}
             return newCM;
         }
 
         if (!rmvpp.Plugins[plugin].multipleDatasets) {
-            var columnMap = newDefaults(colMap);
+            columnMap = newDefaults(colMap);
         } else {
-            var columnMap = {};
             for (dataset in colMap) {
                 columnMap[dataset] = newDefaults(colMap[dataset]);
             }

@@ -399,16 +399,19 @@ app.controller('visBuilder', function($scope, $timeout, $window, $mdToast, Modal
 			$scope.visTab = 'Column Mappings';
 
 			var addCol = angular.copy(addCol);
-			for (column in $scope.vis.ColumnMap) { // Add to  first empty space in column map
-				var col = $scope.vis.ColumnMap[column];
-				if ($.isArray(col) && !added) {
-					$scope.vis.ColumnMap[column].push(addCol);
-					added = true;
-				} else if (!col.Code && !added) {
-					$scope.vis.ColumnMap[column] = addCol;
-					added = true;
+			$scope.vis.ColumnMap = obiee.applyToColumnSets($scope.vis.ColumnMap, $scope.vis.Plugin, function(colMap) {
+				for (column in colMap) { // Add to  first empty space in column map
+					var col = colMap[column];
+					if ($.isArray(col) && !added) {
+						colMap[column].push(addCol);
+						added = true;
+					} else if (!col.Code && !added) {
+						colMap[column] = addCol;
+						added = true;
+					}
 				}
-			}
+				return colMap;
+			});
 			$scope.$apply();
 		}
 	});

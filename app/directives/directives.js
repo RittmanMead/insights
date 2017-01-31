@@ -1049,14 +1049,12 @@ app.directive('dropColumn', ['Global', function(Global) {
 			var dropFunction;
 
 			var addSingleCol = function(column) {
-				console.log(scope.column);
 				scope.column = column;
 				scope.$apply();
 			}
 
 			var addMultiCol = function(column) {
 				if ($.inArray(column, scope.column) == -1) {
-					console.log(scope.column);
 					scope.column.push(column);
 					scope.$apply();
 				}
