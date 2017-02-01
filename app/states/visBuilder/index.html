@@ -207,7 +207,7 @@
                     </md-content>
 				</div>
 				<div resize edge-right="true" callback="updateLeftPaneWidth" ng-style="{width: leftPaneWidth + 'px', overflow: designMode ? 'hidden' : ''}" class="leftPane panel">
-					<div ng-show="!designMode && leftPaneWidth > 60" subject-area="subjectArea" metadata="metadata" change="changeSubjectArea" subject-areas="subjectAreas"></div> <!-- Subject Area -->
+					<div ng-show="!designMode && leftPaneWidth > 60" subject-area="subjectArea" metadata="metadata" subject-areas="subjectAreas"></div> <!-- Subject Area -->
 					<div ng-if="designMode" ng-show="leftPaneWidth > 60">
 						<div designer bi-canvas="db.Canvas"></div>
 					</div>

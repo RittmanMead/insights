@@ -448,7 +448,7 @@ var obiee = (function() {
 	/** Build Logical SQL from obiee.BIQuery object */
 	function buildLSQL(biQuery) {
 		biQuery.SubjectArea = biQuery.defaultSubjectArea();
-		
+
 		var lsql = 'SELECT\n';
 
 		lsql += biQuery.Criteria.map(function(d) {
