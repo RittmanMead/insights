@@ -1148,7 +1148,7 @@ var rmvpp = (function(rmvpp) {
 			this.Container.attr('width', this.ContainerWidth + maxString);
 
 			var legendContainer = chart.append('g')
-				.attr('transform', 'translate(' + ((this.ChartWidth + maxString)) + ', 0)')
+				.attr('transform', 'translate(' + ((this.ChartWidth + maxString)) + ', 10)')
 				.classed('legend', true);
 
 			legendContainer.append('g')
