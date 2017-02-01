@@ -2590,11 +2590,21 @@ var obiee = (function() {
 	}
 
 	/**
-		* Checks if a certain plugin is configured to use multiple datasets.
-		* @param {string} plugin Plugin ID to check.
+		* Gets the dataset ID of a multiple dataset query structure from and input visualisation and a subject area.
 	*/
-	obiee.checkMultiple = function(plugin) {
-		return rmvpp.Plugins[plugin].multipleDatasets;
+	obiee.getDatasetsFromSubjectArea = function(plugin, query, sa) {
+		var plugin = rmvpp.Plugins[plugin];
+		if (plugin.multipleDatasets) {
+			out = [];
+			for (dataset in query) {
+				if (query[dataset].SubjectArea == sa) {
+					out.push(dataset);
+				}
+			}
+			return out;
+		} else {
+			return null;
+		}
 	}
 
 	/**

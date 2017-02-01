@@ -27,6 +27,14 @@ var rmvpp = (function(rmvpp) {
         return plugins;
     }
 
+    /**
+		* Checks if a certain plugin is configured to use multiple datasets.
+		* @param {string} plugin Plugin ID to check.
+	*/
+	rmvpp.checkMultiple = function(plugin) {
+		return rmvpp.Plugins[plugin].multipleDatasets;
+	}
+
 	/**
         * Returns a configuration object with default values for a given plugin.
         * @param {string} plugin ID of the plugin in which to retrieve configuration for.
