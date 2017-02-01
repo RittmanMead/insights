@@ -136,7 +136,7 @@
 		<div ng-controller="dbView">
             <div class="mask overlay" style="opacity: 1; background: #FFFFFF;"></div>
 			<div loading="loading"></div>
-            <div class="topPane panel fixed" ng-class="showPane ? 'showLeft' : ''" style="text-align: center">
+            <div class="topPane panel fixed" ng-class="showPane ? 'showLeft' : ''" style="text-align: center" ng-if="!hidePanes">
                 <md-content md-theme="dark" layout="row">
                     <section flex="85" layout="row" layout-align="center center">
                         <mat-button flat label-pos="bottom" icon="file-image-o" label="Export to PNG" ng-click="exportToPNG()"></mat-button>
@@ -153,7 +153,7 @@
                     </section>
                 </md-content>
             </div>
-            <div class="leftPane fixed panel" ng-class="showPane ? 'showLeft' : ''">
+            <div class="leftPane fixed panel" ng-class="showPane ? 'showLeft' : ''" ng-if="!hidePanes">
                 <div style="margin-top: 10px;">
                     <i class="fa fa-tachometer headerIcon" ng-click="togglePane()"></i>
                     <span class="header">Dashboard</span>
@@ -174,7 +174,8 @@
                 <i class="fa fa-times-circle"></i>
                 <span>{{ error }}</span>
             </div>
-            <div class="mainContent fixed" ng-class="showPane ? 'showLeft' : ''" ng-show="!error">
+            <div class="mainContent fixed" ng-class="showPane ? 'showLeft' : ''" ng-show="!error"
+                ng-style="hidePanes ? {'margin-left': '0px', 'padding-top': '0px'} : {}">
                 <div dashboard-page db="db" path="path" id="rm-DBContainer"></div>
             </div>
 		</div>

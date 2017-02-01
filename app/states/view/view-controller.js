@@ -75,6 +75,7 @@ app.controller('dbView', function($scope, $mdToast, Global, UIConfig, Metadata, 
 	if ($scope.path == '/') $scope.path = ''; // Set to null if path is the root
 
 	$scope.dbPath = rmvpp.getQueryString('db'); // Path of dashboard folder
+	$scope.hidePanes = rmvpp.getQueryString('hidePanes') == 'true' ? true : false;
 
 	if (!sessionStorage.obieeSessionId) {
 		// Automatically login if SSO configured on OBIEE
