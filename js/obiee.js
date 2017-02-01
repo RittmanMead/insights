@@ -1565,50 +1565,82 @@ var obiee = (function() {
 						visObj = re.exec(html)[1];
 						visObj = JSON.parse(visObj);
 
-						visObj.Query.Criteria.forEach(function(c, i) {
-							var newCol = new obiee.BIColumn(c.Code, c.Name, c.DataType, c.Table, c.Measure, c.SubjectArea, c.DataFormat);
-							newCol.SortKey = c.SortKey;
-							visObj.Query.Criteria[i] = newCol;
-						});
+						visObj.Query = obiee.applyToColumnSets(visObj.Query, visObj.Plugin, function(query, dataset) {
+							query.Criteria.forEach(function(c, i) {
+								var newCol = new obiee.BIColumn(c.Code, c.Name, c.DataType, c.Table, c.Measure, c.SubjectArea, c.DataFormat);
+								newCol.SortKey = c.SortKey;
+								query.Criteria[i] = newCol;
+							});
 
-						visObj.Query.Filters.forEach(function(f, i) {
-							if (f.DataType == 'date' && f.ValueType == 'value') {
-								if (f.Value) {
-									f.Value = new Date(f.Value);
-								} else {
-									f.Value = null;
+							query.Filters.forEach(function(f, i) {
+								if (f.DataType == 'date' && f.ValueType == 'value') {
+									if (f.Value) {
+										f.Value = new Date(f.Value);
+									} else {
+										f.Value = null;
+									}
 								}
-							}
+							});
+							return query;
 						});
 
 						// Protects saved visualisations when new multiple column parameters added
+						// Needs to work for both plugins supporting multiple datasets as well as single ones
 						var defaultMap = rmvpp.getDefaultColumnMap(visObj.Plugin);
-						for (col in defaultMap) {
-							if (!(col in visObj.ColumnMap)) {
-								var colObj = rmvpp.Plugins[visObj.Plugin].columnMappingParameters.filter(function(c) { return c.targetProperty == col; })[0];
-								if (colObj.multiple) {
-									visObj.ColumnMap[col] = []
+						visObj.ColumnMap = obiee.applyToColumnSets(visObj.ColumnMap, visObj.Plugin, function(colMap, dataset) {
+							if (dataset) {
+								for (col in defaultMap[dataset]) {
+									if (!(col in colMap)) {
+										var colObj = rmvpp.Plugins[visObj.Plugin].columnMappingParameters[dataset].filter(function(c) {
+											return c.targetProperty == col;
+										})[0];
+										if (colObj.multiple) {
+											colMap[col] = []
+										}
+									}
+								}
+							} else {
+								for (col in defaultMap) {
+									if (!(col in colMap)) {
+										var colObj = rmvpp.Plugins[visObj.Plugin].columnMappingParameters.filter(function(c) {
+											return c.targetProperty == col;
+										})[0];
+										if (colObj.multiple) {
+											colMap[col] = []
+										}
+									}
 								}
 							}
-						}
+							return colMap;
+						});
 
 						// Re-initialise each column, protects against BIColumn framework updates
-						for (col in visObj.ColumnMap) {
-							var cm = visObj.ColumnMap[col];
-							if ($.isArray(cm)) { // Handle multiple columns
-								cm.forEach(function(c, i) {
-									var newCol = new obiee.BIColumn(c.Code, c.Name, c.DataType, c.Table, c.Measure, c.SubjectArea, c.DataFormat, c.Config, c.Locale);
-									newCol.SortKey = c.SortKey;
-									visObj.ColumnMap[col][i] = newCol;
-								});
-							} else {
-								var newCol = new obiee.BIColumn(cm.Code, cm.Name, cm.DataType, cm.Table, cm.Measure, cm.SubjectArea, cm.DataFormat, cm.Config, cm.Locale);
-								newCol.SortKey = cm.SortKey;
-								visObj.ColumnMap[col] = newCol;
+						visObj.ColumnMap = obiee.applyToColumnSets(visObj.ColumnMap, visObj.Plugin, function(colMap, dataset) {
+							for (col in colMap) {
+								var cm = colMap[col];
+								if ($.isArray(cm)) { // Handle multiple columns
+									cm.forEach(function(c, i) {
+										var newCol = new obiee.BIColumn(c.Code, c.Name, c.DataType, c.Table, c.Measure, c.SubjectArea, c.DataFormat, c.Config, c.Locale);
+										newCol.SortKey = c.SortKey;
+										colMap[col][i] = newCol;
+									});
+								} else {
+									var newCol = new obiee.BIColumn(cm.Code, cm.Name, cm.DataType, cm.Table, cm.Measure, cm.SubjectArea, cm.DataFormat, cm.Config, cm.Locale);
+									newCol.SortKey = cm.SortKey;
+									colMap[col] = newCol;
+								}
 							}
-						}
+							return colMap;
+						});
 
-						var biQuery = new obiee.BIQuery(visObj.Query.Criteria, visObj.Query.Filters, visObj.Query.Sort);
+						var biQuery = obiee.applyToColumnSets({}, visObj.Plugin, function(item, dataset) {
+							if (dataset) {
+								// console.log(visObj.Query[dataset]);
+								return new obiee.BIQuery(visObj.Query[dataset].Criteria, visObj.Query[dataset].Filters, visObj.Query[dataset].Sort);
+							} else {
+								return new obiee.BIQuery(visObj.Query.Criteria, visObj.Query.Filters, visObj.Query.Sort);
+							}
+						});
 
 						// Refresh conditional formats
 						visObj.ConditionalFormats.forEach(function(cf, i) {
