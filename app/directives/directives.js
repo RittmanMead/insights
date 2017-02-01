@@ -2049,7 +2049,10 @@ app.directive('visualisation', ['Visuals', 'UIConfig', function(Visuals, UIConfi
 				scope.editMode = false;
 			});
 
-			obiee.removePromptedFilters(scope.vis.Query.Filters);
+			obiee.applyToColumnSets(scope.vis.Query, scope.vis.Plugin, function(query) {
+				obiee.removePromptedFilters(query.Filters);
+				return query;
+			});
 			render();
 		},
 		templateUrl: '/insights/app/directives/templates/dashboard/visualisation.html'

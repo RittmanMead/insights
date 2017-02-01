@@ -2340,6 +2340,7 @@ var obiee = (function() {
 	obiee.removePromptedFilters = function(filters, changed) {
 		var changed = changed || false;
 		var removeIndices = [];
+
 		for (var i=0; i < filters.length; i++) {
 			if (filters[i].Type == 'Filter') {
 				if (filters[i].Global && !filters[i].Protected) {
@@ -3940,25 +3941,37 @@ var obiee = (function() {
 		*/
 		this.promptVisFilters = function(vis) {
 			var promptFilters = this.Filters;
-			var refreshVis = false, visNum = vis.ID;
-			refreshVis = obiee.removePromptedFilters(vis.Query.Filters); // Remove existing explicit global filters
+			var refreshVis = [], visNum = vis.ID;
 
-			for (var j=0; j < promptFilters.length; j++) {
-				filter = promptFilters[j];
-				if (filter.SubjectArea == vis.Query.SubjectArea) { // Check subject areas match and value is not blank
-					var filterFound = false; // Search for filter on same code and update if found
-					origFilters = vis.Query.Filters;
-					filterFound = obiee.replaceFilter(origFilters, filter);
+			obiee.applyToColumnSets(vis.Query, vis.Plugin, function(query) { // Cater for multiple dataset plugins
+				refreshVis.push(obiee.removePromptedFilters(query.Filters)); // Remove existing explicit global filters
+				return query;
+			});
 
-					if (!filterFound) {
-						filter.Global = true;
-						vis.Query.Filters.push(filter);
+			// If any of the queries need refreshing, refresh the visualisation.
+			refreshVis = refreshVis.some(function(v) { return v; });
+
+			obiee.applyToColumnSets(vis.Query, vis.Plugin, function(query) { // Apply to all queries
+				for (var j=0; j < promptFilters.length; j++) {
+					filter = promptFilters[j];
+					if (filter.SubjectArea == query.SubjectArea) { // Check subject areas match and value is not blank
+						var filterFound = false; // Search for filter on same code and update if found
+						origFilters = query.Filters;
+						filterFound = obiee.replaceFilter(origFilters, filter);
+
+						if (!filterFound) {
+							filter.Global = true;
+							query.Filters.push(filter);
+						}
+
+						if (filterFound != 'protected') {
+							refreshVis = true;
+						}
 					}
-
-					if (filterFound != 'protected')
-						refreshVis = true;
 				}
-			}
+				return query;
+			});
+
 			return refreshVis;
 		}
 	}
