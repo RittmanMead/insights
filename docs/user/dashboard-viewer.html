@@ -171,14 +171,16 @@
 <li><strong>Expand Sidebar</strong></li>
 <li><strong>Home, Logout</strong></li>
 </ol>
-<p>The dashboard viewer URL accepts query string parameters which tell the viewer which dashboard or page to load. If no parameters are provided, the catalogue explorer is opened and the user can choose a dashboard page manually.</p>
+<p>The dashboard viewer URL accepts <a href="https://en.wikipedia.org/wiki/Query_string">query string</a> parameters which tell the viewer which dashboard or page to load. If no parameters are provided, the catalogue explorer is opened and the user can choose a dashboard page manually.</p>
 <ul>
 <li><code>db</code> : Expects a catalogue path to folder containing Insights pages.</li>
 <li><code>path</code> : Expects a catalogue path to a single Insights page.</li>
+<li><code>hidePanes=true</code>: When specified explicitly as <code>true</code>, will hide the top and left panels and reposition the main content accordingly.</li>
 </ul>
 <p>E.g.</p>
 <pre><code>/insights/app/view/states/index.html?db=/shared/Insights/Dashboard
-/insights/app/view/states/index.html?path=/shared/Insights/Dashboard/Page 1</code></pre>
+/insights/app/view/states/index.html?path=/shared/Insights/Dashboard/Page 1
+/insights/app/view/states/index.html?path=/shared/Insights/Dashboard/Page 1&amp;hidePanes=true</code></pre>
 </div>
 </body>
 </html>
