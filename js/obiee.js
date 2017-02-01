@@ -447,6 +447,8 @@ var obiee = (function() {
 
 	/** Build Logical SQL from obiee.BIQuery object */
 	function buildLSQL(biQuery) {
+		biQuery.SubjectArea = biQuery.defaultSubjectArea();
+		
 		var lsql = 'SELECT\n';
 
 		lsql += biQuery.Criteria.map(function(d) {
@@ -3345,8 +3347,16 @@ var obiee = (function() {
 		/** Array of BIColumn objects representing the criteria for the query. These will appear in the `SELECT` clause. */
 		this.Criteria = cols;
 
+		/**
+			* Assigns a default subject area based on the criteria assigned.
+			* @returns {string} OBIEE Subject Area for the query.
+		*/
+		this.defaultSubjectArea = function() {
+			return ($.isArray(cols) && cols.length > 0) ? cols[0].SubjectArea : '';
+		}
+
 		/** OBIEE subject area for the query. */
-		this.SubjectArea = ($.isArray(cols) && cols.length > 0) ? cols[0].SubjectArea : '';
+		this.SubjectArea = this.defaultSubjectArea();
 
 		filters = filters || [];
 		if (!$.isArray(filters)) {

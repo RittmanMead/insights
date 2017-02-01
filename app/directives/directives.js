@@ -505,6 +505,7 @@ app.directive('conditionalFormats', ['Global', function(Global) {
 		},
 		link: function(scope, element, attrs) {
 			scope.allowsCFs = function() {
+				// TODO: Build functionality to allow plugins with multiple datasets to use conditional formatting
 				if (!rmvpp.Plugins[scope.plugin].multipleDatasets) {
 					hasCF = rmvpp.Plugins[scope.plugin].columnMappingParameters.filter(function(cm) {
 						return cm.conditionalFormat;
