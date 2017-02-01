@@ -187,7 +187,8 @@ app.directive('palettePicker', ['Global', function(Global) {
 	return {
 		restrict: 'A',
 		scope: {
-			value : '='
+			value : '=',
+			label: '='
 		},
 		replace: true,
 		link: function(scope, elem, attrs) {

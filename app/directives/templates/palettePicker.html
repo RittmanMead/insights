@@ -1,6 +1,6 @@
 <md-input-container class="md-block">
-    <label>Palette</label>
-    <md-select flex="45" ng-model="value" style="font-size: 16px; display:inline-block;" aria-label="Colour Palette">
+    <label>{{ label }}</label>
+    <md-select flex="45" ng-model="value" style="font-size: 16px; display:inline-block;" aria-label="{{ label }}">
         <md-option ng-repeat="(k, v) in palettes">{{ k }}</md-option>
     </md-select>
     <div flex="45" style="display: inline-block; vertical-align: middle;">
