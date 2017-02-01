@@ -1841,7 +1841,7 @@ var rmvpp = (function(rmvpp) {
 					});
 				}
 			});
-		})
+		});
 		return [obj];
 	}
 

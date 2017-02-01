@@ -2567,10 +2567,34 @@ var obiee = (function() {
 	*/
 	obiee.getColNameFromID = function(id, columnMap) {
 		var cmByID = obiee.simplifyColumnMap(columnMap);
-		if (cmByID[id])
+
+		if (cmByID[id]) {
 			return cmByID[id].Name;
-		else
+		} else {
 			return '';
+		}
+	}
+
+	/**
+		* Gets a column ID from a source visualisation based on a trigger ID.
+		* This caters for multiple datasets where the dataset ID is provided by the action trigger.
+	*/
+	obiee.getColNameFromVisAndTrigger = function(id, vis, trigger) {
+		var sourcePlugin = rmvpp.Plugins[vis.Plugin];
+		if (sourcePlugin.multipleDatasets) {
+			var dataset = sourcePlugin.actions.filter(function(a) { return a.trigger == trigger; })[0].dataset;
+			return obiee.getColNameFromID(id, vis.ColumnMap[dataset]);
+		} else {
+			return obiee.getColNameFromID(id, vis.ColumnMap);
+		}
+	}
+
+	/**
+		* Checks if a certain plugin is configured to use multiple datasets.
+		* @param {string} plugin Plugin ID to check.
+	*/
+	obiee.checkMultiple = function(plugin) {
+		return rmvpp.Plugins[plugin].multipleDatasets;
 	}
 
 	/**
@@ -2657,23 +2681,32 @@ var obiee = (function() {
 
 	/** Get columns available for an interaction */
 	function getDefaultColumns(interact) {
-		var cm = interact.SourceVis.ColumnMap, passCols = {}, trigger = interact.Trigger
-		var restrict = rmvpp.Plugins[interact.SourceVis.Plugin].actions.filter(function(a) { return a.trigger == trigger; });
-		if (restrict.length > 0)
-			restrict = restrict[0].output;
-		else
+		var sourcePlugin = rmvpp.Plugins[interact.SourceVis.Plugin];
+		var cm = interact.SourceVis.ColumnMap, passCols = {}, trigger = interact.Trigger;
+		var action = sourcePlugin.actions.filter(function(a) { return a.trigger == trigger; });
+
+		if (sourcePlugin.multipleDatasets && action.length > 0) {
+			cm = interact.SourceVis.ColumnMap[action[0].dataset];
+		}
+
+		if (action.length > 0) {
+			restrict = action[0].output;
+		} else {
 			restrict = [];
+		}
 
 		for (key in cm) {
 			if (restrict.length == 0 || ($.inArray(key, restrict) > -1)) {
 				if ($.isArray(cm[key])) {
 					cm[key].forEach(function(m, i) {
-						if (m.Measure == 'none' && m.Code)
+						if (m.Measure == 'none' && m.Code) {
 							passCols[key + i] = true;
+						}
 					});
 				} else {
-					if (cm[key].Measure == 'none' && cm[key].Code)
+					if (cm[key].Measure == 'none' && cm[key].Code) {
 						passCols[key] = true;
+					}
 				}
 			}
 		}

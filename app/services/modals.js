@@ -1068,8 +1068,9 @@ app.controller('EditInteractModalController', function($scope, Global, interact,
 		if ($scope.edit.SourceVis.Plugin) {
 			var trigs = rmvpp.Plugins[$scope.edit.SourceVis.Plugin].actions;
 			return trigs;
-		} else
+		} else {
 			return [];
+		}
 	}
 
 	// Reset the trigger on visualisation change
@@ -1082,8 +1083,9 @@ app.controller('EditInteractModalController', function($scope, Global, interact,
 	$scope.triggerDesc = function() {
 		var desc = 'No interactions available.';
 		var trigObj = rmvpp.Plugins[$scope.edit.SourceVis.Plugin].actions.filter(function(a) { return a.trigger == $scope.edit.Trigger; })[0];
-		if (trigObj)
+		if (trigObj) {
 			desc = trigObj.description;
+		}
 		return desc;
 	};
 
@@ -1092,8 +1094,9 @@ app.controller('EditInteractModalController', function($scope, Global, interact,
 		if ($scope.edit.TargetVis.Plugin) {
 			var acts = rmvpp.Plugins[$scope.edit.TargetVis.Plugin].reactions;
 			return acts;
-		} else
+		} else {
 			return [];
+		}
 	}
 
 	// Reset action on visualisation change
@@ -1111,7 +1114,7 @@ app.controller('EditInteractModalController', function($scope, Global, interact,
 	}
 
 	$scope.getColNameFromID = function(id) {
-		return obiee.getColNameFromID(id, $scope.edit.SourceVis.ColumnMap);
+		return obiee.getColNameFromVisAndTrigger(id, $scope.edit.SourceVis, $scope.edit.Trigger);
 	}
 
 	$scope.accept = function() {
@@ -1157,7 +1160,7 @@ app.controller('EditDrillModalController', function($scope, Global, drill, visua
 	};
 
 	$scope.getColNameFromID = function(id) {
-		return obiee.getColNameFromID(id, $scope.edit.SourceVis.ColumnMap);
+		return obiee.getColNameFromVisAndTrigger(id, $scope.edit.SourceVis, $scope.edit.Trigger);
 	}
 
 	$scope.openWebcat = function() {

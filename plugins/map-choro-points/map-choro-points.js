@@ -234,6 +234,14 @@
     ]
 
 	rmvpp.Plugins[pluginName].actions = [
+        {
+			'trigger' : 'clickFeature',
+			'type' : 'click',
+			'name' : 'Click Feature',
+            'dataset': 'Choropleth', // Specify dataset explicitly as this is a multiple dataset plugin
+			'output' : ['code'],
+			'description' : 'Click on a map feature to trigger this action.'
+		}
 	];
 
 	rmvpp.Plugins[pluginName].reactions = [
@@ -705,7 +713,7 @@
 					})
 					.off('click')
 					.on('click', function(e) {
-						// rmvpp.createTrigger(pluginName, choroColMap, container, 'clickFeature', datum);
+						rmvpp.createTrigger(pluginName, choroColMap, container, 'clickFeature', datum);
 					});
 			});
 		}
