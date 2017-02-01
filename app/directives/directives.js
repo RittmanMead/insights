@@ -958,7 +958,6 @@ app.directive('resize', function() {
 			$(elem).resizable({
 				handles: edges.join(', '),
 				resize: function( event, ui ) {
-					console.log('here');
 					scope.callback(event, ui)
 				}
 			});
