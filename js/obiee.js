@@ -2238,8 +2238,9 @@ var obiee = (function() {
 					} else
 						changed = 'protected';
 				}
-			} else
+			} else {
 				changed = obiee.replaceFilter(filters[j].Filters, newFilter, changed); // Recursively loop through filter groups
+			}
 		}
 		return changed;
 	}

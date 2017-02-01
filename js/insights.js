@@ -386,16 +386,22 @@ var insights = (function(insights) {
 		var updated = false;
 		colArray.forEach(function(colMap) {
 			var col = colMap.col;
-			var filter = new obiee.BIFilter(col, colMap.values, 'in', targetVis.Query.SubjectArea, global);
+			var filter = new obiee.BIFilter(col, colMap.values, 'in', col.SubjectArea, global);
 
-			// Replace filters
-			var filterFound = obiee.replaceFilter(targetVis.Query.Filters, filter);
-			if (filterFound == true) {
-				updated = true;
-			} else if (!filterFound && filterFound != 'protected') {
-				updated = true;
-				targetVis.Query.Filters.push(filter);
-			}
+			targetVis.Query = obiee.applyToColumnSets(targetVis.Query, targetVis.Plugin, function(query) {
+
+				// Don't filter queries that don't match the subject area
+				if (query.SubjectArea == filter.SubjectArea) {
+					var filterFound = obiee.replaceFilter(query.Filters, filter);
+					if (filterFound == true) {
+						updated = true;
+					} else if (!filterFound && filterFound != 'protected') {
+						updated = true;
+						query.Filters.push(filter);
+					}
+				}
+				return query;
+			});
 		});
 		return updated;
 	};
