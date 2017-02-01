@@ -505,15 +505,14 @@ app.directive('conditionalFormats', ['Global', function(Global) {
 		},
 		link: function(scope, element, attrs) {
 			scope.allowsCFs = function() {
-				// TODO: Build functionality to allow plugins with multiple datasets to use conditional formatting
-				if (!rmvpp.Plugins[scope.plugin].multipleDatasets) {
-					hasCF = rmvpp.Plugins[scope.plugin].columnMappingParameters.filter(function(cm) {
+				var hasCF = [];
+				obiee.applyToColumnSets(rmvpp.Plugins[scope.plugin].columnMappingParameters, scope.plugin, function(item) {
+					hasCF = hasCF.concat(item.filter(function(cm) {
 						return cm.conditionalFormat;
-					});
-					return hasCF.length > 0;
-				} else {
-					return false;
-				}
+					}));
+					return item;
+				});
+				return hasCF.length > 0;
 			}
 
 			scope.opTranslate = function(op) {
@@ -523,6 +522,7 @@ app.directive('conditionalFormats', ['Global', function(Global) {
 			scope.targetName = function(cf) {
 				var name = cf.TargetName;
 				if (!name) {
+					console.log('here');
 					name = rmvpp.Plugins[scope.plugin].columnMappingParameters.filter(function(cmp) {
 						return cmp.targetProperty == cf.TargetID;
 					})[0].formLabel;

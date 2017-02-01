@@ -1644,7 +1644,7 @@ var obiee = (function() {
 
 						// Refresh conditional formats
 						visObj.ConditionalFormats.forEach(function(cf, i) {
-							var newCF = new obiee.BIConditionalFormat(cf.SourceID, cf.TargetID, cf.Value, cf.Operator, cf.Style, visObj.ColumnMap);
+							var newCF = new obiee.BIConditionalFormat(cf.SourceID, cf.TargetID, cf.Value, cf.Operator, cf.Style, visObj.ColumnMap, cf.Dataset);
 							visObj.ConditionalFormats[i] = newCF;
 						});
 
@@ -2461,8 +2461,9 @@ var obiee = (function() {
 				});
 			} else {
 				var check = colCheck(columnMap[col])
-				if (check)
+				if (check) {
 					simple[col] = columnMap[col];
+				}
 			}
 		}
 		return simple;
@@ -2561,12 +2562,14 @@ var obiee = (function() {
 		* @param {string} id Simplified column map ID to retrieve.
 		* @param {Object} columnMap Column Map objects have properties containing `BIColumn` objects or arrays of them.
 		* The precise structure is determined by the plugin itself.
+		* @param {string} dataset Dataset ID that can be passed to accomodate for multiple dataset column maps.
 		* @returns {string} Column name as specified by the `Name` attribute of the `BIColumn` object.
 		* @see simplifyColumnMap
 		* @see getColIDFromName
 	*/
-	obiee.getColNameFromID = function(id, columnMap) {
-		var cmByID = obiee.simplifyColumnMap(columnMap);
+	obiee.getColNameFromID = function(id, columnMap, dataset) {
+		var cm = dataset ? columnMap[dataset] : columnMap;
+		var cmByID = obiee.simplifyColumnMap(cm);
 
 		if (cmByID[id]) {
 			return cmByID[id].Name;
@@ -3091,14 +3094,18 @@ var obiee = (function() {
 		* @param {string} op Operator ID for the formatting rule. Can be one of 'equal', 'notEqual', 'greater', 'greaterOrEqual', 'less', 'lessOrEqual' or 'heatmap'.
 		* @param {string} colour Hex colour to apply if the formatting rule is matched.
 		* @param {Object} columnMap Column Map objects have properties containing `BIColumn` objects or arrays of them.
+		* @param {string} dataset Dataset ID for use with plugins that have multiple datasets allowed.
 		* The precise structure is determined by the plugin itself.
 	*/
-	obiee.BIConditionalFormat = function(sourceID, targetID, val, op, style, columnMap) {
+	obiee.BIConditionalFormat = function(sourceID, targetID, val, op, style, columnMap, dataset) {
 		/** Simplified ID for the column on which to base the rule. */
 		this.SourceID = sourceID || '';
 
+		// Dataset ID for use with plugins that have multiple datasets.
+		this.Dataset = dataset || null;
+
 		/** Name of the column on which to base the rule. */
-		this.SourceName = obiee.getColNameFromID(this.SourceID, columnMap) || '';
+		this.SourceName = obiee.getColNameFromID(this.SourceID, columnMap, this.Dataset) || '';
 
 		var property = this.SourceID, index = 'none', re = new RegExp('(.*?)\\d');
 		if (re.exec(this.SourceID)) {
@@ -3131,7 +3138,7 @@ var obiee = (function() {
 		this.TargetID = targetID || '';
 
 		/** Name of the column on which to apply styling if the rule is true. */
-		this.TargetName = obiee.getColNameFromID(this.TargetID, columnMap) || '';
+		this.TargetName = obiee.getColNameFromID(this.TargetID, columnMap, this.Dataset) || '';
 
 		/** Value the rule has to match. */
 		this.Value = val || '';

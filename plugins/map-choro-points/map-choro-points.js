@@ -22,6 +22,7 @@
                 formLabel: "Description",
     			type: 'dim',
     			required: true,
+                conditionalFormat: true,
                 desc: 'Descriptive field for a given region.'
             },
     		{
@@ -583,8 +584,10 @@
 			}
 			$(container).find('.mapData').data(featureLayer);
 
-            processMarkers(pointData, map);
-
+            if (pointColMap.lat.Code) {
+                processMarkers(pointData, map);
+            }
+            
             if (config.legend) {
                 // Make legend a measure selector
                 if (config.choroStyleType == 'Series Picker') {

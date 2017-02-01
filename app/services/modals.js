@@ -932,7 +932,9 @@ app.controller('EditPermsModalController', function($scope, Global, item, close)
 app.controller('EditCFModalController', function($scope, Global, UIConfig, cf, visColumns, plugin, close) {
 	$scope.width = 30;
 	$scope.edit = cf ? angular.copy(cf) : new obiee.BIConditionalFormat();
+	console.log($scope.edit);
 	$scope.visColumns = visColumns;
+	$scope.multi = rmvpp.checkMulti(plugin);
 	$scope.plugin = plugin;
 	$scope.targetCols = {}, $scope.allCols = [];
 	$scope.noValue = false;
@@ -967,13 +969,16 @@ app.controller('EditCFModalController', function($scope, Global, UIConfig, cf, v
 			var target;
 			if ($scope.edit) {
 				target = $scope.edit.targetProperty();
-				if (!target)
+				if (!target) {
 					target = $scope.allCols[0].id;
+					dataset = $scope.allCols[0].dataset
+				}
 			} else {
 				target = $scope.allCols[0].id;
+				dataset = $scope.allCols[0].dataset
 			}
 
-			var cmProp = rmvpp.Plugins[$scope.plugin].columnMappingParameters.filter(function(cmp) {
+			var cmProp = colMapParams(dataset).filter(function(cmp) {
 				return cmp.targetProperty == target;
 			})[0];
 
@@ -988,26 +993,33 @@ app.controller('EditCFModalController', function($scope, Global, UIConfig, cf, v
 		}
 	}
 
-	function pushCol(prop, col, colNames) {
-		var propName = rmvpp.Plugins[$scope.plugin].columnMappingParameters.filter(function(cmp) {
+	function colMapParams(dataset) {
+		var cm = rmvpp.Plugins[$scope.plugin].columnMappingParameters;
+		cm = dataset ? cm[dataset] : cm;
+		return cm;
+	}
+
+	function pushCol(prop, col, dataset) {
+		var propName = colMapParams(dataset).filter(function(cmp) {
 			return cmp.targetProperty == prop;
 		})[0].formLabel;
 
 		if ($.isArray(col)) {
 			col.forEach(function(c, i) {
-				$scope.allCols.push({id: prop+i, group: propName, name: c.Name});
+				$scope.allCols.push({'id': prop+i, 'group': propName, 'name': c.Name, 'dataset': dataset});
 			});
-			if (col.length > 1)
-				$scope.allCols.push({id: prop, group: '', name: 'All ' + propName});
+			if (col.length > 1) {
+				$scope.allCols.push({'id': prop, 'group': '', 'name': 'All ' + propName, 'dataset': dataset});
+			}
 		} else {
-			if (col.Code)
-				$scope.allCols.push({id: prop, group: '', name : col.Name});
+			if (col.Code) {
+				$scope.allCols.push({'id': prop, 'group': '', 'name' : col.Name, 'dataset': dataset});
+			}
 		}
-		return colNames;
 	}
 
-	function groupCol(prop, col) {
-		var propName = rmvpp.Plugins[$scope.plugin].columnMappingParameters.filter(function(cmp) {
+	function groupCol(prop, col, dataset) {
+		var propName = colMapParams(dataset).filter(function(cmp) {
 			return cmp.targetProperty == prop;
 		})[0];
 
@@ -1015,16 +1027,17 @@ app.controller('EditCFModalController', function($scope, Global, UIConfig, cf, v
 			if ($.isArray(col)) {
 				col.forEach(function(c, i) {
 					if (!$scope.targetCols.hasOwnProperty(propName.formLabel))  { $scope.targetCols[propName.formLabel] = [] };
-					$scope.targetCols[propName.formLabel].push({id: prop+i, group: propName.formLabel, name: c.Name});
+					$scope.targetCols[propName.formLabel].push({'id': prop+i, 'group': propName.formLabel, 'name': c.Name, 'dataset': dataset});
 				});
+
 				if (col.length > 1) {
 					if (!$scope.targetCols.hasOwnProperty('All')) { $scope.targetCols['All'] = [] };
-					$scope.targetCols.All.push({id: prop, group: 'All', name: 'All ' + propName.formLabel});
+					$scope.targetCols.All.push({'id': 'prop', 'group': 'All', 'name': 'All ' + propName.formLabel, 'dataset': dataset});
 				}
 			} else {
 				if (col.Code) {
 					if (!$scope.targetCols.hasOwnProperty('Single')) { $scope.targetCols['Single'] = [] };
-					$scope.targetCols.Single.push({id: prop, group: 'Single', name : col.Name});
+					$scope.targetCols.Single.push({'id': prop, 'group': 'Single', 'name' : col.Name, 'dataset': dataset});
 				}
 			}
 		}
@@ -1032,8 +1045,15 @@ app.controller('EditCFModalController', function($scope, Global, UIConfig, cf, v
 
 	// Create flat column name array from column map
 	for (prop in $scope.visColumns) {
-		pushCol(prop, $scope.visColumns[prop]);
-		groupCol(prop, $scope.visColumns[prop]);
+		if ($scope.multi) {
+			for (sub in $scope.visColumns[prop]) {
+				pushCol(sub, $scope.visColumns[prop][sub], prop);
+				groupCol(sub, $scope.visColumns[prop][sub], prop);
+			}
+		} else {
+			pushCol(prop, $scope.visColumns[prop]);
+			groupCol(prop, $scope.visColumns[prop]);
+		}
 	}
 	$scope.checkIcon();
 
@@ -1045,6 +1065,7 @@ app.controller('EditCFModalController', function($scope, Global, UIConfig, cf, v
 			$scope.error = '';
 			$scope.edit.SourceName = source[0].name;
 			$scope.edit.TargetName = target[0].name;
+			$scope.edit.Dataset = source[0].dataset;
 			close($scope.edit);
 		} else {
 			$scope.error = 'Source and target columns have not been properly defined.'
