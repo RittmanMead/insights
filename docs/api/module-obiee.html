@@ -172,7 +172,7 @@ includes session management, dynamic querying, metadata management and catalogue
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line4345">line 4345</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line4514">line 4514</a></li>
               </ul>
             </dd>
           </dl>
@@ -236,7 +236,71 @@ The precise structure is determined by the plugin itself.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2466">line 2466</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2476">line 2476</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id=".applyToColumnSets"><span class="type-signature">(static) </span>applyToColumnSets<span class="signature">(columnMap, plugin, func)</span><span class="type-signature"/></h4>
+          <div class="description">
+            <p>Applies a funciton to all column maps in a column set. This performs no special action unless
+        the <code>multipleDatasets</code> property of the plugin is set to <code>true</code>. Can be used to build generic objects of
+        the same structure too.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>columnMap</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">object</span>
+                </td>
+                <td class="description last">
+                  <p>Column Map objects have properties containing <code>BIColumn</code> objects or arrays of them.
+The precise structure is determined by the plugin itself.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>plugin</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">string</span>
+                </td>
+                <td class="description last">
+                  <p>ID of the plugin to which the column map applies. Used to get the <code>multipleDatasets</code> property.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>func</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">function</span>
+                </td>
+                <td class="description last">
+                  <p>The function to apply to each of the column <strong>sets</strong>.
+If <code>multipleDatasets</code> is <code>false</code>, the column set is just a regular column map Object.
+If <code>multipleDatasets</code> is <code>true</code>, the column set is an object where each key is a different query containing
+individual column maps.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2501">line 2501</a></li>
               </ul>
             </dd>
           </dl>
@@ -306,7 +370,7 @@ Security permission of the object is retained through the copy.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line856">line 856</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line858">line 858</a></li>
               </ul>
             </dd>
           </dl>
@@ -358,7 +422,7 @@ Security permission of the object is retained through the copy.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2786">line 2786</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2820">line 2820</a></li>
               </ul>
             </dd>
           </dl>
@@ -416,7 +480,7 @@ Security permission of the object is retained through the copy.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line832">line 832</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line834">line 834</a></li>
               </ul>
             </dd>
           </dl>
@@ -474,7 +538,7 @@ Security permission of the object is retained through the copy.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line811">line 811</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line813">line 813</a></li>
               </ul>
             </dd>
           </dl>
@@ -628,7 +692,7 @@ If a BIQuery object was provided, column names will be used for object property 
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2716">line 2716</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2750">line 2750</a></li>
               </ul>
             </dd>
           </dl>
@@ -731,7 +795,7 @@ elements if required.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line681">line 681</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line683">line 683</a></li>
               </ul>
             </dd>
           </dl>
@@ -862,7 +926,7 @@ elements if required.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line975">line 975</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line977">line 977</a></li>
               </ul>
             </dd>
           </dl>
@@ -981,7 +1045,7 @@ The precise structure is determined by the plugin itself.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2561">line 2561</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2595">line 2595</a></li>
               </ul>
             </dd>
             <dt class="tag-see">See:</dt>
@@ -1052,7 +1116,7 @@ The precise structure is determined by the plugin itself.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2533">line 2533</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2567">line 2567</a></li>
               </ul>
             </dd>
             <dt class="tag-see">See:</dt>
@@ -1110,7 +1174,7 @@ Uses RegEx to clean up response, removing some unnecessary information like HY00
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2155">line 2155</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2193">line 2193</a></li>
               </ul>
             </dd>
           </dl>
@@ -1135,7 +1199,7 @@ Uses RegEx to clean up response, removing some unnecessary information like HY00
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2545">line 2545</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2579">line 2579</a></li>
               </ul>
             </dd>
           </dl>
@@ -1203,7 +1267,7 @@ the user has access to.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line1182">line 1182</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line1184">line 1184</a></li>
               </ul>
             </dd>
           </dl>
@@ -1427,7 +1491,7 @@ the user has access to.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2770">line 2770</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2804">line 2804</a></li>
               </ul>
             </dd>
           </dl>
@@ -1501,7 +1565,7 @@ the user has access to.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line789">line 789</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line791">line 791</a></li>
               </ul>
             </dd>
           </dl>
@@ -1609,7 +1673,7 @@ Will match if <em>any</em> filter that is a member of prompts.Filters has a matc
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2216">line 2216</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2254">line 2254</a></li>
               </ul>
             </dd>
           </dl>
@@ -1681,7 +1745,7 @@ This is useful for identifying permissions when accessing a master list of objec
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line746">line 746</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line748">line 748</a></li>
               </ul>
             </dd>
           </dl>
@@ -1751,7 +1815,7 @@ This is useful for identifying permissions when accessing a master list of objec
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line1542">line 1542</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line1548">line 1548</a></li>
               </ul>
             </dd>
           </dl>
@@ -1965,7 +2029,7 @@ Security permission of the object is retained through the move.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line881">line 881</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line883">line 883</a></li>
               </ul>
             </dd>
           </dl>
@@ -2003,7 +2067,7 @@ The precise structure is determined by the plugin itself.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2508">line 2508</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2542">line 2542</a></li>
               </ul>
             </dd>
           </dl>
@@ -2051,7 +2115,7 @@ The precise structure is determined by the plugin itself.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2575">line 2575</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2609">line 2609</a></li>
               </ul>
             </dd>
           </dl>
@@ -2099,7 +2163,7 @@ The precise structure is determined by the plugin itself.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line916">line 916</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line918">line 918</a></li>
               </ul>
             </dd>
           </dl>
@@ -2148,7 +2212,7 @@ the integer equivalent for using with OBIEE web services.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line945">line 945</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line947">line 947</a></li>
               </ul>
             </dd>
           </dl>
@@ -2298,7 +2362,7 @@ catalogue description and essentially renders that one irrelevant for Insights d
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line1108">line 1108</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line1110">line 1110</a></li>
               </ul>
             </dd>
           </dl>
@@ -2345,7 +2409,7 @@ catalogue description and essentially renders that one irrelevant for Insights d
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2484">line 2484</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2517">line 2517</a></li>
               </ul>
             </dd>
           </dl>
@@ -2386,7 +2450,7 @@ catalogue description and essentially renders that one irrelevant for Insights d
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2810">line 2810</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2844">line 2844</a></li>
               </ul>
             </dd>
           </dl>
@@ -2434,7 +2498,7 @@ This prevents a prompt from being created and ran, and then persisted after remo
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2302">line 2302</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2340">line 2340</a></li>
               </ul>
             </dd>
           </dl>
@@ -2516,7 +2580,7 @@ Security permission of the object is retained through the move.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line906">line 906</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line908">line 908</a></li>
               </ul>
             </dd>
           </dl>
@@ -2574,7 +2638,7 @@ Security permission of the object is retained through the move.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2192">line 2192</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2230">line 2230</a></li>
               </ul>
             </dd>
           </dl>
@@ -2666,7 +2730,7 @@ Security permission of the object is retained through the move.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2236">line 2236</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2274">line 2274</a></li>
               </ul>
             </dd>
           </dl>
@@ -2871,7 +2935,7 @@ Security permission of the object is retained through the move.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line1049">line 1049</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line1051">line 1051</a></li>
               </ul>
             </dd>
           </dl>
@@ -2991,7 +3055,7 @@ Security permission of the object is retained through the move.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line1077">line 1077</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line1079">line 1079</a></li>
               </ul>
             </dd>
           </dl>
@@ -3038,7 +3102,7 @@ Security permission of the object is retained through the move.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2408">line 2408</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2418">line 2418</a></li>
               </ul>
             </dd>
           </dl>
@@ -3099,7 +3163,7 @@ The precise structure is determined by the plugin itself.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2430">line 2430</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2440">line 2440</a></li>
               </ul>
             </dd>
           </dl>
@@ -3195,7 +3259,7 @@ The precise structure is determined by the plugin itself.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line1156">line 1156</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line1158">line 1158</a></li>
               </ul>
             </dd>
           </dl>
@@ -3243,7 +3307,7 @@ for example strings should be encased in single quotes.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2754">line 2754</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line2788">line 2788</a></li>
               </ul>
             </dd>
           </dl>
@@ -3381,7 +3445,7 @@ Permissions can be of object form (see <code>obiee.permMaskToObj</code>) or inte
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line1005">line 1005</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line1007">line 1007</a></li>
               </ul>
             </dd>
           </dl>
@@ -3494,6 +3558,9 @@ Permissions can be of object form (see <code>obiee.permMaskToObj</code>) or inte
         <ul>
           <li>
             <a href="#.applyToColumnMap">applyToColumnMap</a>
+          </li>
+          <li>
+            <a href="#.applyToColumnSets">applyToColumnSets</a>
           </li>
           <li>
             <a href="#.copyWebcatItem">copyWebcatItem</a>

@@ -512,6 +512,8 @@ var obiee = (function() {
 
 	/** Build Logical SQL from obiee.BIQuery object */
 	function buildLSQL(biQuery) {
+		biQuery.SubjectArea = biQuery.defaultSubjectArea();
+
 		var lsql = 'SELECT\n';
 
 		lsql += biQuery.Criteria.map(function(d) {
@@ -1295,7 +1297,7 @@ var obiee = (function() {
 		var compoundView = buildCompoundViewXML('rmvppView');
 
 		var dummyCol = new obiee.BIColumn("'Dummy'", 'Dummy');
-		var dummyQuery = new obiee.BIQuery('Dummy', [dummyCol]); // No need for filters or sort
+		var dummyQuery = new obiee.BIQuery([dummyCol]); // No need for filters or sort
 		var xml = buildXML(dummyQuery, [htmlView, compoundView]) // Use the first visualisation as the criteria. Arbitrary here anyway.
 
 		// Security based on system configuration: read for those with view, full for those with create
@@ -1545,6 +1547,10 @@ var obiee = (function() {
 
 	/** Function to rename data properties based on column map for a specific visualisation */
 	function mapData(data, columnMap) {
+		if (!$.isArray(data)) {
+			data = [];
+		}
+
 		for (var i=0; i &lt; data.length; i++) {
 			for (prop in columnMap) {
 				if ($.isArray(columnMap[prop])) { // For grouped attributes, transform to sub-array
@@ -1624,50 +1630,82 @@ var obiee = (function() {
 						visObj = re.exec(html)[1];
 						visObj = JSON.parse(visObj);
 
-						visObj.Query.Criteria.forEach(function(c, i) {
-							var newCol = new obiee.BIColumn(c.Code, c.Name, c.DataType, c.Table, c.Measure, c.SubjectArea, c.DataFormat);
-							newCol.SortKey = c.SortKey;
-							visObj.Query.Criteria[i] = newCol;
-						});
+						visObj.Query = obiee.applyToColumnSets(visObj.Query, visObj.Plugin, function(query, dataset) {
+							query.Criteria.forEach(function(c, i) {
+								var newCol = new obiee.BIColumn(c.Code, c.Name, c.DataType, c.Table, c.Measure, c.SubjectArea, c.DataFormat);
+								newCol.SortKey = c.SortKey;
+								query.Criteria[i] = newCol;
+							});
 
-						visObj.Query.Filters.forEach(function(f, i) {
-							if (f.DataType == 'date' &amp;&amp; f.ValueType == 'value') {
-								if (f.Value) {
-									f.Value = new Date(f.Value);
-								} else {
-									f.Value = null;
+							query.Filters.forEach(function(f, i) {
+								if (f.DataType == 'date' &amp;&amp; f.ValueType == 'value') {
+									if (f.Value) {
+										f.Value = new Date(f.Value);
+									} else {
+										f.Value = null;
+									}
 								}
-							}
+							});
+							return query;
 						});
 
 						// Protects saved visualisations when new multiple column parameters added
+						// Needs to work for both plugins supporting multiple datasets as well as single ones
 						var defaultMap = rmvpp.getDefaultColumnMap(visObj.Plugin);
-						for (col in defaultMap) {
-							if (!(col in visObj.ColumnMap)) {
-								var colObj = rmvpp.Plugins[visObj.Plugin].columnMappingParameters.filter(function(c) { return c.targetProperty == col; })[0];
-								if (colObj.multiple) {
-									visObj.ColumnMap[col] = []
+						visObj.ColumnMap = obiee.applyToColumnSets(visObj.ColumnMap, visObj.Plugin, function(colMap, dataset) {
+							if (dataset) {
+								for (col in defaultMap[dataset]) {
+									if (!(col in colMap)) {
+										var colObj = rmvpp.Plugins[visObj.Plugin].columnMappingParameters[dataset].filter(function(c) {
+											return c.targetProperty == col;
+										})[0];
+										if (colObj.multiple) {
+											colMap[col] = []
+										}
+									}
+								}
+							} else {
+								for (col in defaultMap) {
+									if (!(col in colMap)) {
+										var colObj = rmvpp.Plugins[visObj.Plugin].columnMappingParameters.filter(function(c) {
+											return c.targetProperty == col;
+										})[0];
+										if (colObj.multiple) {
+											colMap[col] = []
+										}
+									}
 								}
 							}
-						}
+							return colMap;
+						});
 
 						// Re-initialise each column, protects against BIColumn framework updates
-						for (col in visObj.ColumnMap) {
-							var cm = visObj.ColumnMap[col];
-							if ($.isArray(cm)) { // Handle multiple columns
-								cm.forEach(function(c, i) {
-									var newCol = new obiee.BIColumn(c.Code, c.Name, c.DataType, c.Table, c.Measure, c.SubjectArea, c.DataFormat, c.Config, c.Locale);
-									newCol.SortKey = c.SortKey;
-									visObj.ColumnMap[col][i] = newCol;
-								});
-							} else {
-								var newCol = new obiee.BIColumn(cm.Code, cm.Name, cm.DataType, cm.Table, cm.Measure, cm.SubjectArea, cm.DataFormat, cm.Config, cm.Locale);
-								newCol.SortKey = cm.SortKey;
-								visObj.ColumnMap[col] = newCol;
+						visObj.ColumnMap = obiee.applyToColumnSets(visObj.ColumnMap, visObj.Plugin, function(colMap, dataset) {
+							for (col in colMap) {
+								var cm = colMap[col];
+								if ($.isArray(cm)) { // Handle multiple columns
+									cm.forEach(function(c, i) {
+										var newCol = new obiee.BIColumn(c.Code, c.Name, c.DataType, c.Table, c.Measure, c.SubjectArea, c.DataFormat, c.Config, c.Locale);
+										newCol.SortKey = c.SortKey;
+										colMap[col][i] = newCol;
+									});
+								} else {
+									var newCol = new obiee.BIColumn(cm.Code, cm.Name, cm.DataType, cm.Table, cm.Measure, cm.SubjectArea, cm.DataFormat, cm.Config, cm.Locale);
+									newCol.SortKey = cm.SortKey;
+									colMap[col] = newCol;
+								}
 							}
-						}
+							return colMap;
+						});
 
-						var biQuery = new obiee.BIQuery(visObj.Query.SubjectArea, visObj.Query.Criteria, visObj.Query.Filters, visObj.Query.Sort);
+						var biQuery = obiee.applyToColumnSets({}, visObj.Plugin, function(item, dataset) {
+							if (dataset) {
+								// console.log(visObj.Query[dataset]);
+								return new obiee.BIQuery(visObj.Query[dataset].Criteria, visObj.Query[dataset].Filters, visObj.Query[dataset].Sort);
+							} else {
+								return new obiee.BIQuery(visObj.Query.Criteria, visObj.Query.Filters, visObj.Query.Sort);
+							}
+						});
 
 						// Refresh conditional formats
 						visObj.ConditionalFormats.forEach(function(cf, i) {
@@ -2367,6 +2405,7 @@ var obiee = (function() {
 	obiee.removePromptedFilters = function(filters, changed) {
 		var changed = changed || false;
 		var removeIndices = [];
+
 		for (var i=0; i &lt; filters.length; i++) {
 			if (filters[i].Type == 'Filter') {
 				if (filters[i].Global &amp;&amp; !filters[i].Protected) {
@@ -2385,35 +2424,6 @@ var obiee = (function() {
 		for (var i = removeIndices.length -1; i >= 0; i--)
 			filters.splice(removeIndices[i],1);
 		return changed;
-	}
-
-	/** Called just before the visualisation is rendered. */
-	function preVisRender(vis) {
-		$(vis.Container).empty(); // Clear loading animation
-		vis.Refresh = true;
-	}
-
-	/** Called just after the visualisation is rendered. */
-	function postVisRender(vis, scope) {
-		if (scope)
-			scope.$emit('refreshInteractions', vis); // Send event to dashboard to refresh interactions
-	}
-
-	/** Wrapper function to execute runQuery asynchronously in a loop and render visualisations based on the index */
-	function renderQueryLoop(visual, scope, callback) {
-		return function(results) {
-			preVisRender(visual);
-
-			visual.Data = angular.copy(results); // Keep the raw data
-			data = mapData(results, visual.ColumnMap); // Map data to visualisation format
-			if (data.length > 0) {
-				rmvpp.Plugins[visual.Plugin].render(data, visual.ColumnMap, visual.Config, $(visual.Container)[0], visual.ConditionalFormats);
-				postVisRender(visual, scope);
-			} else
-				rmvpp.displayError($(visual.Container)[0], 'No data, cannot render visual.')
-
-			if (callback) callback();
-		}
 	}
 
 	/** Get column info for a column map */
@@ -2542,6 +2552,29 @@ var obiee = (function() {
 	}
 
 	/**
+		Applies a funciton to all column maps in a column set. This performs no special action unless
+		the `multipleDatasets` property of the plugin is set to `true`. Can be used to build generic objects of
+		the same structure too.
+		* @param {object} columnMap Column Map objects have properties containing `BIColumn` objects or arrays of them.
+		* The precise structure is determined by the plugin itself.
+		* @param {string} plugin ID of the plugin to which the column map applies. Used to get the `multipleDatasets` property.
+		* @param {function} func The function to apply to each of the column **sets**.
+		* If `multipleDatasets` is `false`, the column set is just a regular column map Object.
+		* If `multipleDatasets` is `true`, the column set is an object where each key is a different query containing
+		* individual column maps.
+	*/
+	obiee.applyToColumnSets = function(columnSet, plugin, func) {
+		if (rmvpp.Plugins[plugin].multipleDatasets) {
+			for (dataset in rmvpp.Plugins[plugin].columnMappingParameters) {
+				columnSet[dataset] = func(columnSet[dataset], dataset);
+			}
+		} else {
+			columnSet = func(columnSet);
+		}
+		return columnSet;
+	}
+
+	/**
 		Removes a column from a column map - either removing from an array for a multiple, or setting to a null `BIColumn` for a single.
 		* @param {object}  columnMap Column Map objects have properties containing `BIColumn` objects or arrays of them.
 		* @param {BIColumn} findCol Column to remove from the map.
@@ -2551,8 +2584,9 @@ var obiee = (function() {
 			if ($.isArray(columnMap[col])) {
 				$.removeFromArray(findCol, columnMap[col]);
 			} else {
-				if (columnMap[col] == findCol)
+				if (columnMap[col] == findCol) {
 					columnMap[col] = new obiee.BIColumn();
+				}
 			}
 		}
 		return columnMap;
@@ -2789,7 +2823,7 @@ var obiee = (function() {
 		var c2 = new obiee.BIColumn('', 'Type');
 		var c3 = new obiee.BIColumn('', 'Size');
 		var c4 = new obiee.BIColumn('', 'Value');
-		var query = new obiee.BIQuery('', [c1,c2,c3,c4]);
+		var query = new obiee.BIQuery([c1,c2,c3,c4]);
 
 		obiee.executeLSQL("Call NQSGetSessionValues('%')", function(results) {
 			results.forEach(function(r) {
@@ -3326,7 +3360,7 @@ var obiee = (function() {
 		else if (this.Column.Measure != 'none') // Measures should be treated as numbers
 			defaultStyle = 'numbox';
 
-		var defaultQuery = new obiee.BIQuery(this.SubjectArea, [this.Column], [])
+		var defaultQuery = new obiee.BIQuery([this.Column], [])
 		defaultQuery.MaxRows = 100;
 
 		/**
@@ -3407,16 +3441,25 @@ var obiee = (function() {
 		* @param {BIFilter[]} filters Array of BIFilter objects used to build the `WHERE` clause.
 		* @param {BISort[]} sort Array of BISort objects used to build the `ORDER BY` clause.
 	*/
-	obiee.BIQuery = function(subjectArea, cols, filters, sort) {
-		/** OBIEE subject area for the query. */
-		this.SubjectArea = subjectArea;
-
+	obiee.BIQuery = function(cols, filters, sort) {
 		/** Array of BIColumn objects representing the criteria for the query. These will appear in the `SELECT` clause. */
 		this.Criteria = cols;
 
+		/**
+			* Assigns a default subject area based on the criteria assigned.
+			* @returns {string} OBIEE Subject Area for the query.
+		*/
+		this.defaultSubjectArea = function() {
+			return ($.isArray(cols) &amp;&amp; cols.length > 0) ? cols[0].SubjectArea : '';
+		}
+
+		/** OBIEE subject area for the query. */
+		this.SubjectArea = this.defaultSubjectArea();
+
 		filters = filters || [];
-		if (Object.prototype.toString.call( filters ) != '[object Array]')
+		if (!$.isArray(filters)) {
 			throw 'Filters not passed through as an array to query.'
+		}
 
 		/** Array of BIFilter objects used to build the `WHERE` clause. */
 		this.Filters = filters;
@@ -3533,7 +3576,7 @@ var obiee = (function() {
 		this.ColumnMap = columnMap || rmvpp.getDefaultColumnMap(plugin);
 
 		/** BIQuery object used to fetch the data for the visualisation. */
-		this.Query = query || new obiee.BIQuery("", [], []);
+		this.Query = query || new obiee.BIQuery([], []);
 
 		/** X co-ordinate for placing on the screen. */
 		this.X = x || 0;
@@ -3566,8 +3609,8 @@ var obiee = (function() {
 		/**  DOM element in which to render the visualisation. */
 		this.Container;
 
-		/** Contains raw dataset for OBIEE query, saved by `renderQueryLoop` private function. */
-		this.Data = [];
+		/** Contains raw dataset for OBIEE query, saved by `render` method. */
+		this.Data = obiee.applyToColumnSets({}, this.Plugin, function() { return []; });
 
 		/** Boolean property indicating whether the query should be refreshed from OBIEE on next execution.
 			Normally true, but set to false by visualisation selectors. */
@@ -3582,44 +3625,158 @@ var obiee = (function() {
 		*/
 		this.resetColumnConfig = function(cleanup) {
 			var vis = this;
-			obiee.applyToColumnMap(vis.ColumnMap, function(col, prop) {
-				var configParams = rmvpp.Plugins[vis.Plugin].columnMappingParameters.filter(function(cp) {
-					return obiee.getPropFromID(prop) == cp.targetProperty;
-				})[0].config;
+			vis.ColumnMap = obiee.applyToColumnSets(vis.ColumnMap, vis.Plugin, function(colMap, dataset) {
+				colMap = obiee.applyToColumnMap(colMap, function(col, prop) {
+					var configParams = rmvpp.Plugins[vis.Plugin].columnMappingParameters;
+					if (dataset) {
+						configParams = configParams[dataset];
+					}
 
-				if (configParams) {
-					if (!col.Config || vis.Plugin != col.Config.Plugin)
-						col.Config = rmvpp.getDefaultColumnConfig(configParams);
-				} else if (cleanup &amp;&amp; (vis.Plugin != col.Config.Plugin))
-					col.Config = {};
+					configParams = configParams.filter(function(cp) {
+						return obiee.getPropFromID(prop) == cp.targetProperty;
+					})[0].config;
+
+					if (configParams) {
+						if (!col.Config || vis.Plugin != col.Config.Plugin) {
+							col.Config = rmvpp.getDefaultColumnConfig(configParams);
+						}
+					} else if (cleanup &amp;&amp; (vis.Plugin != col.Config.Plugin)) {
+						col.Config = {};
+					}
+				});
+				return colMap;
 			});
 		}
 
-		/** Render visual in `container`. Runs a query against the BI server then executes the plugin's render
+		/**
+			Render visual in `container`. Runs a query against the BI server then executes the plugin's render
 			function on success. The plugin render function receives the following: `data`, `columnMap`,
-			`container`, `conditionalFormats`. */
+			`container`, `conditionalFormats`.
+		*/
 		this.render = function(scope, callback) {
-			var vis = this;
+			var vis = this, dfdArray = [], allCriteria = [];
 
-			if (vis.Query.Criteria.length > 0) { // Don't attempt to render visualisation if no columns passed
+			// Get array of all criteria from queries, even with multiple datasets.
+			obiee.applyToColumnSets(vis.Query, vis.Plugin, function(query, dataset) {
+				allCriteria = allCriteria.concat(query.Criteria);
+				return dataset ? vis.Query[dataset] : vis.Query;
+			});
+
+			/** Called just before the visualisation is rendered. */
+			function preVisRender(vis) {
+				$(vis.Container).empty(); // Clear loading animation
+				vis.Refresh = true;
+			}
+
+			/** Called just after the visualisation is rendered. */
+			function postVisRender(vis, scope) {
+				if (scope) {
+					scope.$emit('refreshInteractions', vis); // Send event to dashboard to refresh interactions
+				}
+			}
+
+			/** Executes query returning a deferred object so that multiple queries can be handled nicely. */
+			function runQuery(query, dataset) {
+				var dfd = $.Deferred(); // Deferred for multiple asynchronous execution
+				query.run(function(results) {
+					if (dataset) {
+						results = {'results': results, 'dataset' : dataset};
+					}
+					dfd.resolve(results);
+				}, function(err) {
+					if (dataset) {
+						err = {'error': err, 'dataset' : dataset};
+					}
+					dfd.reject(err);
+				});
+				return dfd.promise();
+			}
+
+			function staticRender(vis, scope, callback) {
+				preVisRender(vis);
+				rmvpp.Plugins[vis.Plugin].render(mapData(vis.Data, vis.ColumnMap), vis.ColumnMap, vis.Config, $(vis.Container)[0], vis.ConditionalFormats);
+				postVisRender(vis, scope);
+
+				if (callback) {
+					callback();
+				}
+			}
+
+			function errorRender(error, query) {
+				var err = obiee.getErrorDetail(error);
+				rmvpp.displayError($(vis.Container)[0], err.basic + '\n\n' + query.lsql());
+			}
+
+			if (allCriteria.length > 0) { // Don't attempt to render visualisation if no columns passed
 				$(vis.Container).empty().off(); // Clear and disable interactions
 				$(vis.Container).addClass('visualisation');
 				$(vis.Container).attr('vis-number', this.ID);
 
-				// Add loading animation
-				rmvpp.loadingScreen(vis.Container);
+				rmvpp.loadingScreen(vis.Container); // Add loading animation
 				vis.resetColumnConfig();
 
-				if (vis.Data.length == 0 || (vis.Refresh > 0)) {
-					vis.Query.run(renderQueryLoop(vis, scope, callback), function(err) {
-						var err = obiee.getErrorDetail(err);
-						rmvpp.displayError($(vis.Container)[0], err.basic + '\n\n' + vis.Query.lsql());
-					});
-				} else {
-					preVisRender(vis);
-					rmvpp.Plugins[vis.Plugin].render(mapData(vis.Data, vis.ColumnMap), vis.ColumnMap, vis.Config, $(vis.Container)[0], vis.ConditionalFormats);
-					postVisRender(vis, scope);
-					if (callback) callback();
+				if (!rmvpp.Plugins[vis.Plugin].multipleDatasets) { // Single dataset handler
+					if (vis.Data.length == 0 || (vis.Refresh > 0)) {
+						dfdArray.push(runQuery(vis.Query));
+						$.when.apply($, dfdArray).then(function(results) {
+							vis.Data = angular.copy(results); // Keep the raw data
+
+							preVisRender(vis);
+							data = mapData(vis.Data, vis.ColumnMap); // Map data to visualisation format
+							if (data.length > 0) {
+								rmvpp.Plugins[vis.Plugin].render(data, vis.ColumnMap, vis.Config, $(vis.Container)[0], vis.ConditionalFormats);
+								postVisRender(vis, scope);
+							} else {
+								rmvpp.displayError($(vis.Container)[0], 'No data, cannot render visual.')
+							}
+
+							if (callback) {
+								callback();
+							}
+						}, function(err) {
+							errorRender(err, vis.Query);
+						});
+					} else {  // Don't re-run the queries if we have data already. Refresh property will override this.
+						staticRender(vis, scope, callback);
+					}
+				} else { // Multiple dataset handler
+					if (Object.values(vis.Data).every(function(v) { return v.length == 0; }) || (vis.Refresh > 0)) {
+						for (dataset in vis.Query) {
+							if (vis.Query[dataset].Criteria.length > 0) {
+								dfdArray.push(runQuery(vis.Query[dataset], dataset));
+							}
+						}
+
+						$.when.all(dfdArray).then(function(results) {
+							results.forEach(function(resultSet) {
+								vis.Data[resultSet.dataset] = angular.copy(resultSet.results);
+							});
+
+							preVisRender(vis);
+							var data = obiee.applyToColumnSets({}, vis.Plugin, function(item, dataset) {
+								if (dataset) {
+									return mapData(vis.Data[dataset], vis.ColumnMap[dataset]);
+								} else {
+									return mapData(vis.Data, vis.ColumnMap);
+								}
+							});
+
+							if (Object.values(vis.Data).some(function(v) { return v.length > 0; })) { // Check if any result sets are present
+								rmvpp.Plugins[vis.Plugin].render(data, vis.ColumnMap, vis.Config, $(vis.Container)[0], vis.ConditionalFormats);
+								postVisRender(vis, scope);
+							} else {
+								rmvpp.displayError($(vis.Container)[0], 'No data, cannot render visual.')
+							}
+
+							if (callback) {
+								callback();
+							}
+						}, function(err) {
+						     errorRender(err[0].error, vis.Query[err[0].dataset]); // Report on the first error
+						});
+					} else {  // Don't re-run the queries if we have data already. Refresh property will override this.
+						staticRender(vis, scope, callback);
+					}
 				}
 			}
 		};
@@ -3849,25 +4006,37 @@ var obiee = (function() {
 		*/
 		this.promptVisFilters = function(vis) {
 			var promptFilters = this.Filters;
-			var refreshVis = false, visNum = vis.ID;
-			refreshVis = obiee.removePromptedFilters(vis.Query.Filters); // Remove existing explicit global filters
+			var refreshVis = [], visNum = vis.ID;
 
-			for (var j=0; j &lt; promptFilters.length; j++) {
-				filter = promptFilters[j];
-				if (filter.SubjectArea == vis.Query.SubjectArea) { // Check subject areas match and value is not blank
-					var filterFound = false; // Search for filter on same code and update if found
-					origFilters = vis.Query.Filters;
-					filterFound = obiee.replaceFilter(origFilters, filter);
+			obiee.applyToColumnSets(vis.Query, vis.Plugin, function(query) { // Cater for multiple dataset plugins
+				refreshVis.push(obiee.removePromptedFilters(query.Filters)); // Remove existing explicit global filters
+				return query;
+			});
 
-					if (!filterFound) {
-						filter.Global = true;
-						vis.Query.Filters.push(filter);
+			// If any of the queries need refreshing, refresh the visualisation.
+			refreshVis = refreshVis.some(function(v) { return v; });
+
+			obiee.applyToColumnSets(vis.Query, vis.Plugin, function(query) { // Apply to all queries
+				for (var j=0; j &lt; promptFilters.length; j++) {
+					filter = promptFilters[j];
+					if (filter.SubjectArea == query.SubjectArea) { // Check subject areas match and value is not blank
+						var filterFound = false; // Search for filter on same code and update if found
+						origFilters = query.Filters;
+						filterFound = obiee.replaceFilter(origFilters, filter);
+
+						if (!filterFound) {
+							filter.Global = true;
+							query.Filters.push(filter);
+						}
+
+						if (filterFound != 'protected') {
+							refreshVis = true;
+						}
 					}
-
-					if (filterFound != 'protected')
-						refreshVis = true;
 				}
-			}
+				return query;
+			});
+
 			return refreshVis;
 		}
 	}
@@ -4027,7 +4196,7 @@ var obiee = (function() {
 			var compoundView = buildCompoundViewXML('rmvppView');
 
 			var dummyCol = new obiee.BIColumn("'Dummy'", 'Dummy');
-			var dummyQuery = new obiee.BIQuery(this.Visuals[0].Query.SubjectArea, [dummyCol]); // No need for filters or sort
+			var dummyQuery = new obiee.BIQuery([dummyCol]); // No need for filters or sort
 			var xml = buildXML(dummyQuery, [staticHTMLView, compoundView]) // Use the first visualisation as the criteria. Arbitrary here anyway.
 			saveXML(xml, path, successFunc, errFunc)
 		};
