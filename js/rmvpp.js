@@ -43,6 +43,16 @@ var rmvpp = (function(rmvpp) {
         }
 	}
 
+    /**
+        * Gets column mapping parameters, catering for multiple datasets.
+        @param {string} plugin Plugin ID to get column parameters for.
+        @param {string} dataset Dataset ID to use if the plugin is a multiple set.
+    */
+    rmvpp.getColMapParams = function(plugin, dataset) {
+        var cm = rmvpp.Plugins[plugin].columnMappingParameters;
+		return dataset ? cm[dataset] : cm;
+    }
+
 	/**
         * Returns a configuration object with default values for a given plugin.
         * @param {string} plugin ID of the plugin in which to retrieve configuration for.

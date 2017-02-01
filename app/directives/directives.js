@@ -522,8 +522,7 @@ app.directive('conditionalFormats', ['Global', function(Global) {
 			scope.targetName = function(cf) {
 				var name = cf.TargetName;
 				if (!name) {
-					console.log('here');
-					name = rmvpp.Plugins[scope.plugin].columnMappingParameters.filter(function(cmp) {
+					name = rmvpp.getColMapParams(scope.plugin, cf.Dataset).filter(function(cmp) {
 						return cmp.targetProperty == cf.TargetID;
 					})[0].formLabel;
 					name = 'All ' + name;

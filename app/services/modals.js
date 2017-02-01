@@ -978,7 +978,7 @@ app.controller('EditCFModalController', function($scope, Global, UIConfig, cf, v
 				dataset = $scope.allCols[0].dataset
 			}
 
-			var cmProp = colMapParams(dataset).filter(function(cmp) {
+			var cmProp = rmvpp.getColMapParams($scope.plugin, dataset).filter(function(cmp) {
 				return cmp.targetProperty == target;
 			})[0];
 
@@ -993,14 +993,8 @@ app.controller('EditCFModalController', function($scope, Global, UIConfig, cf, v
 		}
 	}
 
-	function colMapParams(dataset) {
-		var cm = rmvpp.Plugins[$scope.plugin].columnMappingParameters;
-		cm = dataset ? cm[dataset] : cm;
-		return cm;
-	}
-
 	function pushCol(prop, col, dataset) {
-		var propName = colMapParams(dataset).filter(function(cmp) {
+		var propName = rmvpp.getColMapParams($scope.plugin, dataset).filter(function(cmp) {
 			return cmp.targetProperty == prop;
 		})[0].formLabel;
 
@@ -1019,7 +1013,7 @@ app.controller('EditCFModalController', function($scope, Global, UIConfig, cf, v
 	}
 
 	function groupCol(prop, col, dataset) {
-		var propName = colMapParams(dataset).filter(function(cmp) {
+		var propName = rmvpp.getColMapParams($scope.plugin, dataset).filter(function(cmp) {
 			return cmp.targetProperty == prop;
 		})[0];
 
@@ -1032,7 +1026,7 @@ app.controller('EditCFModalController', function($scope, Global, UIConfig, cf, v
 
 				if (col.length > 1) {
 					if (!$scope.targetCols.hasOwnProperty('All')) { $scope.targetCols['All'] = [] };
-					$scope.targetCols.All.push({'id': 'prop', 'group': 'All', 'name': 'All ' + propName.formLabel, 'dataset': dataset});
+					$scope.targetCols.All.push({'id': prop, 'group': 'All', 'name': 'All ' + propName.formLabel, 'dataset': dataset});
 				}
 			} else {
 				if (col.Code) {
@@ -1058,6 +1052,7 @@ app.controller('EditCFModalController', function($scope, Global, UIConfig, cf, v
 	$scope.checkIcon();
 
 	$scope.accept = function() {
+		console.log($scope.edit.TargetID);
 		var source = $scope.allCols.filter(function(f) { return f.id == $scope.edit.SourceID; });
 		var target = $scope.allCols.filter(function(f) { return f.id == $scope.edit.TargetID; });
 
