@@ -71,7 +71,7 @@ window.onload = loadFunc;</script>
           <div class="container-overview">
             <h2>Constructor</h2>
             <hr/>
-            <h4 class="name" id="BIConditionalFormat"><span class="type-signature"/>new BIConditionalFormat<span class="signature">(sourceID, targetID, val, op, colour, columnMap)</span><span class="type-signature"/></h4>
+            <h4 class="name" id="BIConditionalFormat"><span class="type-signature"/>new BIConditionalFormat<span class="signature">(sourceID, targetID, val, op, colour, columnMap, dataset)</span><span class="type-signature"/></h4>
             <h5>Parameters:</h5>
             <table class="params">
               <thead>
@@ -150,7 +150,18 @@ window.onload = loadFunc;</script>
                     <span class="param-type">Object</span>
                   </td>
                   <td class="description last">
-                    <p>Column Map objects have properties containing <code>BIColumn</code> objects or arrays of them.
+                    <p>Column Map objects have properties containing <code>BIColumn</code> objects or arrays of them.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="name">
+                    <code>dataset</code>
+                  </td>
+                  <td class="type">
+                    <span class="param-type">string</span>
+                  </td>
+                  <td class="description last">
+                    <p>Dataset ID for use with plugins that have multiple datasets allowed.
 The precise structure is determined by the plugin itself.</p>
                   </td>
                 </tr>
@@ -160,7 +171,7 @@ The precise structure is determined by the plugin itself.</p>
               <dt class="tag-source">Source:</dt>
               <dd class="tag-source">
                 <ul class="dummy">
-                  <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3052">line 3052</a></li>
+                  <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3100">line 3100</a></li>
                 </ul>
               </dd>
             </dl>
@@ -175,7 +186,7 @@ The precise structure is determined by the plugin itself.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3096">line 3096</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3147">line 3147</a></li>
               </ul>
             </dd>
           </dl>
@@ -188,7 +199,7 @@ The precise structure is determined by the plugin itself.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3054">line 3054</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3102">line 3102</a></li>
               </ul>
             </dd>
           </dl>
@@ -201,7 +212,7 @@ The precise structure is determined by the plugin itself.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3057">line 3057</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3108">line 3108</a></li>
               </ul>
             </dd>
           </dl>
@@ -214,7 +225,7 @@ The precise structure is determined by the plugin itself.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3101">line 3101</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3152">line 3152</a></li>
               </ul>
             </dd>
           </dl>
@@ -227,7 +238,7 @@ The precise structure is determined by the plugin itself.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3087">line 3087</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3138">line 3138</a></li>
               </ul>
             </dd>
           </dl>
@@ -240,7 +251,7 @@ The precise structure is determined by the plugin itself.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3090">line 3090</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3141">line 3141</a></li>
               </ul>
             </dd>
           </dl>
@@ -253,7 +264,7 @@ The precise structure is determined by the plugin itself.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3093">line 3093</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3144">line 3144</a></li>
               </ul>
             </dd>
           </dl>
@@ -299,7 +310,7 @@ Alternatively, a whole row of data can be passed and the correct column will be 
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3115">line 3115</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3166">line 3166</a></li>
               </ul>
             </dd>
           </dl>
@@ -324,7 +335,7 @@ Alternatively, a whole row of data can be passed and the correct column will be 
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3074">line 3074</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3125">line 3125</a></li>
               </ul>
             </dd>
           </dl>
@@ -337,7 +348,7 @@ Alternatively, a whole row of data can be passed and the correct column will be 
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3066">line 3066</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3117">line 3117</a></li>
               </ul>
             </dd>
           </dl>
@@ -350,7 +361,7 @@ Alternatively, a whole row of data can be passed and the correct column will be 
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3079">line 3079</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3130">line 3130</a></li>
               </ul>
             </dd>
           </dl>

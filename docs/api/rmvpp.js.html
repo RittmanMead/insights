@@ -92,6 +92,32 @@ var rmvpp = (function(rmvpp) {
         return plugins;
     }
 
+    /**
+		* Checks if a certain plugin is configured to use multiple datasets.
+		* @param {string} plugin Plugin ID to check.
+	*/
+	rmvpp.checkMulti = function(plugin) {
+        if (plugin in rmvpp.Plugins) {
+            if (rmvpp.Plugins[plugin].multipleDatasets) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+	}
+
+    /**
+        * Gets column mapping parameters, catering for multiple datasets.
+        @param {string} plugin Plugin ID to get column parameters for.
+        @param {string} dataset Dataset ID to use if the plugin is a multiple set.
+    */
+    rmvpp.getColMapParams = function(plugin, dataset) {
+        var cm = rmvpp.Plugins[plugin].columnMappingParameters;
+		return dataset ? cm[dataset] : cm;
+    }
+
 	/**
         * Returns a configuration object with default values for a given plugin.
         * @param {string} plugin ID of the plugin in which to retrieve configuration for.
@@ -1906,7 +1932,7 @@ var rmvpp = (function(rmvpp) {
 					});
 				}
 			});
-		})
+		});
 		return [obj];
 	}
 
