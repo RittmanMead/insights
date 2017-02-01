@@ -27,6 +27,32 @@ var rmvpp = (function(rmvpp) {
         return plugins;
     }
 
+    /**
+		* Checks if a certain plugin is configured to use multiple datasets.
+		* @param {string} plugin Plugin ID to check.
+	*/
+	rmvpp.checkMulti = function(plugin) {
+        if (plugin in rmvpp.Plugins) {
+            if (rmvpp.Plugins[plugin].multipleDatasets) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+	}
+
+    /**
+        * Gets column mapping parameters, catering for multiple datasets.
+        @param {string} plugin Plugin ID to get column parameters for.
+        @param {string} dataset Dataset ID to use if the plugin is a multiple set.
+    */
+    rmvpp.getColMapParams = function(plugin, dataset) {
+        var cm = rmvpp.Plugins[plugin].columnMappingParameters;
+		return dataset ? cm[dataset] : cm;
+    }
+
 	/**
         * Returns a configuration object with default values for a given plugin.
         * @param {string} plugin ID of the plugin in which to retrieve configuration for.
@@ -67,13 +93,28 @@ var rmvpp = (function(rmvpp) {
         * @returns {object} Column map object describing the input format for the plugin.
     */
 	rmvpp.getDefaultColumnMap = function(plugin) {
-		var columnMap = {}, colMap = rmvpp.Plugins[plugin].columnMappingParameters;
-		for (var i=0; i < colMap.length; i++) {
-			if (colMap[i].multiple)
-				columnMap[colMap[i].targetProperty] = [];
-			else
-				columnMap[colMap[i].targetProperty] = new obiee.BIColumn ('','');
-		}
+		var colMap = rmvpp.Plugins[plugin].columnMappingParameters;
+        var columnMap = {};
+
+        function newDefaults(colMap) {
+            var newCM = {};
+            for (var i=0; i < colMap.length; i++) {
+    			if (colMap[i].multiple) {
+    				newCM[colMap[i].targetProperty] = [];
+    			} else {
+    				newCM[colMap[i].targetProperty] = new obiee.BIColumn ('','');
+                }
+    		}
+            return newCM;
+        }
+
+        if (!rmvpp.Plugins[plugin].multipleDatasets) {
+            columnMap = newDefaults(colMap);
+        } else {
+            for (dataset in colMap) {
+                columnMap[dataset] = newDefaults(colMap[dataset]);
+            }
+        }
 		return columnMap;
 	}
 
@@ -85,37 +126,42 @@ var rmvpp = (function(rmvpp) {
         * @returns {object} Column map of the target plugin with  the original columns mapped.
     */
 	rmvpp.importColumnMap = function(sourceMap, targetPlugin) {
-		var targetMap = rmvpp.getDefaultColumnMap(targetPlugin);
-		var targetParams = rmvpp.Plugins[targetPlugin].columnMappingParameters;
-
-		function matchColumnToMap(allowedTypes, targetMap, col) {
+		function matchColumnToMap(allowedTypes, targetParams, colMap, col) {
 			var filtered = targetParams.filter(function(p) { return $.inArray(p.type, allowedTypes) > -1; });
 			var populated = false;
 			filtered.forEach(function(fp) {
 				if (!populated) { // Break when populated
 					if (fp.multiple) {
-						targetMap[fp.targetProperty].push(col);
+						colMap[fp.targetProperty].push(col);
 						populated = true;
-					} else if (!targetMap[fp.targetProperty].Code) {
-						targetMap[fp.targetProperty] = col;
+					} else if (!colMap[fp.targetProperty].Code) {
+						colMap[fp.targetProperty] = col;
 						populated = true;
 					}
 				}
 			});
-			return targetMap;
+			return colMap;
 		}
 
-		obiee.applyToColumnMap(sourceMap, function(col, id) {
-			if (col.Code) {
-				if (id.indexOf('hidden') == 0) { // Map hidden columns between plugins
-					targetMap = matchColumnToMap(['hidden'], targetMap, col);
-				} else if (col.Measure == 'none') {
-					targetMap = matchColumnToMap(['dim', 'any'], targetMap, col);
-				} else {
-					targetMap = matchColumnToMap(['fact', 'any'], targetMap, col);
-				}
-			}
-		});
+        // Only allow single dataset plugins to work with column map transferrence
+        var targetMap = rmvpp.getDefaultColumnMap(targetPlugin);
+        var targetParams = rmvpp.Plugins[targetPlugin].columnMappingParameters;
+        if (!rmvpp.Plugins[targetPlugin].multipleDatasets) {
+            obiee.applyToColumnMap(sourceMap, function(col, id) {
+    			if (col.Code) {
+    				if (id.indexOf('hidden') == 0) { // Map hidden columns between plugins
+    					targetMap = matchColumnToMap(['hidden'], targetParams, targetMap, col);
+    				} else if (col.Measure == 'none') {
+    					targetMap = matchColumnToMap(['dim', 'any'], targetParams, targetMap, col);
+    				} else {
+    					targetMap = matchColumnToMap(['fact', 'any'], targetParams, targetMap, col);
+    				}
+    			}
+    		});
+        } else {
+            // TODO: Build funcitonality to map columns automatically when switching from multiple dataset plugins
+            // to single dataset plugins.
+        }
 		return targetMap;
 	}
 
@@ -1138,6 +1184,41 @@ var rmvpp = (function(rmvpp) {
 		/** Height of the container. */
 		this.ContainerHeight = 0;
 
+        /** Get y offset of lowest key group (g) elements. */
+    	function getLegendKeyOffset(legendContainer) {
+    		var lastGroup = legendContainer.selectAll('g.key, g.label').last(), yMargin = -5;
+    		if (lastGroup[0][0]) {
+    			var translate = d3.transform(lastGroup.attr('transform')).translate;
+    			yMargin = yMargin + lastGroup.node().getBBox().height + translate[1];
+    		}
+    		return yMargin;
+    	}
+
+        /**
+            * Adds label text to the legend.
+        */
+        this.addLabel = function(label, element, offset) {
+            element = element || this.Element;
+            yOffset = offset;
+
+            if (!yOffset && yOffset != 0) { // Use default if unspecified
+                yOffset = getLegendKeyOffset(element) + 20;
+            }
+
+            element.append("g")
+                .attr('transform', 'translate(0, ' + yOffset + ')')
+                .classed('label', true)
+                .append('text')
+					.classed('title', true)
+                    .style({
+                        'fill': '#333333',
+                    	'font': '10px sans-serif',
+            			'font-weight': 'bold',
+            			'text-anchor': 'end'
+            		})
+					.text(label);
+        }
+
 		/** Creates the SVG elements for the legend. */
 		this.create = function() {
 			this.Container.selectAll('.legend').remove(); // Remove legend if it exists
@@ -1151,18 +1232,7 @@ var rmvpp = (function(rmvpp) {
 				.attr('transform', 'translate(' + ((this.ChartWidth + maxString)) + ', 10)')
 				.classed('legend', true);
 
-			legendContainer.append('g')
-				.attr('transform', 'translate(0, 0)')
-				.append('text')
-					.classed('title', true)
-                    .style({
-                        'fill': '#333333',
-                    	'font': '10px sans-serif',
-            			'font-weight': 'bold',
-            			'text-anchor': 'end'
-            		})
-					.text(this.Title);
-
+            this.addLabel(this.Title, legendContainer, 0);
 			return legendContainer;
 		}
 
@@ -1317,15 +1387,7 @@ var rmvpp = (function(rmvpp) {
 		}
 	};
 
-	/** Get y offset of lowest key group (g) elements. */
-	function getLegendKeyOffset(legendContainer) {
-		var lastGroup = legendContainer.selectAll('g.key').last(), yMargin = 5;
-		if (lastGroup[0][0]) {
-			var translate = d3.transform(lastGroup.attr('transform')).translate;
-			yMargin = yMargin + lastGroup.node().getBBox().height + translate[1];
-		}
-		return yMargin;
-	}
+
 
 	/* ------ END OF LEGEND CLASS ------ */
 
@@ -1805,7 +1867,7 @@ var rmvpp = (function(rmvpp) {
 					});
 				}
 			});
-		})
+		});
 		return [obj];
 	}
 
@@ -2069,6 +2131,22 @@ jQuery.getSelectedText = function() {
         text = document.selection.createRange().text;
     }
     return text;
+}
+
+// Adds a $.when.all function which can be used to elegantly receive the output of a deferred
+// array as an array of arguments for both success and failure.
+if (jQuery.when.all===undefined) {
+    jQuery.when.all = function(deferreds) {
+        var deferred = new jQuery.Deferred();
+        $.when.apply(jQuery, deferreds).then(
+            function() {
+                deferred.resolve(Array.prototype.slice.call(arguments));
+            },
+            function() {
+                deferred.reject(Array.prototype.slice.call(arguments));
+            });
+        return deferred;
+    }
 }
 
 /* ------ END OF JQUERY EXTENSIONS ------- */

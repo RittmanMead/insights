@@ -20,6 +20,10 @@ app.controller('visBuilder', function($scope, $timeout, $window, $mdToast, Modal
 
 	$scope.dummy = function() {};
 
+	$scope.test = function() {
+		console.log($scope.vis);
+	}
+
 	// Hide left and right panels
 	$scope.hidePanes = function() {
 		$scope.lastLeftPaneWidth = $scope.leftPaneWidth;
@@ -234,16 +238,29 @@ app.controller('visBuilder', function($scope, $timeout, $window, $mdToast, Modal
 	// Set the current scope visualisation to a BIVisual object
 	function setScopeVis(vis) {
 		if (vis) {
-			$scope.subjectArea = vis.Query.SubjectArea;
-			$scope.changeSubjectArea(false);
+			if (!rmvpp.Plugins[vis.Plugin].multipleDatasets) {
+				$scope.subjectArea = vis.Query.SubjectArea;
+			} else {
+				$scope.subjectArea = vis.Query[Object.keys(vis.Query)[0]].SubjectArea;
+			}
 
-			if (vis.Query.Filters.length > 0) {
-				if (vis.Query.Filters[0].Type == 'FilterGroup')
-					$scope.filters = vis.Query.Filters[0].Filters;
-				else
-					$scope.filters = vis.Query.Filters;
-			} else
-				$scope.filters = [];
+			$scope.changeSubjectArea(false);
+			$scope.filters = obiee.applyToColumnSets({}, vis.Plugin, function(item, dataset) {
+				var query = vis.Query;
+				if (dataset) {
+					query = vis.Query[dataset];
+				}
+
+				if (query.Filters.length > 0) {
+					if (query.Filters[0].Type == 'FilterGroup') {
+						return query.Filters[0].Filters;
+					} else {
+						return query.Filters;
+					}
+				} else {
+					return [];
+				}
+			});
 
 			$scope.plugin = vis.Plugin;
 			$scope.vis = vis;
@@ -377,17 +394,33 @@ app.controller('visBuilder', function($scope, $timeout, $window, $mdToast, Modal
 		}
 	}
 
+	function resetFilters() {
+		$scope.filters = obiee.applyToColumnSets({}, $scope.vis.Plugin, function() { return []; });
+	}
+
 	// Update the visualisation query when a new filter is added
 	$scope.filters = [];
-	$scope.$on('newFilter', function(event, filter) {
+	$scope.$on('newFilter', function(event, filter, dataset) {
 		if (!$scope.dashboardMode) { // Add filter to visualisation
 			$scope.visTab = 'Filters';
-			if (!$.isArray($scope.filters))
-				$scope.filters = [];
-			$scope.filters.push(filter);
+
+			// Reset filter object
+			if (typeof($scope.filters) == 'undefined') {
+				resetFilters();
+			}
+
+			if (!dataset) { // Add filter to all queries if dataset not specified
+				$scope.filters = obiee.applyToColumnSets($scope.filters, $scope.vis.Plugin, function(item, dataset) {
+					item.push(filter);
+					return item;
+				});
+			} else { // Otherwise add the filter to the specific query (assumes it is a multi-dataset)
+				$scope.filters[dataset].push(filter);
+			}
 		} else { // Add dashboard prompt
-			if (!$scope.db.Prompts.Filters)
+			if (!$scope.db.Prompts.Filters) {
 				$scope.db.Prompts = new obiee.BIPrompt();
+			}
 			$scope.db.Prompts.Filters.push(filter);
 		}
 	});
@@ -399,16 +432,19 @@ app.controller('visBuilder', function($scope, $timeout, $window, $mdToast, Modal
 			$scope.visTab = 'Column Mappings';
 
 			var addCol = angular.copy(addCol);
-			for (column in $scope.vis.ColumnMap) { // Add to  first empty space in column map
-				var col = $scope.vis.ColumnMap[column];
-				if ($.isArray(col) && !added) {
-					$scope.vis.ColumnMap[column].push(addCol);
-					added = true;
-				} else if (!col.Code && !added) {
-					$scope.vis.ColumnMap[column] = addCol;
-					added = true;
+			$scope.vis.ColumnMap = obiee.applyToColumnSets($scope.vis.ColumnMap, $scope.vis.Plugin, function(colMap) {
+				for (column in colMap) { // Add to  first empty space in column map
+					var col = colMap[column];
+					if ($.isArray(col) && !added) {
+						colMap[column].push(addCol);
+						added = true;
+					} else if (!col.Code && !added) {
+						colMap[column] = addCol;
+						added = true;
+					}
 				}
-			}
+				return colMap;
+			});
 			$scope.$apply();
 		}
 	});
@@ -444,6 +480,7 @@ app.controller('visBuilder', function($scope, $timeout, $window, $mdToast, Modal
 		if ($scope.vis) {
 			var prevCM = angular.copy($scope.vis.ColumnMap);
 			var prevFilters = angular.copy($scope.filters);
+			var prevMulti = rmvpp.Plugins[$scope.vis.Plugin].multipleDatasets;
 		}
 
 		$scope.vis = new obiee.BIVisual($scope.plugin);
@@ -451,10 +488,15 @@ app.controller('visBuilder', function($scope, $timeout, $window, $mdToast, Modal
 		// Force reset gets passed in by the subject area dropdown
 		if ($scope.vis && !forceReset) {
 			$scope.vis.ColumnMap = rmvpp.importColumnMap(prevCM, $scope.plugin);
-			$scope.filters = prevFilters;
+			if (rmvpp.Plugins[$scope.vis.Plugin].multipleDatasets == prevMulti) {
+				$scope.filters = prevFilters;
+			} else { // TODO: Implement some filter sharing for multiple datasets
+				// console.log('there');
+				resetFilters();
+			}
 		} else if ($scope.vis) {
 			$scope.vis.ColumnMap = rmvpp.getDefaultColumnMap($scope.plugin);
-			$scope.filters = [];
+			resetFilters();
 		}
 
 		$scope.vis.Config = rmvpp.getDefaultConfig($scope.plugin);
@@ -464,12 +506,24 @@ app.controller('visBuilder', function($scope, $timeout, $window, $mdToast, Modal
 
 	// Construct Query from UI objects
 	function constructQuery() {
-		var columns = [];
-		obiee.applyToColumnMap($scope.vis.ColumnMap, function(col) {
-			if (col.Code)
-				columns.push(col);
+		function createNewQuery(colMap, subjectArea, filters) {
+			var columns = [];
+			obiee.applyToColumnMap(colMap, function(col) {
+				if (col.Code) {
+					columns.push(col);
+				}
+			});
+			var query = new obiee.BIQuery(columns, filters);
+			return query;
+		}
+
+
+		$scope.vis.Query = obiee.applyToColumnSets({}, $scope.vis.Plugin, function(query, dataset) {
+			var cm = dataset ? $scope.vis.ColumnMap[dataset] : $scope.vis.ColumnMap;
+			var filters = dataset ? $scope.filters[dataset] : $scope.filters;
+			query = createNewQuery(cm, $scope.subjectArea, filters);
+			return query;
 		});
-		$scope.vis.Query = new obiee.BIQuery($scope.subjectArea, columns, $scope.filters);
 	}
 
 	// Render visualisation

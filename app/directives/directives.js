@@ -384,6 +384,25 @@ app.directive('presTable', function() {
 });
 
 // Parameter Form directives
+app.directive('columnMapContainer', ['Global', function(Global) {
+	return {
+		restrict: 'A',
+		replace: true,
+		templateUrl: '/insights/app/directives/templates/columnMapContainer.html',
+		scope: {
+			'columns': '=visColumns',
+			'colmapParams': '=',
+			'dropFns' : '=',
+			'plugin': '='
+		},
+		link: function(scope, element, attrs) {
+			scope.$watch('plugin', function() {
+				scope.multipleDatasets = rmvpp.Plugins[scope.plugin].multipleDatasets;
+			});
+		}
+	}
+}]);
+
 app.directive('columnMap', ['Global', function(Global) {
 	return {
 		restrict: 'A',
@@ -392,16 +411,17 @@ app.directive('columnMap', ['Global', function(Global) {
 		scope: {
 			'columns': '=visColumns',
 			'colmapParams': '=',
-			'dropFns' : '='
+			'dropFns' : '=',
+			'dataset': '='
 		},
 		link: function(scope, element, attrs) {
 			scope.tooltip = function(desc, e) { Global.tooltip.displayHTML(desc, e); }
 			scope.hideTooltip = function() { Global.tooltip.hide();	}
 
 			scope.remove = function(column, subColumn, multiple) {
-				if (!multiple)
+				if (!multiple) {
 					scope.columns[column] = new obiee.BIColumn('', '');
-				else {
+				} else {
 					$.removeFromArray(subColumn, column);
 				};
 			};
@@ -416,7 +436,7 @@ app.directive('columnMap', ['Global', function(Global) {
 
 			scope.filter = function(col) {
 				var filter = new obiee.BIFilter(col);
-				scope.$emit('newFilter', filter);
+				scope.$emit('newFilter', filter, scope.dataset);
 			}
 
 			scope.edit = function() {
@@ -486,8 +506,12 @@ app.directive('conditionalFormats', ['Global', function(Global) {
 		},
 		link: function(scope, element, attrs) {
 			scope.allowsCFs = function() {
-				hasCF = rmvpp.Plugins[scope.plugin].columnMappingParameters.filter(function(cm) {
-					return cm.conditionalFormat;
+				var hasCF = [];
+				obiee.applyToColumnSets(rmvpp.Plugins[scope.plugin].columnMappingParameters, scope.plugin, function(item) {
+					hasCF = hasCF.concat(item.filter(function(cm) {
+						return cm.conditionalFormat;
+					}));
+					return item;
 				});
 				return hasCF.length > 0;
 			}
@@ -499,7 +523,7 @@ app.directive('conditionalFormats', ['Global', function(Global) {
 			scope.targetName = function(cf) {
 				var name = cf.TargetName;
 				if (!name) {
-					name = rmvpp.Plugins[scope.plugin].columnMappingParameters.filter(function(cmp) {
+					name = rmvpp.getColMapParams(scope.plugin, cf.Dataset).filter(function(cmp) {
 						return cmp.targetProperty == cf.TargetID;
 					})[0].formLabel;
 					name = 'All ' + name;
@@ -935,7 +959,6 @@ app.directive('resize', function() {
 			$(elem).resizable({
 				handles: edges.join(', '),
 				resize: function( event, ui ) {
-					console.log('here');
 					scope.callback(event, ui)
 				}
 			});
@@ -1186,6 +1209,23 @@ app.directive('editColumnBtn', ['UIConfig', function(UIConfig) {
 }]);
 
 // Filter UI representation
+app.directive('filtersContainer', ['Global', function(Global) {
+	return {
+		restrict: 'A',
+		replace: true,
+		scope: {
+			'filters': '=filtersContainer',
+			'plugin': '='
+		},
+		link: function(scope, element, attrs) {
+			scope.$watch('plugin', function() {
+				scope.multipleDatasets = rmvpp.Plugins[scope.plugin].multipleDatasets;
+			});
+		},
+		templateUrl: '/insights/app/directives/templates/list/filtersContainer.html'
+	};
+}]);
+
 app.directive('filters', ['Global', function(Global) {
 	return {
 		restrict: 'A',
@@ -2008,7 +2048,10 @@ app.directive('visualisation', ['Visuals', 'UIConfig', function(Visuals, UIConfi
 				scope.editMode = false;
 			});
 
-			obiee.removePromptedFilters(scope.vis.Query.Filters);
+			obiee.applyToColumnSets(scope.vis.Query, scope.vis.Plugin, function(query) {
+				obiee.removePromptedFilters(query.Filters);
+				return query;
+			});
 			render();
 		},
 		templateUrl: '/insights/app/directives/templates/dashboard/visualisation.html'

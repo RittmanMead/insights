@@ -31,49 +31,81 @@ var insights = (function(insights) {
 		var updateVisuals = function() {
 			selector.Visuals.forEach(function(origVis) {
 				if (origVis.enabled) {
-					var vis = visArray.filter(function(d) { return d.Name == origVis.name && d.Query.SubjectArea == newCol.SubjectArea; })[0];
-					var refreshVis = false, replaceColID, oldCol;
-
-					// Update query criteria with the new column
-					for (var i=0; i < vis.Query.Criteria.length; i++) {
-						if ($.inArray(vis.Query.Criteria[i].ID, colIDArray) > -1) {
-							refreshVis = true;
-							replaceColID = vis.Query.Criteria[i].ID;
-							oldCol = vis.Query.Criteria[i];
-							vis.Query.Criteria[i] = newCol;
+					var vis = visArray.filter(function(d) {
+						if (rmvpp.Plugins[d.Plugin].multipleDatasets) {
+							var datasets = obiee.getDatasetsFromSubjectArea(d.Plugin, d.Query, newCol.SubjectArea); // Get all allowed dataset IDs for this subject area
+							return d.Name == origVis.name && datasets.length > 0;
+						} else {
+							return d.Name == origVis.name && d.Query.SubjectArea == newCol.SubjectArea;
 						}
-					};
+					})[0];
 
-					// Update column map object with new column
-					if (refreshVis) {
-						// Remove sort keys that may be defined
-						var oldSortCol = new obiee.BIColumn('SORTKEY(' + oldCol.Code + ')', oldCol.Name + ' (Sort)', 'integer');
+					if (vis) {
+						// Set variables for handling multiple dataset plugins
+						var multiSet = rmvpp.Plugins[vis.Plugin].multipleDatasets;
+						if (multiSet) {
+							// For multiple dataset plugins, this is an array of dataset IDs that can have their queries updated
+							var datasets = obiee.getDatasetsFromSubjectArea(vis.Plugin, vis.Query, newCol.SubjectArea);
+						} else {
+							var datasets = [0]; // Hardcode one element
+						}
 
-						vis.Query.Criteria = vis.Query.Criteria.filter(function(c) {
-							return c.Code != oldSortCol.Code;
+						var refreshVis = false;
+
+						datasets.forEach(function(ds) {
+							if (multiSet) {
+								var query = vis.Query[ds];
+								var colMap = vis.ColumnMap[ds];
+							} else {
+								var query = vis.Query;
+								var colMap = vis.ColumnMap;
+							}
+
+							var replaceColID, oldCol;
+
+							for (var i=0; i < query.Criteria.length; i++) {
+								if ($.inArray(query.Criteria[i].ID, colIDArray) > -1) {
+									refreshVis = true;
+									replaceColID = query.Criteria[i].ID;
+									oldCol = query.Criteria[i];
+									query.Criteria[i] = newCol;
+								}
+							};
+
+							if (refreshVis) {
+								// Remove sort keys that may be defined
+								var oldSortCol = new obiee.BIColumn('SORTKEY(' + oldCol.Code + ')', oldCol.Name + ' (Sort)', 'integer');
+
+								query.Criteria = query.Criteria.filter(function(c) {
+									return c.Code != oldSortCol.Code;
+								});
+
+
+								for (attr in colMap) {
+									var cMap = colMap[attr];
+									if ($.isArray(cMap)) {
+										for (j=0; j < cMap.length; j++) {
+											if (cMap[j].ID == replaceColID)
+												colMap[attr][j] = newCol;
+										}
+									} else {
+										if (cMap.ID == replaceColID)
+											colMap[attr] = newCol;
+									}
+								}
+							}
 						});
 
-
-						for (attr in vis.ColumnMap) {
-							var cMap = vis.ColumnMap[attr];
-							if ($.isArray(cMap)) {
-								for (j=0; j < cMap.length; j++) {
-									if (cMap[j].ID == replaceColID)
-										vis.ColumnMap[attr][j] = newCol;
-								}
-							} else {
-								if (cMap.ID == replaceColID)
-									vis.ColumnMap[attr] = newCol;
-							}
-						}
-						if (!noRender) {
+						if (!noRender && refreshVis) {
 							vis.render(scope);
 						}
 					}
 				}
 			});
-			if (callback)
+
+			if (callback) {
 				callback();
+			}
 		}
 
 		// Bring back column information if not already gathered
@@ -143,7 +175,7 @@ var insights = (function(insights) {
 		* @param {function} callback Callback function to execute once all of the values have been fetched.
 	*/
 	insights.lsqlFilterChoices = function(filter, callback) {
-		var biQuery = new obiee.BIQuery(filter.SubjectArea, [filter.Column], []);
+		var biQuery = new obiee.BIQuery([filter.Column], []);
 		var choices = [];
 		obiee.executeLSQL(filter.PromptOptions.SQLOverride, function(results) {
 			results.forEach(function(row) {
@@ -167,7 +199,7 @@ var insights = (function(insights) {
 		if (filter.PromptOptions.DefaultValues.length > 0)
 			filter.Value = []; // Clear the original value if there is a default defined
 
-		var biQuery = new obiee.BIQuery(filter.SubjectArea, [filter.Column], []);
+		var biQuery = new obiee.BIQuery([filter.Column], []);
 		obiee.executeLSQL(filter.PromptOptions.SQLOverride, function(results) {
 			results.forEach(function(row) {
 				for (col in row) {
@@ -186,9 +218,10 @@ var insights = (function(insights) {
 			}
 			filter.Value = insights.valsFromChoices(choices);
 
-			$.when.apply(null, dfdArray).done(function() {
-				if (callback)
+			$.when.apply($, dfdArray).done(function() {
+				if (callback) {
 					callback();
+				}
 			});
 		}, biQuery);
 	}
@@ -385,16 +418,22 @@ var insights = (function(insights) {
 		var updated = false;
 		colArray.forEach(function(colMap) {
 			var col = colMap.col;
-			var filter = new obiee.BIFilter(col, colMap.values, 'in', targetVis.Query.SubjectArea, global);
+			var filter = new obiee.BIFilter(col, colMap.values, 'in', col.SubjectArea, global);
 
-			// Replace filters
-			var filterFound = obiee.replaceFilter(targetVis.Query.Filters, filter);
-			if (filterFound == true) {
-				updated = true;
-			} else if (!filterFound && filterFound != 'protected') {
-				updated = true;
-				targetVis.Query.Filters.push(filter);
-			}
+			targetVis.Query = obiee.applyToColumnSets(targetVis.Query, targetVis.Plugin, function(query) {
+
+				// Don't filter queries that don't match the subject area
+				if (query.SubjectArea == filter.SubjectArea) {
+					var filterFound = obiee.replaceFilter(query.Filters, filter);
+					if (filterFound == true) {
+						updated = true;
+					} else if (!filterFound && filterFound != 'protected') {
+						updated = true;
+						query.Filters.push(filter);
+					}
+				}
+				return query;
+			});
 		});
 		return updated;
 	};
@@ -703,7 +742,7 @@ interact(element[0]).dropzone({
 		});
 
 		// When all rendered, stitch them together
-		$.when.apply(null, dfdArray).done(function() {
+		$.when.apply($, dfdArray).done(function() {
 			// Get overall dashboard size
 			dbHeight = db.getHeight();
 			dbWidth = db.getWidth();
@@ -748,8 +787,9 @@ interact(element[0]).dropzone({
 						saveAsPDF(masterCanvas.lowerCanvasEl, filename + '.pdf'); // Save as PDF
 						break;
 				}
-				if (callback)
+				if (callback) {
 					callback();
+				}
 			})
 		});
 	}
@@ -908,7 +948,7 @@ interact(element[0]).dropzone({
 		});
 
 		// Resolve when all recurses complete
-		$.when.apply(null, dfdArray).done(function() {
+		$.when.apply($, dfdArray).done(function() {
 			mainDFD.resolve();
 		});
 
@@ -1001,7 +1041,7 @@ interact(element[0]).dropzone({
 				canvasDFDArray[1].resolve();
 			}
 
-			$.when.apply(null, canvasDFDArray).done(function() {
+			$.when.apply($, canvasDFDArray).done(function() {
 				$('#'+masterCanvasID).parent().append('<canvas class="tempCanvas ' + masterCanvasID + ' lower-canvas" canvas-id="' + i + '" id="tempCanvas-' + i + '-' + masterCanvasID + '"></canvas>');
 
 				$('#tempCanvas-' + i + '-' + masterCanvasID).attr({width: elem.width(), height: elem.height()});

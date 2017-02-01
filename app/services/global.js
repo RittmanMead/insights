@@ -479,22 +479,28 @@ app.factory('Metadata', ['Global', function(Global) {
 
 		},
 		// Add any custom columns from the visualisation to the presentation layer
-		addCustomColumns: function(vis,  metadata, callback) {
-			vis.Query.Criteria.forEach(function(c) {
-				if (!metadata[vis.Query.SubjectArea].AllColumns.hasOwnProperty(c.ID) && c.Table != 'RM-Sort')
-					metadata[vis.Query.SubjectArea].addColumn(c);
+		addCustomColumns: function(query,  metadata, callback) {
+			query.Criteria.forEach(function(c) {
+				if (!metadata[query.SubjectArea].AllColumns.hasOwnProperty(c.ID) && c.Table != 'RM-Sort') {
+					metadata[query.SubjectArea].addColumn(c);
+				}
 			});
-			if (callback)
+
+			if (callback) {
 				callback();
+			}
 		},
 		updateMetadata: function(scope, vis, metadata, callback) {
-			if (vis.Query.SubjectArea in metadata) {
-				Metadata.addCustomColumns(vis, metadata, callback);
-			} else {
-				Metadata.popPresTables(vis.Query.SubjectArea, metadata, function() {
-					Metadata.addCustomColumns(vis, metadata, callback);
-				});
-			}
+			obiee.applyToColumnSets(vis.Query, vis.Plugin, function(query, dataset) {
+				if (query.SubjectArea in metadata) {
+					Metadata.addCustomColumns(query, metadata, callback);
+				} else {
+					Metadata.popPresTables(query.SubjectArea, metadata, function() {
+						Metadata.addCustomColumns(query, metadata, callback);
+					});
+				}
+				return query;
+			});
 		}
 	};
 	return Metadata;
@@ -504,7 +510,13 @@ app.factory('Visuals', function() {
 	var Visuals = {
 		storeVis: function(vis, visArray) {
 			vis.forEach(function(v) {
-				if ($.inArray(v, visArray) == -1 && v.Query.Criteria.length > 0) {
+				var criteriaLength = []
+				obiee.applyToColumnSets(v.Query, v.Plugin, function(item) {
+					criteriaLength.push(item.Criteria.length);
+					return item;
+				});
+
+				if ($.inArray(v, visArray) == -1 && criteriaLength.some(function(v) { return v > 0; })) {
 					v.ID = visArray.length;
 					v.Name = v.defaultName();
 					v.resetName();
@@ -582,6 +594,8 @@ app.filter('presTableSearch', function() {
 app.filter('noGlobalFilters', function() {
     return function(objs, search) {
 		if (!objs) return objs;
+		if (!$.isArray(objs)) return objs;
+
 		var result = [];
 		objs.forEach(function(filter) {
 			if (!filter.Global)

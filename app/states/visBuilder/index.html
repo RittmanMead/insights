@@ -112,6 +112,9 @@
 		<!-- Map (Choropleth) -->
 		<script src="/insights/plugins/map-choropleth/map-choropleth.js"></script>
 
+        <!-- Map (Choropleth & Points)  -->
+        <script src="/insights/plugins/map-choro-points/map-choro-points.js"></script>
+
 		<!-- Sankey Chart -->
 		<script src="/insights/plugins/sankey/lib/d3.sankey.min.js"></script>
 		<script src="/insights/plugins/sankey/sankey.js"></script>
@@ -167,6 +170,7 @@
                                 <mat-button flat label-pos="bottom" icon="cogs" label="Options" ng-click="toggleOptions()"></mat-button>
                                 <mat-button flat label-pos="bottom" icon="columns" label="New Column" ng-click="toggleNewColumn()"></mat-button>
                                 <mat-button flat label-pos="bottom" icon="play" label="Run" ng-click="renderVis()"></mat-button>
+                                <mat-button flat label-pos="bottom" icon="cog" label="Test" ng-click="test()"></mat-button>
                             </section>
                             <section layout="row" style="margin-top: 3px;" ng-if="dashboardMode">
                                 <mat-button flat label-pos="bottom" icon="bar-chart" label="Visualisation Mode"  ng-click="switchVisMode()"></mat-button>
@@ -204,7 +208,7 @@
                     </md-content>
 				</div>
 				<div resize edge-right="true" callback="updateLeftPaneWidth" ng-style="{width: leftPaneWidth + 'px', overflow: designMode ? 'hidden' : ''}" class="leftPane panel">
-					<div ng-show="!designMode && leftPaneWidth > 60" subject-area="subjectArea" metadata="metadata" change="changeSubjectArea" subject-areas="subjectAreas"></div> <!-- Subject Area -->
+					<div ng-show="!designMode && leftPaneWidth > 60" subject-area="subjectArea" metadata="metadata" subject-areas="subjectAreas"></div> <!-- Subject Area -->
 					<div ng-if="designMode" ng-show="leftPaneWidth > 60">
 						<div designer bi-canvas="db.Canvas"></div>
 					</div>
@@ -268,9 +272,9 @@
 						<!-- Column and Config Parameters -->
 						<div ng-show="showOptions && !editColumn.show && !editColumn.config" class="visOptions" main-panel>
                             <div tabset="['Column Mappings', 'Configuration', 'Filters', 'Conditional Formatting']" selected-tab="$parent.visTab"></div>
-                            <div ng-show="visTab == 'Column Mappings'" column-map colmap-params="colmapParams" vis-columns="vis.ColumnMap" drop-fns="dropFunctions"></div>
+                            <div ng-show="visTab == 'Column Mappings'" column-map-container plugin="vis.Plugin" colmap-params="colmapParams" vis-columns="vis.ColumnMap" drop-fns="dropFunctions"></div>
                             <div ng-show="visTab == 'Configuration'" config-form config-params="configParams" config-vals="vis.Config"></div>
-                            <div ng-show="visTab == 'Filters'" filters="filters"></div>
+                            <div ng-show="visTab == 'Filters'" filters-container="filters" plugin="vis.Plugin"></div>
                             <div ng-show="visTab == 'Conditional Formatting'" conditional-formats cond-formats="vis.ConditionalFormats" plugin="vis.Plugin" vis-columns="vis.ColumnMap"></div>
 						</div>
 						<div class="singleVis visualisation"></div>
