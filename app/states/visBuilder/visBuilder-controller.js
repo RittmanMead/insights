@@ -513,7 +513,7 @@ app.controller('visBuilder', function($scope, $timeout, $window, $mdToast, Modal
 					columns.push(col);
 				}
 			});
-			var query = new obiee.BIQuery(subjectArea, columns, filters);
+			var query = new obiee.BIQuery(columns, filters);
 			return query;
 		}
 

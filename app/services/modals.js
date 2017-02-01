@@ -304,7 +304,7 @@ app.controller('FilterModalController', function($scope, $window, UIConfig, $tim
 	else
 		$scope.selectedValues = [];
 
-	$scope.query = new obiee.BIQuery($scope.filter.SubjectArea, [$scope.filter.Column]);
+	$scope.query = new obiee.BIQuery([$scope.filter.Column]);
 	$scope.query.MaxRows = 100; // Default row limit for subquerie
 
 	// Subquery for values based on input
@@ -410,7 +410,7 @@ app.controller('PromptFilterModalController', function($scope, Global, filter, c
 	$scope.original = angular.copy(filter);
 	$scope.selectedTab = 'Criteria';
 
-	var defaultQuery = new obiee.BIQuery($scope.filter.SubjectArea, [$scope.filter.Column], []);
+	var defaultQuery = new obiee.BIQuery([$scope.filter.Column], []);
 	defaultQuery.MaxRows = 100;
 	var defaultLSQL = defaultQuery.lsql();
 

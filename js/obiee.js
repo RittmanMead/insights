@@ -1230,7 +1230,7 @@ var obiee = (function() {
 		var compoundView = buildCompoundViewXML('rmvppView');
 
 		var dummyCol = new obiee.BIColumn("'Dummy'", 'Dummy');
-		var dummyQuery = new obiee.BIQuery('Dummy', [dummyCol]); // No need for filters or sort
+		var dummyQuery = new obiee.BIQuery([dummyCol]); // No need for filters or sort
 		var xml = buildXML(dummyQuery, [htmlView, compoundView]) // Use the first visualisation as the criteria. Arbitrary here anyway.
 
 		// Security based on system configuration: read for those with view, full for those with create
@@ -1606,7 +1606,7 @@ var obiee = (function() {
 							}
 						}
 
-						var biQuery = new obiee.BIQuery(visObj.Query.SubjectArea, visObj.Query.Criteria, visObj.Query.Filters, visObj.Query.Sort);
+						var biQuery = new obiee.BIQuery(visObj.Query.Criteria, visObj.Query.Filters, visObj.Query.Sort);
 
 						// Refresh conditional formats
 						visObj.ConditionalFormats.forEach(function(cf, i) {
@@ -2723,7 +2723,7 @@ var obiee = (function() {
 		var c2 = new obiee.BIColumn('', 'Type');
 		var c3 = new obiee.BIColumn('', 'Size');
 		var c4 = new obiee.BIColumn('', 'Value');
-		var query = new obiee.BIQuery('', [c1,c2,c3,c4]);
+		var query = new obiee.BIQuery([c1,c2,c3,c4]);
 
 		obiee.executeLSQL("Call NQSGetSessionValues('%')", function(results) {
 			results.forEach(function(r) {
@@ -3260,7 +3260,7 @@ var obiee = (function() {
 		else if (this.Column.Measure != 'none') // Measures should be treated as numbers
 			defaultStyle = 'numbox';
 
-		var defaultQuery = new obiee.BIQuery(this.SubjectArea, [this.Column], [])
+		var defaultQuery = new obiee.BIQuery([this.Column], [])
 		defaultQuery.MaxRows = 100;
 
 		/**
@@ -3341,12 +3341,12 @@ var obiee = (function() {
 		* @param {BIFilter[]} filters Array of BIFilter objects used to build the `WHERE` clause.
 		* @param {BISort[]} sort Array of BISort objects used to build the `ORDER BY` clause.
 	*/
-	obiee.BIQuery = function(subjectArea, cols, filters, sort) {
-		/** OBIEE subject area for the query. */
-		this.SubjectArea = subjectArea;
-
+	obiee.BIQuery = function(cols, filters, sort) {
 		/** Array of BIColumn objects representing the criteria for the query. These will appear in the `SELECT` clause. */
 		this.Criteria = cols;
+
+		/** OBIEE subject area for the query. */
+		this.SubjectArea = ($.isArray(cols) && cols.length > 0) ? cols[0].SubjectArea : '';
 
 		filters = filters || [];
 		if (!$.isArray(filters)) {
@@ -3468,7 +3468,7 @@ var obiee = (function() {
 		this.ColumnMap = columnMap || rmvpp.getDefaultColumnMap(plugin);
 
 		/** BIQuery object used to fetch the data for the visualisation. */
-		this.Query = query || new obiee.BIQuery("", [], []);
+		this.Query = query || new obiee.BIQuery([], []);
 
 		/** X co-ordinate for placing on the screen. */
 		this.X = x || 0;
@@ -4076,7 +4076,7 @@ var obiee = (function() {
 			var compoundView = buildCompoundViewXML('rmvppView');
 
 			var dummyCol = new obiee.BIColumn("'Dummy'", 'Dummy');
-			var dummyQuery = new obiee.BIQuery(this.Visuals[0].Query.SubjectArea, [dummyCol]); // No need for filters or sort
+			var dummyQuery = new obiee.BIQuery([dummyCol]); // No need for filters or sort
 			var xml = buildXML(dummyQuery, [staticHTMLView, compoundView]) // Use the first visualisation as the criteria. Arbitrary here anyway.
 			saveXML(xml, path, successFunc, errFunc)
 		};

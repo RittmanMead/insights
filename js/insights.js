@@ -143,7 +143,7 @@ var insights = (function(insights) {
 		* @param {function} callback Callback function to execute once all of the values have been fetched.
 	*/
 	insights.lsqlFilterChoices = function(filter, callback) {
-		var biQuery = new obiee.BIQuery(filter.SubjectArea, [filter.Column], []);
+		var biQuery = new obiee.BIQuery([filter.Column], []);
 		var choices = [];
 		obiee.executeLSQL(filter.PromptOptions.SQLOverride, function(results) {
 			results.forEach(function(row) {
@@ -167,7 +167,7 @@ var insights = (function(insights) {
 		if (filter.PromptOptions.DefaultValues.length > 0)
 			filter.Value = []; // Clear the original value if there is a default defined
 
-		var biQuery = new obiee.BIQuery(filter.SubjectArea, [filter.Column], []);
+		var biQuery = new obiee.BIQuery([filter.Column], []);
 		obiee.executeLSQL(filter.PromptOptions.SQLOverride, function(results) {
 			results.forEach(function(row) {
 				for (col in row) {
