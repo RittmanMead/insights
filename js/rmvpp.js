@@ -1197,7 +1197,7 @@ var rmvpp = (function(rmvpp) {
         /**
             * Adds label text to the legend.
         */
-        this.addLabel = function(label, element, offset) {
+        this.addLabel = function(label, offset, element) {
             element = element || this.Element;
             yOffset = offset;
 
@@ -1229,10 +1229,12 @@ var rmvpp = (function(rmvpp) {
 			this.Container.attr('width', this.ContainerWidth + maxString);
 
 			var legendContainer = chart.append('g')
-				.attr('transform', 'translate(' + ((this.ChartWidth + maxString)) + ', 10)')
+				.attr('transform', 'translate(' + ((this.ChartWidth + maxString)) + ', 0)')
 				.classed('legend', true);
 
-            this.addLabel(this.Title, legendContainer, 0);
+            if (this.Title) {
+                this.addLabel(this.Title, 0, legendContainer);
+            }
 			return legendContainer;
 		}
 
