@@ -236,8 +236,6 @@
         $(mapContainer).data({ 'mapObject' : map }); // Add map object to the map itself
 		$(mapContainer).css('cursor', 'grab');
 
-		// rmvpp.iconButton(panel.toJQuery(), 'pencil', 'Lasso', outerTooltip, '#FFA500');
-
         if (config.bubbleStyleType == 'Series Picker') {
             renderMapObjs(map, markers, 0);
         } else {
@@ -267,11 +265,6 @@
                 subset = data;
             }
 
-			// $(container).find('.fa-pencil').off('click').click(function() {
-			// 	if (mapEnabled)
-			// 		disableMap(map);
-			// });
-
 			// Deselect any selected markers
 			function deselectMarkers() {
 				d3.select(container).selectAll('circle.measure-marker')
@@ -294,24 +287,6 @@
 				$(poly._container).parent().hide(); // Prevents from blocking hover overs
 				map.removeLayer(poly);
 				deselectMarkers();
-			}
-
-			// Enable the map
-			function enableMap(map) {
-				if (!mapEnabled) {
-					map.dragging.enable();
-					map.touchZoom.enable();
-					map.scrollWheelZoom.enable();
-					map.doubleClickZoom.enable();
-					map.boxZoom.enable();
-					$(container).find('.leaflet-container').css('cursor', '');
-					map.zoomControl.addTo(map);
-				}
-				if (d3.select(container).selectAll('circle.selected')[0].length > 0)
-					clear(map);
-				mapEnabled = true;
-				var selectedData = d3.select(container).selectAll('circle').data();
-				// rmvpp.createTrigger(pluginName, columnMap, container, 'freehandSelect', selectedData); // Trigger event
 			}
 
             // Return the correct colour
@@ -380,16 +355,12 @@
                     if (d3.select(container).selectAll('circle.selected')[0].length > 0)
                         deselectMarkers();
                     highlightMarker(i);
-                    // rmvpp.createTrigger(pluginName, columnMap, container, 'hoverBubble', subset[i]); // Trigger event
                     displayTooltip(subset[i], d3.event, i);
                 })
                 .on('mouseout', function() {
                     deselectMarkers();
                     tooltip.hide();
                 })
-                .on('click', function(d, i) {
-                    // rmvpp.createTrigger(pluginName, columnMap, container, 'clickBubble', subset[i]); // Trigger event
-                });
             }
 
             if (!config.voronoi)

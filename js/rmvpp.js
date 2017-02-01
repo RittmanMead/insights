@@ -1158,6 +1158,41 @@ var rmvpp = (function(rmvpp) {
 		/** Height of the container. */
 		this.ContainerHeight = 0;
 
+        /** Get y offset of lowest key group (g) elements. */
+    	function getLegendKeyOffset(legendContainer) {
+    		var lastGroup = legendContainer.selectAll('g.key, g.label').last(), yMargin = -5;
+    		if (lastGroup[0][0]) {
+    			var translate = d3.transform(lastGroup.attr('transform')).translate;
+    			yMargin = yMargin + lastGroup.node().getBBox().height + translate[1];
+    		}
+    		return yMargin;
+    	}
+
+        /**
+            * Adds label text to the legend.
+        */
+        this.addLabel = function(label, element, offset) {
+            element = element || this.Element;
+            yOffset = offset;
+
+            if (!yOffset && yOffset != 0) { // Use default if unspecified
+                yOffset = getLegendKeyOffset(element) + 20;
+            }
+
+            element.append("g")
+                .attr('transform', 'translate(0, ' + yOffset + ')')
+                .classed('label', true)
+                .append('text')
+					.classed('title', true)
+                    .style({
+                        'fill': '#333333',
+                    	'font': '10px sans-serif',
+            			'font-weight': 'bold',
+            			'text-anchor': 'end'
+            		})
+					.text(label);
+        }
+
 		/** Creates the SVG elements for the legend. */
 		this.create = function() {
 			this.Container.selectAll('.legend').remove(); // Remove legend if it exists
@@ -1168,21 +1203,10 @@ var rmvpp = (function(rmvpp) {
 			this.Container.attr('width', this.ContainerWidth + maxString);
 
 			var legendContainer = chart.append('g')
-				.attr('transform', 'translate(' + ((this.ChartWidth + maxString)) + ', 0)')
+				.attr('transform', 'translate(' + ((this.ChartWidth + maxString)) + ', 10)')
 				.classed('legend', true);
 
-			legendContainer.append('g')
-				.attr('transform', 'translate(0, 0)')
-				.append('text')
-					.classed('title', true)
-                    .style({
-                        'fill': '#333333',
-                    	'font': '10px sans-serif',
-            			'font-weight': 'bold',
-            			'text-anchor': 'end'
-            		})
-					.text(this.Title);
-
+            this.addLabel(this.Title, legendContainer, 0);
 			return legendContainer;
 		}
 
@@ -1337,15 +1361,7 @@ var rmvpp = (function(rmvpp) {
 		}
 	};
 
-	/** Get y offset of lowest key group (g) elements. */
-	function getLegendKeyOffset(legendContainer) {
-		var lastGroup = legendContainer.selectAll('g.key').last(), yMargin = 5;
-		if (lastGroup[0][0]) {
-			var translate = d3.transform(lastGroup.attr('transform')).translate;
-			yMargin = yMargin + lastGroup.node().getBBox().height + translate[1];
-		}
-		return yMargin;
-	}
+
 
 	/* ------ END OF LEGEND CLASS ------ */
 
