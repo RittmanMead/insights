@@ -1299,7 +1299,6 @@ var rmvpp = (function(rmvpp) {
 
 			// Position elements in legend
 			var yMargin = getLegendKeyOffset(this.Element);
-            console.log(yMargin);
 
 			// Legend elements
 			var key = this.Element.append("g")
