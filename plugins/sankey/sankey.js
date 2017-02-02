@@ -323,7 +323,7 @@
             .attr("transform", null)
             .style({
                 cursor: 'pointer',
-                'font-family': 'sans-serif',
+                'font-family': 'monospace',
                 'font-size': '11px'
             })
             .text(function(d) { return d.name; });

@@ -216,7 +216,7 @@
 
             legend.append('div').text(columnMap.vary.Name).style({
                 'font-size' : '10px',
-                'font-family' : 'sans-serif',
+                'font-family' : 'monospace',
                 'text-align' : 'center'
             });
             uniqueVary.forEach(function(v, i) {
@@ -228,7 +228,7 @@
                 row.append('span').style({
                     'display' : 'inline-block',
                     'font-size' : '10px',
-                    'font-family' : 'sans-serif',
+                    'font-family' : 'monospace',
                     'margin-right' : '5px'
                 }).text(v);
                 row.append('span').style({
