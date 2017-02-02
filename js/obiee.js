@@ -3410,10 +3410,18 @@ var obiee = (function() {
 				if (findVis.length > 0) {
 					findVis[0].displayName = vis.DisplayName;
 				} else {
+					var dataset = false;
+					if (rmvpp.checkMulti(vis.Plugin)) {
+						dataset = {};
+						obiee.applyToColumnSets({}, vis.Plugin, function(item, ds) {
+							dataset[ds] = {'enabled': false};
+						});
+					}
 					filter.PromptOptions.ProtectedQueries.push({
 						'enabled': false,
 						'name': vis.Name,
-						'displayName': vis.DisplayName
+						'displayName': vis.DisplayName,
+						'dataset': dataset
 					});
 				}
 			});
@@ -4049,14 +4057,26 @@ var obiee = (function() {
 			// If any of the queries need refreshing, refresh the visualisation.
 			refreshVis = refreshVis.some(function(v) { return v; });
 
-			obiee.applyToColumnSets(vis.Query, vis.Plugin, function(query) { // Apply to all queries
+			obiee.applyToColumnSets(vis.Query, vis.Plugin, function(query, ds) { // Apply to all queries
 				promptFilters.forEach(function(filter, j) {
-					// Check that the visualisation is not marked to ignore prompted filters
-					var disallowed = filter.PromptOptions.ProtectedQueries.filter(function(pq) {
-						return pq.enabled;
-					});
+					var allowed = false;
+					if (rmvpp.checkMulti(vis.Plugin)) {
+						var findVis = filter.PromptOptions.ProtectedQueries.filter(function(pq) {
+							return pq.name == vis.Name
+						});
+						if (findVis.length > 0) {
+							allowed = !findVis[0].dataset[ds].enabled; // Allow the filter if the query is unprotected
+						}
 
-					if ($.inArray(vis.Name, disallowed.map(function(d) { return d.name; })) == -1) {
+					} else {
+						// Check that the visualisation is not marked to ignore prompted filters
+						var protectedVis = filter.PromptOptions.ProtectedQueries.filter(function(pq) {
+							return pq.enabled;
+						});
+						allowed = $.inArray(vis.Name, protectedVis.map(function(d) { return d.name; })) == -1
+					}
+
+					if (allowed) {
 						if (filter.SubjectArea == query.SubjectArea) { // Check subject areas match and value is not blank
 							var filterFound = false; // Search for filter on same code and update if found
 							origFilters = query.Filters;
