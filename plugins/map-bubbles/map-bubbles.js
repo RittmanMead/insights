@@ -193,7 +193,7 @@
 	];
 
     rmvpp.Plugins[pluginName].render = function(data, columnMap, config, container)   {
-        if (!columnMap.lng.Code || columnMap.lat.Code) {
+        if (!columnMap.lng.Code || !columnMap.lat.Code) {
             rmvpp.displayError(container, 'Cannot render map if longitude or latitude columns are unspecified.');
         }
 
