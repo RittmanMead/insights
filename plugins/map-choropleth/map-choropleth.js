@@ -3,7 +3,7 @@
     var pluginName = "map-choropleth";
     rmvpp.Plugins[pluginName] = {};
     rmvpp.Plugins[pluginName].id = pluginName;
-    rmvpp.Plugins[pluginName].displayName = "Map (Choropleth)";
+    rmvpp.Plugins[pluginName].displayName = "Map (Tiles)";
     rmvpp.Plugins[pluginName].description = 'Map visualisation using open source plugin [LeafletJS](http://leafletjs.com/). This shows regions coloured as a heatmap, darker colours for higher values and vice versa. Hovering over the regions will display a tooltip. Works by using a [topoJSON](https://github.com/mbostock/topojson) file uploaded to the deployment on the server (in the `topojson` folder). This file will have the description of the regions as well as an attribute that can be used to tie the OBIEE dataset to the map.';
 	rmvpp.Plugins[pluginName].icon = "globe";
 

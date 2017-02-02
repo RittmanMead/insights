@@ -4,7 +4,7 @@
     rmvpp.Plugins[pluginName] = {};
     rmvpp.Plugins[pluginName].id = pluginName;
     rmvpp.Plugins[pluginName].multipleDatasets = true;
-    rmvpp.Plugins[pluginName].displayName = "Map (Choropleth & Points)";
+    rmvpp.Plugins[pluginName].displayName = "Map (Tiles & Points)";
     rmvpp.Plugins[pluginName].description = 'Map visualisation using open source plugin [LeafletJS](http://leafletjs.com/). This shows regions coloured as a heatmap, darker colours for higher values and vice versa. Hovering over the regions will display a tooltip. Works by using a [topoJSON](https://github.com/mbostock/topojson) file uploaded to the deployment on the server (in the `topojson` folder). This file will have the description of the regions as well as an attribute that can be used to tie the OBIEE dataset to the map. Additionally can have a layer of points overlayed from a separate dataset';
 	rmvpp.Plugins[pluginName].icon = "globe";
 
@@ -130,7 +130,7 @@
 		},
         {
 			targetProperty:"choroStyleType",
-            label: "Style Type",
+            label: "Tile Style Choice",
             inputType: "radio",
             inputOptions: {
 				'values': ['Series Picker', 'Split Series'],
@@ -189,7 +189,7 @@
         },
         {
 			targetProperty:"bubbleStyleType",
-            label: "Style Type",
+            label: "Point Style Choice",
             inputType: "radio",
             inputOptions: {
 				'values': ['Series Picker', 'Split Series'],
@@ -350,8 +350,6 @@
                 processLayer(json);
                 if (pointColMap.lat.Code) {
                     enablePointTooltip();
-                } else {
-                    enableTileTooltip();
                 }
             }
 		});
@@ -378,6 +376,10 @@
             legend.addLabel('Tile Measures', 10);
             legend.addColourKey(measureNames, choroColour);
 
+            d3.select(container)
+                .selectAll('.legendContainer .key')
+                .classed('choro', true)
+
             if (varyColour) {
                 var pointColourNames = d3.unique(pointData.map(function(d) { return d.vary; }));
                 legend.addLabel(pointColMap.vary.Name);
@@ -402,6 +404,18 @@
                 renderMapObjs(data, map, markers, 0);
             } else {
                 renderMapObjs(data, map, markers, -1);
+            }
+
+            // Make legend a measure selector
+            if (config.legend) {
+                if (config.bubbleStyleType == 'Series Picker') {
+                    d3.select(container).selectAll('.legendContainer .key:not(.choro)')
+            			.on('click', function(d, i) {
+            				tooltip.hide();
+            				renderMapObjs(data, map, markers, i);
+            			})
+            			.style('cursor','pointer');
+                }
             }
 
             function renderMapObjs(data, map, markers, colourIdx) {
@@ -633,7 +647,7 @@
             if (config.legend) {
                 // Make legend a measure selector
                 if (config.choroStyleType == 'Series Picker') {
-                    d3.select(container).selectAll('.legendContainer .key')
+                    d3.select(container).selectAll('.legendContainer .key.choro')
                         .on('click', function(d, i) {
                             tooltip.hide();
                             processFeatures(featureLayer, i);
