@@ -1503,16 +1503,20 @@ var obiee = (function() {
 					var valueArray = [];
 					for (var j=0; j < columnMap[prop].length; j++) {
 						value = {'name' : columnMap[prop][j].Name, 'value' : data[i][columnMap[prop][j].Name]};
-						if ($.inArray(columnMap[prop][j].DataType, ['integer', 'double']) > -1)
+						if ($.inArray(columnMap[prop][j].DataType, ['integer', 'double', 'numeric']) > -1) {
 							value.value = +value.value;
+						}
 						valueArray.push(value);
 					}
 					data[i][prop] = valueArray;
 				} else {
-					if ('Name' in columnMap[prop])
+					if ('Name' in columnMap[prop]) {
 						data[i] = renameProperty(data[i], columnMap[prop].Name, prop);
-					if ($.inArray(columnMap[prop].DataType, ['integer', 'double']) > -1)
+					}
+
+					if ($.inArray(columnMap[prop].DataType, ['integer', 'double', 'numeric']) > -1) {
 						data[i][prop] = +data[i][prop];
+					}
 				}
 			}
 		}
