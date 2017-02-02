@@ -674,7 +674,7 @@ var rmvpp = (function(rmvpp) {
 	}
 
 	/**
-        * Calculates an estimate of longest string in an array in px: assumes sans-serif, font size 10.
+        * Calculates an estimate of longest string in an array in px: assumes monospace, font size 10.
         * @param {string[]} Array in which check for the longest string.
         * @param {BIColumn} OBIEE column so the string can be formatted before checking.
         * @param {number} [size=10] Font size to check length for.
@@ -698,17 +698,11 @@ var rmvpp = (function(rmvpp) {
 
 		var longString = stringConvert.sort(function (a, b) { return b.length - a.length; })[0];
 
-        // Use a large character so it doesn't underestimate
-        var placeholder = ''
-        for (var i=0; i < longString.length; i++) {
-            placeholder += 'M';
-        }
+		// $('html').append('<span id="rm-string-width" style="font-family : monospace; font-size: ' + size + 'px;">' + longString + '</span>');
+		// var stringWidth = $('#rm-string-width').width();
+		// $('#rm-string-width').remove();
 
-		$('html').append('<span id="rm-string-width" style="font-family : sans-serif; font-size: ' + size + 'px;">' + placeholder + '</span>');
-		var stringWidth = $('#rm-string-width').width();
-		$('#rm-string-width').remove();
-
-		return stringWidth;
+		return (longString.length * 5) + 5; // Add 5 just as a buffer
 	}
 
 	/* ------ END OF PLOTTING FUNCTIONS ------ */
@@ -1197,7 +1191,7 @@ var rmvpp = (function(rmvpp) {
         /**
             * Adds label text to the legend.
         */
-        this.addLabel = function(label, element, offset) {
+        this.addLabel = function(label, offset, element) {
             element = element || this.Element;
             yOffset = offset;
 
@@ -1212,7 +1206,7 @@ var rmvpp = (function(rmvpp) {
 					.classed('title', true)
                     .style({
                         'fill': '#333333',
-                    	'font': '10px sans-serif',
+                    	'font': '10px monospace',
             			'font-weight': 'bold',
             			'text-anchor': 'end'
             		})
@@ -1222,17 +1216,19 @@ var rmvpp = (function(rmvpp) {
 		/** Creates the SVG elements for the legend. */
 		this.create = function() {
 			this.Container.selectAll('.legend').remove(); // Remove legend if it exists
-			var maxString = rmvpp.longestString(this.Keys.concat([this.Title]));
+			var maxString = rmvpp.longestString(this.Keys.concat([this.Title])) + 20;
 
 			// Make chart parent container wider to match the widest legend element
 			this.ContainerWidth = +this.Container.attr('width');
 			this.Container.attr('width', this.ContainerWidth + maxString);
 
 			var legendContainer = chart.append('g')
-				.attr('transform', 'translate(' + ((this.ChartWidth + maxString)) + ', 10)')
+				.attr('transform', 'translate(' + ((this.ChartWidth + maxString)) + ', 0)')
 				.classed('legend', true);
 
-            this.addLabel(this.Title, legendContainer, 0);
+            if (this.Title) {
+                this.addLabel(this.Title, 0, legendContainer);
+            }
 			return legendContainer;
 		}
 
@@ -1288,7 +1284,7 @@ var rmvpp = (function(rmvpp) {
 				.style({
                     "text-anchor":  "end",
                     'fill': '#333333',
-                	'font': '10px sans-serif'
+                	'font': '10px monospace'
                 })
 				.text(function(d) { return d; });
 		};
@@ -1299,6 +1295,8 @@ var rmvpp = (function(rmvpp) {
 			* @param {function} sizeScale D3 scale for using to draw the scaled circles.
 		*/
 		this.addSizeKey = function(sizeName, sizeScale) {
+            this.addLabel(sizeName);
+
 			// Position elements in legend
 			var yMargin = getLegendKeyOffset(this.Element);
 
@@ -1306,18 +1304,6 @@ var rmvpp = (function(rmvpp) {
 			var key = this.Element.append("g")
 				.classed('key', true)
 				.attr("transform", "translate(0, " + yMargin + ")");
-
-			// Heading
-			key.append("text")
-				.attr("x", 0 )
-				.attr("y", 9)
-				.attr("dy", ".35em")
-				.style({
-                    "text-anchor":  "end",
-                    'fill': '#333333',
-                	'font': '10px sans-serif'
-                })
-				.text(sizeName);
 
 			// Use scales for displaying the key
 			var sizeScale = sizeScale.copy();
@@ -1333,7 +1319,7 @@ var rmvpp = (function(rmvpp) {
 				.append('circle')
 					.attr('r', function(d) {return sizeScale(d);})
 					.attr('cx', function(d) {return posRange(d);})
-					.attr('cy', 20 + (+sizeScale.range()[1]));
+					.attr('cy', +sizeScale.range()[1]);
 		};
 
 		/**
@@ -1343,32 +1329,20 @@ var rmvpp = (function(rmvpp) {
 		*/
 		this.addCondFormatKey = function(condFormats, columnMap) {
 			if (condFormats.length > 0) {
-				var yMargin = getLegendKeyOffset(this.Element);
-
 				// Adjust width of chart to compensate for conditional format
 				var maxString = rmvpp.longestString(condFormats.map(function(cf) { return cf.SourceName + ' ' + obiee.operatorToText(cf.Operator) + ' ' + cf.Value; }).concat(['Conditional Formatting']), false, 8);
-				this.Container.attr('width', this.ContainerWidth + maxString);
-				this.Container.select('.legend').attr('transform', 'translate(' + ((this.ChartWidth + maxString)) + ', 0)');
+				this.Container.attr('width', this.ContainerWidth + maxString + 40);
+				this.Container.select('.legend').attr('transform', 'translate(' + ((this.ChartWidth + maxString + 40)) + ', 0)');
 
-				// Legend elements
-				var title = this.Element.append("g")
-					.classed('key', true)
-					.attr("transform", "translate(0, " + yMargin + ")");
+                this.addLabel('Conditional Format');
 
-				// Heading
-				title.append("text")
-					.attr("x", 0 )
-					.attr("y", 9)
-					.attr("dy", ".35em")
-					.style("text-anchor", "end")
-					.style('font-weight', 'bold')
-					.text('Conditional Format');
+                var yMargin = getLegendKeyOffset(this.Element);
 
 				// Legend elements
 				var key = this.Element.selectAll(".element")
 					.data(condFormats)
 				.enter().append("g")
-					.attr("transform", function(d, i) { return "translate(" + 0 + "," + (yMargin + ((i+1) * 20)) + ")"; })
+					.attr("transform", function(d, i) { return "translate(" + 0 + "," + (yMargin + ((i) * 20)) + ")"; })
 					.classed('key', true);
 
 				key.append("rect")

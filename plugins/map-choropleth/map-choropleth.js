@@ -312,7 +312,7 @@
     					.style({
     						'margin-left': '10px',
     						'display': 'inline-block',
-    						'font': '10px sans-serif'
+    						'font': '10px monospace'
     					})
     					.attr('height', height)
     					.append('g');

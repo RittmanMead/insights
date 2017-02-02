@@ -331,12 +331,13 @@
                     .style({
                         'margin-left': '10px',
                         'display': 'inline-block',
-                        'font': '10px sans-serif'
+                        'font': '10px monospace'
                     })
                     .attr('height', height)
                     .append('g');
 
-            var legend = new rmvpp.Legend(d3.select(container).select('.legendContainer>g'), measureNames, 'Tile Measures', 0);
+            var legend = new rmvpp.Legend(d3.select(container).select('.legendContainer>g'), measureNames, null, 0);
+            legend.addLabel('Tile Measures', 10);
             legend.addColourKey(measureNames, choroColour);
 
             if (varyColour) {
@@ -587,7 +588,7 @@
             if (pointColMap.lat.Code) {
                 processMarkers(pointData, map);
             }
-            
+
             if (config.legend) {
                 // Make legend a measure selector
                 if (config.choroStyleType == 'Series Picker') {

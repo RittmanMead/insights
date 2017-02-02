@@ -893,7 +893,7 @@ interact(element[0]).dropzone({
 		basic.find('text').css({
 			'fill': '#333',
 			'font-size': '10px',
-			'font-family': 'sans-serif'
+			'font-family': 'monospace'
 		});
 
 		basic.find('.axis .label').css({
