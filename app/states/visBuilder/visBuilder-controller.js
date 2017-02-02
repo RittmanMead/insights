@@ -21,7 +21,7 @@ app.controller('visBuilder', function($scope, $timeout, $window, $mdToast, Modal
 	$scope.dummy = function() {};
 
 	$scope.test = function() {
-		console.log($scope.vis);
+		console.log($scope.db);
 	}
 
 	// Hide left and right panels

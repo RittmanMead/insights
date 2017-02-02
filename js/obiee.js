@@ -1659,6 +1659,8 @@ var obiee = (function() {
 							visObj.ConditionalFormats[i] = newCF;
 						});
 
+						// var prompt = visObj.Prompt
+
 						visObj = new obiee.BIVisual(visObj.Plugin, visObj.Config, visObj.ColumnMap, biQuery, visObj.X, visObj.Y,
 													visObj.ID, visObj.Name, visObj.ConditionalFormats, visObj.DisplayName);
 						visObj = rmvpp.tidyConfig(visObj) // Fill in any missing configuration parameters with defaults
@@ -3282,10 +3284,11 @@ var obiee = (function() {
 		* @param {string} [op=in] Operator for the filter action. Can be one of a limited set of values: `equal`, `notEqual`, `notIn`, `greater`,
 		* `greaterOrEqual`, `less`, `lessOrEqual`, `top`, `bottom`, `like`, `contains`, `starts`, `ends`, `isNull`, `isNotNull`.
 		* @param {string} [subjectArea=BIColumn.subjectArea] Subject area the filter belongs to.
-		* @param {boolean} [global=false] Flag indicating whether the filter is global, i.e. implemented by a drilldown or
-		* dashboard prompt.
+		* @param {boolean} [global=false] Flag indicating whether the filter is global, i.e. implemented by a drilldown or dashboard prompt.
+		* @param {boolean} [protect=false] Flag indicating whether to protect htis filter against prompts and interactions.
+		* @param {string} [valueType=value] Type of the value, defaulting to `value`. Can be one of `value`, `expression`, `repVar`, `sessionVar`.
 	*/
-	obiee.BIFilter = function(column, value, op, subjectArea, global) {
+	obiee.BIFilter = function(column, value, op, subjectArea, global, protect, valueType, promptOptions) {
 
 		/** OBIEE column code for the filter. */
 		this.Code = column.Code;
@@ -3297,7 +3300,7 @@ var obiee = (function() {
 			throw 'No code specifed for filter.';
 
 		/** Flag to mark this filter as protected against drilldowns and prompts */
-		this.Protected = false;
+		this.Protected = protect || false;
 
 		/** Operator for the filter action. Can be one of a limited set of values: `equal`, `notEqual`, `notIn`, `greater`,
 			`greaterOrEqual`, `less`, `lessOrEqual`, `top`, `bottom`, `like`, `contains`, `starts`, `ends`, `isNull`, `isNotNull`. */
@@ -3334,7 +3337,7 @@ var obiee = (function() {
 		this.Value = value || defaultVal;
 
 		/** Type of the value, defaulting to `value`. Can be one of `value`, `expression`, `repVar`, `sessionVar`. */
-		this.ValueType = 'value';
+		this.ValueType = valueType || 'value';
 
 		/** Column's data type. */
 		this.DataType = dataType;
@@ -3346,16 +3349,17 @@ var obiee = (function() {
 		this.ColumnID = column.ID;
 
 		/** Introduces some information redundancy, optimise when possible. */
-		this.Column = column;
+		this.Column = new obiee.BIColumn(column.Code, column.Name, column.DataType, column.Table, column.Measure, column.SubjectArea, column.DataFormat);;
 
 		/** Subject area, optional as a BIQuery object will have this information, but can be useful for global filters. */
 		this.SubjectArea = column.SubjectArea || "";
 
 		var defaultStyle = 'picklist';
-		if (this.DataType == 'date')
+		if (this.DataType == 'date') {
 			defaultStyle = 'datepicker';
-		else if (this.Column.Measure != 'none') // Measures should be treated as numbers
+		} else if (this.Column.Measure != 'none') { // Measures should be treated as numbers
 			defaultStyle = 'numbox';
+		}
 
 		var defaultQuery = new obiee.BIQuery([this.Column], [])
 		defaultQuery.MaxRows = 100;
@@ -3369,22 +3373,30 @@ var obiee = (function() {
 			@property {boolean} OverrideDefault Boolean variable indicating whether the default value should be override. Set to true when drilling between analyses.
 			@property {boolean} MultipleValues Boolean variable indiciating whether more than one value can be selected at a time.
 			@property {string} PresVar Name of presentation variable this prompt should set.
+			@property {string[]} AllowedQueries List of allowed queries in the dashboard for which this prompt filter applies.
 		*/
-		this.PromptOptions = {
-			Style : defaultStyle,
-			ChoiceType: "lsql",
-			SQLOverride :  defaultQuery.lsql(),
-			DefaultValues : [],
-			GoLess : true,
-			OverrideDefault : false,
-			MultipleValues: true,
-			PresVar: '',
-			SubOptions: {
+
+		var defaultOptions = {
+			'Style' : defaultStyle,
+			'ChoiceType': "lsql",
+			'SQLOverride' :  defaultQuery.lsql(),
+			'DefaultValues' : [],
+			'GoLess' : true,
+			'OverrideDefault' : false,
+			'MultipleValues': true,
+			'PresVar': '',
+			'SubOptions': {
 				min: 0,
 				max: 100,
 				choices: []
-			}
-		};
+			},
+			'AllowedQueries': []
+		}
+
+		if (promptOptions) {
+			promptOptions = $.extend(true, defaultOptions, promptOptions);
+		}
+		this.PromptOptions = promptOptions || defaultOptions;
 
 		/** Hardcoded object identifier, `Filter`. */
 		this.Type = 'Filter';
@@ -3753,7 +3765,7 @@ var obiee = (function() {
 
 							preVisRender(vis);
 							var data = mapDataMulti(vis);
-							
+
 							if (Object.values(vis.Data).some(function(v) { return v.length > 0; })) { // Check if any result sets are present
 								rmvpp.Plugins[vis.Plugin].render(data, vis.ColumnMap, vis.Config, $(vis.Container)[0], vis.ConditionalFormats);
 								postVisRender(vis, scope);
@@ -3977,6 +3989,11 @@ var obiee = (function() {
 	obiee.BIPrompt = function(filters, x, y) {
 		/** Array of `BIFilter` objects to use in dashboard prompt. */
 		this.Filters = filters || [];
+
+		var prompt = this;
+		filters.forEach(function(f, i) {
+			prompt.Filters[i] = new obiee.BIFilter(f.Column, f.Value, f.Operator, f.SubjectArea, f.Global, f.Protected, f.ValueType, f.PromptOptions);
+		});
 
 		/** Array of booleans used to keep track of which filters have been populated with options from OBIEE. */
 		this.Populated = this.Filters.map(function(f) {
