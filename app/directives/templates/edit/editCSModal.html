@@ -30,9 +30,19 @@
 					</md-subheader>
 					<section layout="column">
 						<div ng-repeat="(k, val) in edit.Visuals">
-							<md-checkbox style="margin-left: 10px;"	ng-model="edit.Visuals[k].enabled" class="md-primary"
-										 aria-label="Affected Visualisation">{{ val.displayName }}</md-checkbox>
-						</div>
+						   <md-checkbox ng-if="!val.dataset" style="margin-left: 10px;"
+							   ng-model="edit.Visuals[k].enabled"
+							   class="md-primary"
+							   aria-label="Affected Visualisation">{{ val.displayName }}</md-checkbox>
+						   <div ng-if="val.dataset">
+							   <div style="margin-left: 40px; margin-bottom: 10px;">{{ val.displayName }}</div>
+							   <div ng-repeat="(query, queryVal) in val.dataset">
+								   <md-checkbox style="margin-left: 10px; font-style: italic; font-size: 14px;"
+									   ng-model="queryVal.enabled" class="md-primary"
+									   aria-label="Affected Query">{{ query }}</md-checkbox>
+							   </div>
+						   </div>
+					   </div>
 					</section>
 				</div>
 			</section>

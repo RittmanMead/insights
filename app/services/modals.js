@@ -405,10 +405,11 @@ app.controller('FilterModalController', function($scope, $window, UIConfig, $tim
 });
 
 // Controller for editing filters in a dashboard prompt
-app.controller('PromptFilterModalController', function($scope, Global, filter, close) {
+app.controller('PromptFilterModalController', function($scope, Global, filter, visuals, close) {
 	$scope.filter = filter;
 	$scope.original = angular.copy(filter);
 	$scope.selectedTab = 'Criteria';
+	$scope.filter.updateQueries(visuals);
 
 	var defaultQuery = new obiee.BIQuery([$scope.filter.Column], []);
 	defaultQuery.MaxRows = 100;

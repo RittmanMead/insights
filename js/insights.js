@@ -46,6 +46,11 @@ var insights = (function(insights) {
 						if (multiSet) {
 							// For multiple dataset plugins, this is an array of dataset IDs that can have their queries updated
 							var datasets = obiee.getDatasetsFromSubjectArea(vis.Plugin, vis.Query, newCol.SubjectArea);
+
+							// Checks that the column selector has been 
+							datasets = datasets.filter(function(ds) {
+								return origVis.dataset[ds].enabled;
+							});
 						} else {
 							var datasets = [0]; // Hardcode one element
 						}

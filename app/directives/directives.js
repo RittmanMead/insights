@@ -2323,7 +2323,7 @@ app.directive('promptFilter', ['UIConfig', 'ModalService', 'Global', function(UI
 			// Open edit modal for the filter
 			scope.editPromptFilter = function() {
 				var origSQL = angular.copy(scope.filter.PromptOptions.SQLOverride);
-				Global.editPromptFilter(scope.filter, function(filter) {
+				Global.editPromptFilter(scope.filter, scope.$parent.$parent.db.Visuals, function(filter) {
 					scope.filter.PromptOptions = filter.PromptOptions;
 					updateChoices(origSQL);
 				});

@@ -6,7 +6,7 @@
 		<div ng-show="filter.DataType == 'date'" tabset="['Criteria', 'Default Values']" selected-tab="selectedTab"></div>
 		<div ng-if="selectedTab == 'Criteria'">
 			<div class="header">Prompt Criteria</div>
-			<md-content md-theme="dark" layout="row" layout-wrap>
+			<md-content md-theme="dark" layout="row" layout-wrap style="max-height: 250px;">
 				<md-input-container>
 					<label>Column</label>
 					<input disabled ng-model="filter.Name"></input>
@@ -32,6 +32,23 @@
 					<label>Presentation Variable</label>
 					<input ng-model="filter.PromptOptions.PresVar"></input>
 				</md-input-container>
+				<section layout="column">
+					<md-subheader style="margin-bottom: 10px;">Ignore Visualisations</md-subheader>
+					<div ng-repeat="(k, val) in filter.PromptOptions.ProtectedQueries">
+						<md-checkbox ng-if="!val.dataset" style="margin-left: 10px;"
+							ng-model="filter.PromptOptions.ProtectedQueries[k].enabled"
+							class="md-primary"
+							aria-label="Affected Visualisation">{{ val.displayName }}</md-checkbox>
+						<div ng-if="val.dataset">
+							<div style="margin-left: 40px; margin-bottom: 10px;">{{ val.displayName }}</div>
+							<div ng-repeat="(query, queryVal) in val.dataset">
+								<md-checkbox style="margin-left: 10px; font-style: italic; font-size: 14px;"
+									ng-model="queryVal.enabled" class="md-primary"
+									aria-label="Affected Query">{{ query }}</md-checkbox>
+							</div>
+						</div>
+					</div>
+				</section>
 			</md-content>
 		</div>
 
