@@ -4048,8 +4048,6 @@ var obiee = (function() {
 			var promptFilters = this.Filters;
 			var refreshVis = [], visNum = vis.ID;
 
-
-
 			obiee.applyToColumnSets(vis.Query, vis.Plugin, function(query) { // Cater for multiple dataset plugins
 				refreshVis.push(obiee.removePromptedFilters(query.Filters)); // Remove existing explicit global filters
 				return query;
@@ -4060,7 +4058,7 @@ var obiee = (function() {
 
 			obiee.applyToColumnSets(vis.Query, vis.Plugin, function(query, ds) { // Apply to all queries
 				promptFilters.forEach(function(filter, j) {
-					var allowed = false;
+					var allowed = true;
 					if (rmvpp.checkMulti(vis.Plugin)) {
 						var findVis = filter.PromptOptions.ProtectedQueries.filter(function(pq) {
 							return pq.name == vis.Name
@@ -4074,7 +4072,7 @@ var obiee = (function() {
 						var protectedVis = filter.PromptOptions.ProtectedQueries.filter(function(pq) {
 							return pq.enabled;
 						});
-						allowed = $.inArray(vis.Name, protectedVis.map(function(d) { return d.name; })) == -1
+						allowed = $.inArray(vis.Name, protectedVis.map(function(d) { return d.name; })) == -1;
 					}
 
 					if (allowed) {
