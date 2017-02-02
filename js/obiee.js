@@ -3991,7 +3991,7 @@ var obiee = (function() {
 		this.Filters = filters || [];
 
 		var prompt = this;
-		filters.forEach(function(f, i) {
+		this.Filters.forEach(function(f, i) {
 			prompt.Filters[i] = new obiee.BIFilter(f.Column, f.Value, f.Operator, f.SubjectArea, f.Global, f.Protected, f.ValueType, f.PromptOptions);
 		});
 
