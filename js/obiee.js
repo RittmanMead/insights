@@ -1480,6 +1480,17 @@ var obiee = (function() {
 
 	/* ------ PUBLIC RMVPP FUNCTIONS ------ */
 
+	/** Wrapper for the map data function accomodating for multiple datasets. */
+	function mapDataMulti(vis) {
+		return obiee.applyToColumnSets({}, vis.Plugin, function(item, dataset) {
+			if (dataset) {
+				return mapData(vis.Data[dataset], vis.ColumnMap[dataset]);
+			} else {
+				return mapData(vis.Data, vis.ColumnMap);
+			}
+		});
+	}
+
 	/** Function to rename data properties based on column map for a specific visualisation */
 	function mapData(data, columnMap) {
 		if (!$.isArray(data)) {
@@ -3680,7 +3691,9 @@ var obiee = (function() {
 
 			function staticRender(vis, scope, callback) {
 				preVisRender(vis);
-				rmvpp.Plugins[vis.Plugin].render(mapData(vis.Data, vis.ColumnMap), vis.ColumnMap, vis.Config, $(vis.Container)[0], vis.ConditionalFormats);
+				var data = mapDataMulti(vis);
+
+				rmvpp.Plugins[vis.Plugin].render(data, vis.ColumnMap, vis.Config, $(vis.Container)[0], vis.ConditionalFormats);
 				postVisRender(vis, scope);
 
 				if (callback) {
@@ -3739,14 +3752,8 @@ var obiee = (function() {
 							});
 
 							preVisRender(vis);
-							var data = obiee.applyToColumnSets({}, vis.Plugin, function(item, dataset) {
-								if (dataset) {
-									return mapData(vis.Data[dataset], vis.ColumnMap[dataset]);
-								} else {
-									return mapData(vis.Data, vis.ColumnMap);
-								}
-							});
-
+							var data = mapDataMulti(vis);
+							
 							if (Object.values(vis.Data).some(function(v) { return v.length > 0; })) { // Check if any result sets are present
 								rmvpp.Plugins[vis.Plugin].render(data, vis.ColumnMap, vis.Config, $(vis.Container)[0], vis.ConditionalFormats);
 								postVisRender(vis, scope);

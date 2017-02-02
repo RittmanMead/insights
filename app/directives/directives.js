@@ -1832,7 +1832,6 @@ app.directive('dashboardPage', ['Global', function(Global) {
 					for (var i=0; i < visArray.length; i++) {
 						var refreshVis = scope.db.Prompts.promptVisFilters(visArray[i]);
 
-
 						// Execute views if filters have changed
 						if (refreshVis) {
 							if (obiee.showOrHideVis(scope.db.VisualSelectors, visArray[i])) {
