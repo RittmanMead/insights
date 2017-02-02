@@ -652,9 +652,15 @@ var rmvpp = (function(rmvpp) {
 			d3.select(this).transition().style('color', 'black');
 			tooltip.hide();
 		});
-		if (clickHandler) { btn.click(function() { clickHandler(); }) };
+
+		if (clickHandler) {
+            btn.click(function() {
+                clickHandler();
+            })
+        };
 
 		$(container).append(btn);
+        return btn;
 	};
 
 	/**

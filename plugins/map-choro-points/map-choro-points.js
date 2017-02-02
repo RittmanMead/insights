@@ -296,6 +296,37 @@
 
         var measureNames = choroColMap.measure.map(function(m) { return m.Name; });
 
+        if (pointColMap.lat.Code) {
+            // Create toolbar with option buttons
+            var outerTooltip = new rmvpp.Tooltip(container);
+            var panel = d3.select(container)
+    			.append('div')
+    			.attr('class', 'panel do-not-print')
+    			.style('font-size', '24px');
+
+            function enableTileTooltip() {
+                $(container)
+                    .find('.leaflet-overlay-pane .leaflet-zoom-animated')
+                    .css({'pointer-events': 'auto'});
+                $(container)
+                    .find('.leaflet-overlay-pane svg.point-container')
+                    .css({'pointer-events': 'none'});
+            }
+
+            function enablePointTooltip() {
+                $(container)
+                    .find('.leaflet-overlay-pane .leaflet-zoom-animated')
+                    .css({'pointer-events': 'none'});
+                $(container)
+                    .find('.leaflet-overlay-pane svg.point-container')
+                    .css({'pointer-events': 'auto'});
+            }
+
+            var tileHoverBtn = rmvpp.iconButton(panel.toJQuery(), 'globe', 'Tile Tooltips', outerTooltip, '#E84C3D', enableTileTooltip);
+            var pointHoverBtn = rmvpp.iconButton(panel.toJQuery(), 'map-marker', 'Point Tooltips', outerTooltip, '#E84C3D', enablePointTooltip);
+            $(pointHoverBtn).css({'margin-left': '5px'}); // Formatting for the button
+        }
+
 		// Create container for map
 		var mapContainer = d3.select(container).append('div')
 			.attr('class', 'map print-as-map')
@@ -310,12 +341,19 @@
 
 		// Load Topojson file if it exists
 		$.ajax({
-			dataType: 'json',
-			url: '/insights/topojson/' + config.topojson,
-			error: function(jqXHR, textStatus, errorThrown) {
+			'dataType': 'json',
+			'url': '/insights/topojson/' + config.topojson,
+			'error': function(jqXHR, textStatus, errorThrown) {
 				rmvpp.displayError(container, 'Topojson file not found at: ' + 'topojson/' + config.topojson);
 			},
-			success: processLayer
+			'success': function(json) {
+                processLayer(json);
+                if (pointColMap.lat.Code) {
+                    enablePointTooltip();
+                } else {
+                    enableTileTooltip();
+                }
+            }
 		});
 
 		var choroColour = rmvpp.colourScale(measureNames, config.choroColours);
@@ -351,6 +389,7 @@
             }
         }
 
+        // Process the points on the map
         function processMarkers(data, map) {
             // Loop through properties, adding markers
     		var markers = [];
@@ -427,7 +466,9 @@
     			}
 
     			// Custom layer for D3
-    			var svg = d3.select(map.getPanes().overlayPane).append('svg');
+    			var svg = d3.select(map.getPanes().overlayPane)
+                    .append('svg')
+                    .classed('point-container', true);
 
                 // Layers for Voronoi click map
                 var circleLayer = svg.append('g').classed('circles', true);
@@ -602,6 +643,7 @@
             }
 		}
 
+        // Calculate the gradient colour
         function getGradColour(min, max, minColour, currColour, maxColour) {
             var gradColour;
             if (config.scaleType == 'Linear') {
