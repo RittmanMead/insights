@@ -1720,6 +1720,7 @@ var obiee = (function() {
 						if (re.exec(html)) {
 							selector = re.exec(html)[1];
 							selector = JSON.parse(selector);
+							selector = new obiee.BIColumnSelector(selector.Columns, selector.Visuals, selector.X, selector.Y, selector.Style);
 							selectorArray.push(selector);
 						}
 					}
@@ -4138,7 +4139,19 @@ var obiee = (function() {
 				if (findVis.length > 0) {
 					findVis[0].displayName = vis.DisplayName;
 				} else {
-					cs.Visuals.push({enabled: true, name: vis.Name, displayName: vis.DisplayName });
+					var dataset = false;
+					if (rmvpp.checkMulti(vis.Plugin)) {
+						dataset = {};
+						obiee.applyToColumnSets({}, vis.Plugin, function(item, ds) {
+							dataset[ds] = {'enabled': true};
+						});
+					}
+					cs.Visuals.push({
+						'enabled': true,
+						'name': vis.Name,
+						'displayName': vis.DisplayName,
+						'dataset': dataset
+					});
 				}
 			});
 		}
