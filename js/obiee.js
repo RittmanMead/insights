@@ -3365,15 +3365,16 @@ var obiee = (function() {
 		defaultQuery.MaxRows = 100;
 
 		/**
-			Options for when using this filter in a prompt.
-			@property {string} Style Indicates UI style that the prompt will render as. Defaults to `picklist`.
-			@property {string} SQLOverride Contains logical SQL to use when fetching options for the dashboard prompt.
-			@property {string} DefaultType Has value type for the default prompt option. Can be one of: `value`, `expression`, `repVar`, `sessionVar`.
-			@property {boolean} GoLess  Boolean operator indicating whether the prompt should update reports as soon as it changes or not.
-			@property {boolean} OverrideDefault Boolean variable indicating whether the default value should be override. Set to true when drilling between analyses.
-			@property {boolean} MultipleValues Boolean variable indiciating whether more than one value can be selected at a time.
-			@property {string} PresVar Name of presentation variable this prompt should set.
-			@property {string[]} AllowedQueries List of allowed queries in the dashboard for which this prompt filter applies.
+			* Options for when using this filter in a prompt.
+			* @property {string} Style Indicates UI style that the prompt will render as. Defaults to `picklist`.
+			* @property {string} SQLOverride Contains logical SQL to use when fetching options for the dashboard prompt.
+			* @property {string} DefaultType Has value type for the default prompt option. Can be one of: `value`, `expression`, `repVar`, `sessionVar`.
+			* @property {boolean} GoLess  Boolean operator indicating whether the prompt should update reports as soon as it changes or not.
+			* @property {boolean} OverrideDefault Boolean variable indicating whether the default value should be override. Set to true when drilling between analyses.
+			* @property {boolean} MultipleValues Boolean variable indiciating whether more than one value can be selected at a time.
+			* @property {string} PresVar Name of presentation variable this prompt should set.
+			* @property {string[]} ProtectedQueries List of queries in the dashboard for which this prompt filter does not apply to.
+			* If the list is empty, will assume that all apply
 		*/
 
 		var defaultOptions = {
@@ -3390,13 +3391,33 @@ var obiee = (function() {
 				max: 100,
 				choices: []
 			},
-			'AllowedQueries': []
+			'ProtectedQueries': []
 		}
 
 		if (promptOptions) {
 			promptOptions = $.extend(true, defaultOptions, promptOptions);
 		}
 		this.PromptOptions = promptOptions || defaultOptions;
+
+		/** Updates `PromptOptions.ProtectedQueries` property with new new visualisations, datasets and display names. */
+		this.updateQueries = function(visuals) {
+			var filter = this;
+			visuals.forEach(function(vis) {
+				findVis = filter.PromptOptions.ProtectedQueries.filter(function(tv) {
+					return tv.name == vis.Name;
+				});
+
+				if (findVis.length > 0) {
+					findVis[0].displayName = vis.DisplayName;
+				} else {
+					filter.PromptOptions.ProtectedQueries.push({
+						'enabled': false,
+						'name': vis.Name,
+						'displayName': vis.DisplayName
+					});
+				}
+			});
+		}
 
 		/** Hardcoded object identifier, `Filter`. */
 		this.Type = 'Filter';
@@ -4018,6 +4039,8 @@ var obiee = (function() {
 			var promptFilters = this.Filters;
 			var refreshVis = [], visNum = vis.ID;
 
+
+
 			obiee.applyToColumnSets(vis.Query, vis.Plugin, function(query) { // Cater for multiple dataset plugins
 				refreshVis.push(obiee.removePromptedFilters(query.Filters)); // Remove existing explicit global filters
 				return query;
@@ -4027,23 +4050,29 @@ var obiee = (function() {
 			refreshVis = refreshVis.some(function(v) { return v; });
 
 			obiee.applyToColumnSets(vis.Query, vis.Plugin, function(query) { // Apply to all queries
-				for (var j=0; j < promptFilters.length; j++) {
-					filter = promptFilters[j];
-					if (filter.SubjectArea == query.SubjectArea) { // Check subject areas match and value is not blank
-						var filterFound = false; // Search for filter on same code and update if found
-						origFilters = query.Filters;
-						filterFound = obiee.replaceFilter(origFilters, filter);
+				promptFilters.forEach(function(filter, j) {
+					// Check that the visualisation is not marked to ignore prompted filters
+					var disallowed = filter.PromptOptions.ProtectedQueries.filter(function(pq) {
+						return pq.enabled;
+					});
 
-						if (!filterFound) {
-							filter.Global = true;
-							query.Filters.push(filter);
-						}
+					if ($.inArray(vis.Name, disallowed.map(function(d) { return d.name; })) == -1) {
+						if (filter.SubjectArea == query.SubjectArea) { // Check subject areas match and value is not blank
+							var filterFound = false; // Search for filter on same code and update if found
+							origFilters = query.Filters;
+							filterFound = obiee.replaceFilter(origFilters, filter);
 
-						if (filterFound != 'protected') {
-							refreshVis = true;
+							if (!filterFound) {
+								filter.Global = true;
+								query.Filters.push(filter);
+							}
+
+							if (filterFound != 'protected') {
+								refreshVis = true;
+							}
 						}
 					}
-				}
+				});
 				return query;
 			});
 

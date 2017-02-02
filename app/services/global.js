@@ -283,12 +283,13 @@ app.factory('Global', ['ModalService', 'UIConfig', '$timeout', '$window', functi
 	}
 
 	// Dashboard prompt edit modal
-	var editPromptFilter = function(startFilter, successFunc) {
+	var editPromptFilter = function(startFilter, visuals, successFunc) {
 		ModalService.showModal({
 			templateUrl: "/insights/app/directives/templates/modals/promptFilterModal.html",
 			controller: "PromptFilterModalController",
 			inputs: {
-				filter: startFilter
+				filter: startFilter,
+				visuals: visuals
 			}
 		}).then(function(modal) {
 			modal.close.then(function(filter) {
