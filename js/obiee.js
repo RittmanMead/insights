@@ -4419,10 +4419,23 @@ var obiee = (function() {
 			var wb = new Workbook(); // Create new Excel workbook
 			this.Visuals.forEach(function(vis) {
 				if (obiee.showOrHideVis(visSelectors, vis)) { // If shown on page
-					if (vis.Data.length > 0) {
-						wb.SheetNames.push(vis.DisplayName);
-						var ws = sheetFromData(vis.Data, vis.Query.Criteria); // Use cached data for download
-						wb.Sheets[vis.DisplayName] = ws;
+
+					// Process extra sheets for plugins with multiple datasets
+					if (rmvpp.checkMulti(vis.Plugin)) {
+						for (dataset in vis.Data) {
+							if (vis.Data[dataset].length > 0) {
+								var sheetName = vis.DisplayName + ' - ' + dataset;
+								wb.SheetNames.push(sheetName);
+								var ws = sheetFromData(vis.Data[dataset], vis.Query[dataset].Criteria);
+								wb.Sheets[sheetName] = ws;
+							}
+						}
+					} else {
+						if (vis.Data.length > 0) {
+							wb.SheetNames.push(vis.DisplayName);
+							var ws = sheetFromData(vis.Data, vis.Query.Criteria); // Use cached data for download
+							wb.Sheets[vis.DisplayName] = ws;
+						}
 					}
 				}
 			});
