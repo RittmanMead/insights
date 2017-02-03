@@ -2243,4 +2243,12 @@ Array.prototype.equals = function (array) {
 
 Object.defineProperty(Array.prototype, "equals", {enumerable: false}); // Hide method from for-in loops
 
+if (!Object.values) {
+    Object.values = function(obj) {
+        return Object.keys(obj).map(function(key) {
+            return obj[key];
+        });
+    }
+}
+
 /* ------ END OF JAVASCRIPT EXTENSIONS ------ */
