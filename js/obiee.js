@@ -4328,12 +4328,25 @@ var obiee = (function() {
 
 			this.Visuals.forEach(function(vis) {
 				if (obiee.showOrHideVis(visSelectors, vis)) { // If shown on page
-					if (vis.Data.length == 0) { // Don't run the query if unnecessary
-						vis.Query.run(function(data) {
-							createCSV(data, vis.DisplayName);
-						});
+					if (rmvpp.checkMulti(vis.Plugin)) {
+						for (dataset in vis.Query) {
+							var sheetName = vis.DisplayName + ' - ' + dataset;
+							if (vis.Data[dataset].length == 0) { // Don't run the query if unnecessary
+								vis.Query[dataset].run(function(data) {
+									createCSV(data, sheetName);
+								});
+							} else {
+								createCSV(vis.Data[dataset], sheetName);
+							}
+						}
 					} else {
-						createCSV(vis.Data, vis.DisplayName);
+						if (vis.Data.length == 0) { // Don't run the query if unnecessary
+							vis.Query.run(function(data) {
+								createCSV(data, vis.DisplayName);
+							});
+						} else {
+							createCSV(vis.Data, vis.DisplayName);
+						}
 					}
 				}
 			});
@@ -4422,7 +4435,7 @@ var obiee = (function() {
 
 					// Process extra sheets for plugins with multiple datasets
 					if (rmvpp.checkMulti(vis.Plugin)) {
-						for (dataset in vis.Data) {
+						for (dataset in vis.Query) {
 							if (vis.Data[dataset].length > 0) {
 								var sheetName = vis.DisplayName + ' - ' + dataset;
 								wb.SheetNames.push(sheetName);
