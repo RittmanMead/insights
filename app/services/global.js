@@ -469,12 +469,14 @@ app.factory('Metadata', ['Global', function(Global) {
 						metadata[sa] = presObj;
 						Global.subjectArea = sa;
 						Global.biMetadata = metadata;
-						if (callback)
+						if (callback) {
 							callback();
+						}
 					})
 				} else {
-					if (callback)
+					if (callback) {
 						callback();
+					}
 				}
 			}
 
@@ -491,12 +493,13 @@ app.factory('Metadata', ['Global', function(Global) {
 				callback();
 			}
 		},
-		updateMetadata: function(scope, vis, metadata, callback) {
+		updateMetadata: function(scope, vis, metadata, origSA, callback) {
 			obiee.applyToColumnSets(vis.Query, vis.Plugin, function(query, dataset) {
 				if (query.SubjectArea in metadata) {
 					Metadata.addCustomColumns(query, metadata, callback);
 				} else {
 					Metadata.popPresTables(query.SubjectArea, metadata, function() {
+						Global.subjectArea = origSA;
 						Metadata.addCustomColumns(query, metadata, callback);
 					});
 				}

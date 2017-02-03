@@ -312,7 +312,7 @@ app.controller('visBuilder', function($scope, $timeout, $window, $mdToast, Modal
 							setScopeVis(dbObj.Visuals[0]);
 							Global.loadingOff();
 
-							Metadata.updateMetadata($scope, $scope.vis, $scope.metadata, function() {
+							Metadata.updateMetadata($scope, $scope.vis, $scope.metadata, $scope.subjectArea, function() {
 								$scope.storeVis();
 								$scope.$apply();
 							});
@@ -330,7 +330,7 @@ app.controller('visBuilder', function($scope, $timeout, $window, $mdToast, Modal
 					$scope.$broadcast('reloadDB', function() {
 						Global.loadingOff();
 						$scope.db.Visuals.forEach(function(vis) {
-							Metadata.updateMetadata($scope, vis, $scope.metadata);
+							Metadata.updateMetadata($scope, vis, $scope.metadata, $scope.subjectArea);
 						});
 
 						$scope.visArray = [];

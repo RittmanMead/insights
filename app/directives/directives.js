@@ -1078,7 +1078,7 @@ app.directive('dropColumn', ['Global', function(Global) {
 					var columnMap = scope.$parent.$parent.$parent.columns;
 					obiee.removeFromColumnMap(columnMap, newCol);
 					verifyCol(newCol, callback);
-				} else if ($(event.relatedTarget).attr('code')) { // Otherwise get from global metadata
+				} else if ($(event.relatedTarget).attr('code')) { // Otherwise get from global metadat
 					var column = angular.copy(Global.biMetadata[Global.subjectArea].AllColumns[$(event.relatedTarget).attr('code')]);
 					verifyCol(column, callback);
 				};
