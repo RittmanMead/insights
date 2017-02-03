@@ -176,11 +176,13 @@
 <li><code>db</code> : Expects a catalogue path to folder containing Insights pages.</li>
 <li><code>path</code> : Expects a catalogue path to a single Insights page.</li>
 <li><code>hidePanes=true</code>: When specified explicitly as <code>true</code>, will hide the top and left panels and reposition the main content accordingly.</li>
+<li><code>user</code> and <code>password</code>: These can be used to automatically login with the credentials provided. This is useful when trying to embed an Insights report externally without having SSO configured.</li>
 </ul>
 <p>E.g.</p>
 <pre><code>/insights/app/view/states/index.html?db=/shared/Insights/Dashboard
 /insights/app/view/states/index.html?path=/shared/Insights/Dashboard/Page 1
-/insights/app/view/states/index.html?path=/shared/Insights/Dashboard/Page 1&amp;hidePanes=true</code></pre>
+/insights/app/view/states/index.html?path=/shared/Insights/Dashboard/Page 1&amp;hidePanes=true
+/insights/app/view/states/index.html?path=/shared/Insights/Dashboard/Page 1&amp;user=weblogic&amp;password=Password01</code></pre>
 </div>
 </body>
 </html>

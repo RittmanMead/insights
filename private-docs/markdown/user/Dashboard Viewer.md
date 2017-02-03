@@ -20,6 +20,7 @@ The dashboard viewer URL accepts [query string](https://en.wikipedia.org/wiki/Qu
 * `db` : Expects a catalogue path to folder containing Insights pages.
 * `path` : Expects a catalogue path to a single Insights page.
 * `hidePanes=true`: When specified explicitly as `true`, will hide the top and left panels and reposition the main content accordingly.
+* `user` and `password`: These can be used to automatically login with the credentials provided. This is useful when trying to embed an Insights report externally without having SSO configured.
 
 E.g.
 
@@ -27,4 +28,5 @@ E.g.
 /insights/app/view/states/index.html?db=/shared/Insights/Dashboard
 /insights/app/view/states/index.html?path=/shared/Insights/Dashboard/Page 1
 /insights/app/view/states/index.html?path=/shared/Insights/Dashboard/Page 1&hidePanes=true
+/insights/app/view/states/index.html?path=/shared/Insights/Dashboard/Page 1&user=weblogic&password=Password01
 ```

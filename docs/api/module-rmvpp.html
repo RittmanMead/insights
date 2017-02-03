@@ -165,7 +165,7 @@ Includes configuration functions, as well as classes and functions for drawing S
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line1853">line 1853</a></li>
+                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line1856">line 1856</a></li>
               </ul>
             </dd>
           </dl>
@@ -285,7 +285,7 @@ Includes configuration functions, as well as classes and functions for drawing S
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line1734">line 1734</a></li>
+                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line1714">line 1714</a></li>
               </ul>
             </dd>
           </dl>
@@ -444,6 +444,158 @@ Includes configuration functions, as well as classes and functions for drawing S
             </dd>
           </dl>
           <hr/>
+          <h4 class="name" id=".checkLngLat"><span class="type-signature">(static) </span>checkLngLat<span class="signature">(container, columnMap, data, lng<span class="signature-attributes">opt</span>, lat<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Array.&lt;object>}</span></h4>
+          <div class="description">
+            <p>Checks if longitude and latitude columns are populated and filters the dataset for valid values.</p>
+          </div>
+          <h5>Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Attributes</th>
+                <th>Default</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name">
+                  <code>container</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">DOM</span>
+                </td>
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+                <td class="default">
+                
+                </td>
+                <td class="description last">
+                  <p>Used to render an error message on failure.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>columnMap</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">object</span>
+                </td>
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+                <td class="default">
+                
+                </td>
+                <td class="description last">
+                  <p>Used to check if the longitude and latitude columns are specified.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>data</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">Array.&lt;object></span>
+                </td>
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+                <td class="default">
+                
+                </td>
+                <td class="description last">
+                  <p>Filters for valid longitude and latitude values.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>lng</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">string</span>
+                </td>
+                <td class="attributes">
+                
+                    &lt;optional><br/>
+                
+
+                
+
+                
+                </td>
+                <td class="default">
+                
+                    lng
+                
+                </td>
+                <td class="description last">
+                  <p>Name of the longitude property.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="name">
+                  <code>lat</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">string</span>
+                </td>
+                <td class="attributes">
+                
+                    &lt;optional><br/>
+                
+
+                
+
+                
+                </td>
+                <td class="default">
+                
+                    lat
+                
+                </td>
+                <td class="description last">
+                  <p>Name of the longitude property.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line1759">line 1759</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <h5>Returns:</h5>
+          <div class="param-desc">
+            <p>Dataset filter for invalid co-ordinates.</p>
+          </div>
+          <dl>
+            <dt>
+        Type
+    </dt>
+            <dd>
+              <span class="param-type">Array.&lt;object></span>
+            </dd>
+          </dl>
+          <hr/>
           <h4 class="name" id=".checkMulti"><span class="type-signature">(static) </span>checkMulti<span class="signature">(plugin)</span><span class="type-signature"/></h4>
           <div class="description">
             <p>Checks if a certain plugin is configured to use multiple datasets.</p>
@@ -597,7 +749,7 @@ Includes configuration functions, as well as classes and functions for drawing S
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line1757">line 1757</a></li>
+                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line1737">line 1737</a></li>
               </ul>
             </dd>
           </dl>
@@ -692,7 +844,7 @@ The function expects one or more data in the standard format as provided to the 
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line1840">line 1840</a></li>
+                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line1843">line 1843</a></li>
               </ul>
             </dd>
           </dl>
@@ -739,7 +891,7 @@ The function expects one or more data in the standard format as provided to the 
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line1797">line 1797</a></li>
+                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line1800">line 1800</a></li>
               </ul>
             </dd>
           </dl>
@@ -798,7 +950,7 @@ The function expects one or more data in the standard format as provided to the 
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line1686">line 1686</a></li>
+                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line1666">line 1666</a></li>
               </ul>
             </dd>
           </dl>
@@ -867,7 +1019,7 @@ The function expects one or more data in the standard format as provided to the 
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line1818">line 1818</a></li>
+                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line1821">line 1821</a></li>
               </ul>
             </dd>
           </dl>
@@ -1143,7 +1295,7 @@ E.g. <code>rmvpp.Plugins['table'].columnMappingParameters.columns.config</code>.
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line1927">line 1927</a></li>
+                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line1930">line 1930</a></li>
               </ul>
             </dd>
           </dl>
@@ -1326,7 +1478,7 @@ should move the tooltip consistently across browsers due to the positioning of t
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line1915">line 1915</a></li>
+                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line1918">line 1918</a></li>
               </ul>
             </dd>
           </dl>
@@ -1874,14 +2026,14 @@ Plugin column parameters of type <code>dim</code>, <code>measure</code> and <cod
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line1488">line 1488</a></li>
+                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line1468">line 1468</a></li>
               </ul>
             </dd>
           </dl>
           <hr/>
           <h4 class="name" id=".longestString"><span class="type-signature">(static) </span>longestString<span class="signature">(Array, OBIEE, size<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {number}</span></h4>
           <div class="description">
-            <p>Calculates an estimate of longest string in an array in px: assumes sans-serif, font size 10.</p>
+            <p>Calculates an estimate of longest string in an array in px: assumes monospace, font size 10.</p>
           </div>
           <h5>Parameters:</h5>
           <table class="params">
@@ -1968,7 +2120,7 @@ Plugin column parameters of type <code>dim</code>, <code>measure</code> and <cod
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line683">line 683</a></li>
+                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line689">line 689</a></li>
               </ul>
             </dd>
           </dl>
@@ -2083,7 +2235,7 @@ Output data will have fewer elements, but each element will have multiple measur
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line1513">line 1513</a></li>
+                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line1493">line 1493</a></li>
               </ul>
             </dd>
           </dl>
@@ -2260,7 +2412,7 @@ Output data will have fewer elements, but each element will have multiple measur
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line665">line 665</a></li>
+                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line671">line 671</a></li>
               </ul>
             </dd>
           </dl>
@@ -2340,7 +2492,7 @@ Output data will have fewer elements, but each element will have multiple measur
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line1404">line 1404</a></li>
+                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line1384">line 1384</a></li>
               </ul>
             </dd>
           </dl>
@@ -2517,7 +2669,7 @@ referring to measures as <code>columnMap.measure[sort.col]</code>. The <code>dir
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line1651">line 1651</a></li>
+                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line1631">line 1631</a></li>
               </ul>
             </dd>
           </dl>
@@ -2581,7 +2733,7 @@ This has since been deprecated in favour of obtaining column properties before q
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line1593">line 1593</a></li>
+                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line1573">line 1573</a></li>
               </ul>
             </dd>
           </dl>
@@ -2714,7 +2866,7 @@ This has since been deprecated in favour of obtaining column properties before q
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line1776">line 1776</a></li>
+                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line1779">line 1779</a></li>
               </ul>
             </dd>
           </dl>
@@ -2774,7 +2926,7 @@ for each attribute are sorted alphabetically.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line1701">line 1701</a></li>
+                <li><a href="rmvpp.js.html">rmvpp.js</a>, <a href="rmvpp.js.html#line1681">line 1681</a></li>
               </ul>
             </dd>
           </dl>
@@ -2896,6 +3048,9 @@ for each attribute are sorted alphabetically.</p>
           </li>
           <li>
             <a href="#.applyColours">applyColours</a>
+          </li>
+          <li>
+            <a href="#.checkLngLat">checkLngLat</a>
           </li>
           <li>
             <a href="#.checkMulti">checkMulti</a>
