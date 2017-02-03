@@ -71,7 +71,7 @@ window.onload = loadFunc;</script>
           <div class="container-overview">
             <h2>Constructor</h2>
             <hr/>
-            <h4 class="name" id="BIFilter"><span class="type-signature"/>new BIFilter<span class="signature">(column, value, op<span class="signature-attributes">opt</span>, subjectArea<span class="signature-attributes">opt</span>, global<span class="signature-attributes">opt</span>)</span><span class="type-signature"/></h4>
+            <h4 class="name" id="BIFilter"><span class="type-signature"/>new BIFilter<span class="signature">(column, value, op<span class="signature-attributes">opt</span>, subjectArea<span class="signature-attributes">opt</span>, global<span class="signature-attributes">opt</span>, protect<span class="signature-attributes">opt</span>, valueType<span class="signature-attributes">opt</span>)</span><span class="type-signature"/></h4>
             <h5>Parameters:</h5>
             <table class="params">
               <thead>
@@ -199,8 +199,57 @@ window.onload = loadFunc;</script>
                 
                 </td>
                   <td class="description last">
-                    <p>Flag indicating whether the filter is global, i.e. implemented by a drilldown or
-dashboard prompt.</p>
+                    <p>Flag indicating whether the filter is global, i.e. implemented by a drilldown or dashboard prompt.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="name">
+                    <code>protect</code>
+                  </td>
+                  <td class="type">
+                    <span class="param-type">boolean</span>
+                  </td>
+                  <td class="attributes">
+                
+                    &lt;optional><br/>
+                
+
+                
+
+                
+                </td>
+                  <td class="default">
+                
+                    false
+                
+                </td>
+                  <td class="description last">
+                    <p>Flag indicating whether to protect htis filter against prompts and interactions.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="name">
+                    <code>valueType</code>
+                  </td>
+                  <td class="type">
+                    <span class="param-type">string</span>
+                  </td>
+                  <td class="attributes">
+                
+                    &lt;optional><br/>
+                
+
+                
+
+                
+                </td>
+                  <td class="default">
+                
+                    value
+                
+                </td>
+                  <td class="description last">
+                    <p>Type of the value, defaulting to <code>value</code>. Can be one of <code>value</code>, <code>expression</code>, <code>repVar</code>, <code>sessionVar</code>.</p>
                   </td>
                 </tr>
               </tbody>
@@ -209,7 +258,7 @@ dashboard prompt.</p>
               <dt class="tag-source">Source:</dt>
               <dd class="tag-source">
                 <ul class="dummy">
-                  <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3277">line 3277</a></li>
+                  <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3296">line 3296</a></li>
                 </ul>
               </dd>
             </dl>
@@ -224,7 +273,7 @@ dashboard prompt.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3280">line 3280</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3299">line 3299</a></li>
               </ul>
             </dd>
           </dl>
@@ -237,7 +286,7 @@ dashboard prompt.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3338">line 3338</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3357">line 3357</a></li>
               </ul>
             </dd>
           </dl>
@@ -250,7 +299,7 @@ dashboard prompt.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3335">line 3335</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3354">line 3354</a></li>
               </ul>
             </dd>
           </dl>
@@ -263,7 +312,7 @@ dashboard prompt.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3329">line 3329</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3348">line 3348</a></li>
               </ul>
             </dd>
           </dl>
@@ -276,7 +325,7 @@ dashboard prompt.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3310">line 3310</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3329">line 3329</a></li>
               </ul>
             </dd>
           </dl>
@@ -289,7 +338,7 @@ dashboard prompt.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3332">line 3332</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3351">line 3351</a></li>
               </ul>
             </dd>
           </dl>
@@ -302,7 +351,7 @@ dashboard prompt.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3283">line 3283</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3302">line 3302</a></li>
               </ul>
             </dd>
           </dl>
@@ -316,12 +365,77 @@ dashboard prompt.</p>
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3293">line 3293</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3312">line 3312</a></li>
               </ul>
             </dd>
           </dl>
           <hr/>
-          <h4 class="name" id="PromptOptions"><span class="type-signature"/>PromptOptions<span class="type-signature"/></h4>
+          <h4 class="name" id="Protected"><span class="type-signature"/>Protected<span class="type-signature"/></h4>
+          <div class="description">
+            <p>Flag to mark this filter as protected against drilldowns and prompts</p>
+          </div>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3308">line 3308</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id="SubjectArea"><span class="type-signature"/>SubjectArea<span class="type-signature"/></h4>
+          <div class="description">
+            <p>Subject area, optional as a BIQuery object will have this information, but can be useful for global filters.</p>
+          </div>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3360">line 3360</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id="Type"><span class="type-signature"/>Type<span class="type-signature"/></h4>
+          <div class="description">
+            <p>Hardcoded object identifier, <code>Filter</code>.</p>
+          </div>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3436">line 3436</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id="Value"><span class="type-signature"/>Value<span class="type-signature"/></h4>
+          <div class="description">
+            <p>Value to filter on.</p>
+          </div>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3342">line 3342</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id="ValueType"><span class="type-signature"/>ValueType<span class="type-signature"/></h4>
+          <div class="description">
+            <p>Type of the value, defaulting to <code>value</code>. Can be one of <code>value</code>, <code>expression</code>, <code>repVar</code>, <code>sessionVar</code>.</p>
+          </div>
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3345">line 3345</a></li>
+              </ul>
+            </dd>
+          </dl>
+          <hr/>
+          <h4 class="name" id="~defaultOptions"><span class="type-signature">(inner) </span>defaultOptions<span class="type-signature"/></h4>
           <div class="description">
             <p>Options for when using this filter in a prompt.</p>
           </div>
@@ -412,78 +526,39 @@ dashboard prompt.</p>
                   <p>Name of presentation variable this prompt should set.</p>
                 </td>
               </tr>
+              <tr>
+                <td class="name">
+                  <code>ProtectedQueries</code>
+                </td>
+                <td class="type">
+                  <span class="param-type">Array.&lt;string></span>
+                </td>
+                <td class="description last">
+                  <p>List of queries in the dashboard for which this prompt filter does not apply to.
+If the list is empty, will assume that all apply</p>
+                </td>
+              </tr>
             </tbody>
           </table>
           <dl class="details">
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3362">line 3362</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3385">line 3385</a></li>
               </ul>
             </dd>
           </dl>
+          <h3 class="subsection-title">Methods</h3>
           <hr/>
-          <h4 class="name" id="Protected"><span class="type-signature"/>Protected<span class="type-signature"/></h4>
+          <h4 class="name" id="updateQueries"><span class="type-signature"/>updateQueries<span class="signature">()</span><span class="type-signature"/></h4>
           <div class="description">
-            <p>Flag to mark this filter as protected against drilldowns and prompts</p>
+            <p>Updates <code>PromptOptions.ProtectedQueries</code> property with new new visualisations, datasets and display names.</p>
           </div>
           <dl class="details">
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3289">line 3289</a></li>
-              </ul>
-            </dd>
-          </dl>
-          <hr/>
-          <h4 class="name" id="SubjectArea"><span class="type-signature"/>SubjectArea<span class="type-signature"/></h4>
-          <div class="description">
-            <p>Subject area, optional as a BIQuery object will have this information, but can be useful for global filters.</p>
-          </div>
-          <dl class="details">
-            <dt class="tag-source">Source:</dt>
-            <dd class="tag-source">
-              <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3341">line 3341</a></li>
-              </ul>
-            </dd>
-          </dl>
-          <hr/>
-          <h4 class="name" id="Type"><span class="type-signature"/>Type<span class="type-signature"/></h4>
-          <div class="description">
-            <p>Hardcoded object identifier, <code>Filter</code>.</p>
-          </div>
-          <dl class="details">
-            <dt class="tag-source">Source:</dt>
-            <dd class="tag-source">
-              <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3379">line 3379</a></li>
-              </ul>
-            </dd>
-          </dl>
-          <hr/>
-          <h4 class="name" id="Value"><span class="type-signature"/>Value<span class="type-signature"/></h4>
-          <div class="description">
-            <p>Value to filter on.</p>
-          </div>
-          <dl class="details">
-            <dt class="tag-source">Source:</dt>
-            <dd class="tag-source">
-              <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3323">line 3323</a></li>
-              </ul>
-            </dd>
-          </dl>
-          <hr/>
-          <h4 class="name" id="ValueType"><span class="type-signature"/>ValueType<span class="type-signature"/></h4>
-          <div class="description">
-            <p>Type of the value, defaulting to <code>value</code>. Can be one of <code>value</code>, <code>expression</code>, <code>repVar</code>, <code>sessionVar</code>.</p>
-          </div>
-          <dl class="details">
-            <dt class="tag-source">Source:</dt>
-            <dd class="tag-source">
-              <ul class="dummy">
-                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3326">line 3326</a></li>
+                <li><a href="obiee.js.html">obiee.js</a>, <a href="obiee.js.html#line3408">line 3408</a></li>
               </ul>
             </dd>
           </dl>
@@ -610,9 +685,6 @@ dashboard prompt.</p>
             <a href="#Operator">Operator</a>
           </li>
           <li>
-            <a href="#PromptOptions">PromptOptions</a>
-          </li>
-          <li>
             <a href="#Protected">Protected</a>
           </li>
           <li>
@@ -626,6 +698,15 @@ dashboard prompt.</p>
           </li>
           <li>
             <a href="#ValueType">ValueType</a>
+          </li>
+          <li>
+            <a href="#~defaultOptions">~defaultOptions</a>
+          </li>
+        </ul>
+        <h3>Methods<span class="toggleList collapse">-</span></h3>
+        <ul>
+          <li>
+            <a href="#updateQueries">updateQueries</a>
           </li>
         </ul>
       </div>
