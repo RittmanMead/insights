@@ -1481,12 +1481,12 @@ var obiee = (function() {
 	/* ------ PUBLIC RMVPP FUNCTIONS ------ */
 
 	/** Wrapper for the map data function accomodating for multiple datasets. */
-	function mapDataMulti(vis) {
+	function mapDataMulti(data, vis) {
 		return obiee.applyToColumnSets({}, vis.Plugin, function(item, dataset) {
 			if (dataset) {
-				return mapData(vis.Data[dataset], vis.ColumnMap[dataset]);
+				return mapData(data[dataset], vis.ColumnMap[dataset]);
 			} else {
-				return mapData(vis.Data, vis.ColumnMap);
+				return mapData(data, vis.ColumnMap);
 			}
 		});
 	}
@@ -3737,7 +3737,7 @@ var obiee = (function() {
 
 			function staticRender(vis, scope, callback) {
 				preVisRender(vis);
-				var data = mapDataMulti(vis);
+				var data = mapDataMulti(vis.Data, vis);
 
 				rmvpp.Plugins[vis.Plugin].render(data, vis.ColumnMap, vis.Config, $(vis.Container)[0], vis.ConditionalFormats);
 				postVisRender(vis, scope);
@@ -3767,7 +3767,7 @@ var obiee = (function() {
 							vis.Data = angular.copy(results); // Keep the raw data
 
 							preVisRender(vis);
-							data = mapData(vis.Data, vis.ColumnMap); // Map data to visualisation format
+							data = mapData(results, vis.ColumnMap); // Map data to visualisation format
 							if (data.length > 0) {
 								rmvpp.Plugins[vis.Plugin].render(data, vis.ColumnMap, vis.Config, $(vis.Container)[0], vis.ConditionalFormats);
 								postVisRender(vis, scope);
@@ -3793,12 +3793,14 @@ var obiee = (function() {
 						}
 
 						$.when.all(dfdArray).then(function(results) {
+							var rawResults = {};
 							results.forEach(function(resultSet) {
-								vis.Data[resultSet.dataset] = angular.copy(resultSet.results);
+								rawResults[resultSet.dataset] = resultSet.results;
 							});
+							vis.Data = angular.copy(rawResults);
 
 							preVisRender(vis);
-							var data = mapDataMulti(vis);
+							var data = mapDataMulti(rawResults, vis);
 
 							if (Object.values(vis.Data).some(function(v) { return v.length > 0; })) { // Check if any result sets are present
 								rmvpp.Plugins[vis.Plugin].render(data, vis.ColumnMap, vis.Config, $(vis.Container)[0], vis.ConditionalFormats);
@@ -4420,7 +4422,6 @@ var obiee = (function() {
 					if (vis.Data.length > 0) {
 						wb.SheetNames.push(vis.DisplayName);
 						var ws = sheetFromData(vis.Data, vis.Query.Criteria); // Use cached data for download
-						console.log(vis.DisplayName);
 						wb.Sheets[vis.DisplayName] = ws;
 					}
 				}
