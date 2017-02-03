@@ -83,8 +83,21 @@ app.controller('dbView', function($scope, $mdToast, Global, UIConfig, Metadata, 
 			var sessionId = $.getCookie('ORA_BIPS_NQID');
 			if (sessionId) {
 				setPermissions();
-			} else { // Automatically logout if no ID found
-				Global.navigate('/insights');
+			} else { // Attempt to extract login details from the query string
+				var user = rmvpp.getQueryString('user');
+				var password = rmvpp.getQueryString('password');
+				if (user && password) {
+					obiee.logon(user, password,
+						function() { // Success
+							setPermissions();
+						},
+						function(err) { // Go to homepage on failure
+							Global.navigate('/insights');
+						}
+					);
+				} else { // Automatically go to homepage if no ID found
+					Global.navigate('/insights');
+				}
 			}
 		});
 	} else {
