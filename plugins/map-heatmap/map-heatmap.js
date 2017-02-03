@@ -91,6 +91,8 @@
 	];
 
     rmvpp.Plugins[pluginName].render = function(data, columnMap, config, container)   {
+        data = rmvpp.checkLngLat(container, columnMap, data);
+
 		var width = +config.width, height = +config.height; // Set width, height
         var colours = rmvpp.getPalette(config.colours);
 

@@ -1747,6 +1747,29 @@ var rmvpp = (function(rmvpp) {
 		return outMeasure;
 	}
 
+    /**
+        * Checks if longitude and latitude columns are populated and filters the dataset for valid values.
+        * @param {DOM} container Used to render an error message on failure.
+        * @param {object} columnMap Used to check if the longitude and latitude columns are specified.
+        * @param {object[]} data Filters for valid longitude and latitude values.
+        * @param {string} [lng=lng] Name of the longitude property.
+        * @param {string} [lat=lat] Name of the longitude property.
+        * @returns {object[]} Dataset filter for invalid co-ordinates.
+    */
+    rmvpp.checkLngLat = function(container, columnMap, data, lng, lat) {
+        lng = lng || 'lng';
+        lat = lat || 'lat';
+
+        // Errors if either of the columns are unspecified.
+        if (!columnMap[lng].Code || !columnMap[lat].Code) {
+            rmvpp.displayError(container, 'Cannot render map if longitude or latitude columns are unspecified.');
+        }
+        // Filters for valid longitude and latitude values
+        return data.filter(function(d) {
+            return (+d[lat] >= -90.0 && +d[lat] <= 90.0 && +d[lng] >= -90.0 && +d[lng] <= 90.0);
+        });
+    }
+
 	/**
 		* Get JavaScript date from a string, assuming certain formats.
 		* @param {string} str Date string to convert.

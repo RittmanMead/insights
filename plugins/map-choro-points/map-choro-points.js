@@ -285,6 +285,7 @@
 
         var pointColMap = columnMap["Points"];
         var pointData = data["Points"];
+        pointData = rmvpp.checkLngLat(container, pointColMap, pointData);
 
         var varyColour = false; // Check if vary by colour has been defined
 		if (pointColMap.vary && pointColMap.vary.Code != "") {

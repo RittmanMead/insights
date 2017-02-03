@@ -84,7 +84,9 @@
 	];
 
     rmvpp.Plugins[pluginName].render = function(data, columnMap, config, container)   {
-		var width = +config.width, height = +config.height; // Set width, height
+        data = rmvpp.checkLngLat(container, columnMap, data);
+
+        var width = +config.width, height = +config.height; // Set width, height
 
 		var mapContainer = d3.select(container).append('div')
 			.attr('class', 'map print-as-map')

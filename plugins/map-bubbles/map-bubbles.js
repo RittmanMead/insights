@@ -193,9 +193,7 @@
 	];
 
     rmvpp.Plugins[pluginName].render = function(data, columnMap, config, container)   {
-        if (!columnMap.lng.Code || !columnMap.lat.Code) {
-            rmvpp.displayError(container, 'Cannot render map if longitude or latitude columns are unspecified.');
-        }
+        data = rmvpp.checkLngLat(container, columnMap, data);
 
         var varyColour = false; // Check if vary by colour has been defined
 		if (columnMap.vary && columnMap.vary.Code != "") {
