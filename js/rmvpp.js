@@ -704,11 +704,11 @@ var rmvpp = (function(rmvpp) {
 
 		var longString = stringConvert.sort(function (a, b) { return b.length - a.length; })[0];
 
-		// $('html').append('<span id="rm-string-width" style="font-family : monospace; font-size: ' + size + 'px;">' + longString + '</span>');
-		// var stringWidth = $('#rm-string-width').width();
-		// $('#rm-string-width').remove();
+		$('html').append('<span id="rm-string-width" style="font-family : monospace; font-size: ' + size + 'px;">' + longString + '</span>');
+		var stringWidth = $('#rm-string-width').width();
+		$('#rm-string-width').remove();
 
-		return (longString.length * 5) + 5; // Add 5 just as a buffer
+		return (stringWidth + 10); // Add 5 just as a buffer
 	}
 
 	/* ------ END OF PLOTTING FUNCTIONS ------ */
