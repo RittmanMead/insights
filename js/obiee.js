@@ -89,6 +89,16 @@ var obiee = (function() {
 		xml = xml.replace(/&shy;/g, '');
 		return xml;
 	}
+	
+	/** Sanitise string - replace special characters with their safe SOAP XML equivalents. */
+	function sanitiseForXML(str) {
+		str = str.replace(/&/g, '&amp;');
+		str = str.replace(/</g, '&lt;');
+		str = str.replace(/>/g, '&gt;');
+		str = str.replace(/\\/g, '&apos;');
+		str = str.replace(/"/g, '&quot;');
+		return str;
+	}
 
 	/** SOAP header required for all OBIEE web service requests */
 	function obieeSOAPHeader() {
@@ -392,10 +402,8 @@ var obiee = (function() {
 		biQuery = biQuery || ""; // Set to null if unspecified
 		var override = errorFunc ? true : false;
 
-		// Escape special characters
-		lsql = lsql.replace(/&/g, '&amp;');
-		lsql = lsql.replace(/</g, '&lt;');
-		lsql = lsql.replace(/>/g, '&gt;');
+		// Escape special characters	
+		lsql = sanitiseForXML(lsql);
 
 		var soapMessage =  obieeSOAPHeader();
 		soapMessage += '<soapenv:Body><'+wsdl+':executeSQLQuery><'+wsdl+':sql>' + lsql + '</'+wsdl+':sql>';
@@ -789,6 +797,8 @@ var obiee = (function() {
 		* @returns {object} Single web catalogue definition.
 	*/
 	obiee.getWebcatItem = function(path, successFunc, errFunc) {
+		path = sanitiseForXML(path);
+		
 		var soapMessage = obieeSOAPHeader();
 		soapMessage += '<soapenv:Body><'+wsdl+':getItemInfo>';
 		soapMessage += '<'+wsdl+':path>' + path + '</'+wsdl+':path>';
@@ -811,6 +821,8 @@ var obiee = (function() {
 		* @param {function} errFunc Callback function to execute on failure.
 	*/
 	obiee.deleteWebcatItem = function(path, successFunc, errFunc) {
+		path = sanitiseForXML(path);
+		
 		var soapMessage = obieeSOAPHeader();
 		soapMessage += '<soapenv:Body><'+wsdl+':removeFolder>';
 		soapMessage += '<'+wsdl+':path>' + path + '</'+wsdl+':path>';
@@ -832,6 +844,8 @@ var obiee = (function() {
 		* @param {function} errFunc Callback function to execute on failure
 	*/
 	obiee.createWebcatFolder = function(path, successFunc, errFunc) {
+		path = sanitiseForXML(path);
+		
 		var soapMessage = obieeSOAPHeader()
 		soapMessage += '<soapenv:Body><'+wsdl+':createFolder>';
 		soapMessage += '<'+wsdl+':path>' + path + '</'+wsdl+':path>';
@@ -856,8 +870,10 @@ var obiee = (function() {
 		* @param {function} errFunc Callback function to execute on failure
 	*/
 	obiee.copyWebcatItem = function(srcPath, destPath, successFunc, errFunc) {
+		srcPath = sanitiseForXML(srcPath);
+		destPath = sanitiseForXML(destPath);
+		
 		var soapMessage = obieeSOAPHeader()
-
 		soapMessage += '<soapenv:Body><'+wsdl+':copyItem>';
 		soapMessage += '<'+wsdl+':pathSrc>' + srcPath + '</'+wsdl+':pathSrc>';
 		soapMessage += '<'+wsdl+':pathDest>' + destPath + '</'+wsdl+':pathDest>';
@@ -881,8 +897,10 @@ var obiee = (function() {
 		* @param {function} errFunc Callback function to execute on failure
 	*/
 	obiee.moveWebcatItem = function(srcPath, destPath, successFunc, errFunc) {
+		srcPath = sanitiseForXML(srcPath);
+		destPath = sanitiseForXML(destPath);
+		
 		var soapMessage = obieeSOAPHeader()
-
 		soapMessage += '<soapenv:Body><'+wsdl+':moveItem>';
 		soapMessage += '<'+wsdl+':pathSrc>' + srcPath + '</'+wsdl+':pathSrc>';
 		soapMessage += '<'+wsdl+':pathDest>' + destPath + '</'+wsdl+':pathDest>';
@@ -1005,6 +1023,7 @@ var obiee = (function() {
 		* @param {function} errFunc Error handling function passing the error message.
 	*/
 	obiee.updateWebcatPerms = function(path, acls, successFunc, errFunc, recursive) {
+		path = sanitiseForXML(path);
 		recursive = recursive ? 'True' : 'False';
 
 		soapMessage =  obieeSOAPHeader();
@@ -1053,6 +1072,7 @@ var obiee = (function() {
 		unset = unset || 0;
 		successFunc = successFunc || function() {};
 		errFunc = errFunc || function() {};
+		path = sanitiseForXML(path);
 
 		soapMessage =  obieeSOAPHeader();
 		soapMessage += '<soapenv:Body><'+wsdl+':setItemAttributes>';
@@ -1077,6 +1097,7 @@ var obiee = (function() {
 		* @param {function} [errFunc] Error handling function passing the error message.
 	*/
 	obiee.setWebcatProperty = function(path, name, value, successFunc, errFunc) {
+		path = sanitiseForXML(path);
 		successFunc = successFunc || function() {};
 		errFunc = errFunc || function() {};
 
@@ -1108,6 +1129,7 @@ var obiee = (function() {
 		* @param {function} [errFunc] Error handling function passing the error message.
 	*/
 	obiee.publishDB = function(path, desc, tags, icon, successFunc, errFunc) {
+		path = sanitiseForXML(path);
 		successFunc = successFunc || function() {};
 		errFunc = errFunc || function() {};
 		var dbList, db;
@@ -1156,6 +1178,7 @@ var obiee = (function() {
 		* @param {function} [errFunc] Error handling function passing the error message.
 	*/
 	obiee.unpublishDB = function(path, successFunc, errFunc) {
+		path = sanitiseForXML(path);
 		successFunc = successFunc || function() {};
 		errFunc = errFunc || function() {};
 		obiee.getPublishedDBs(function(dbList) {
@@ -1247,6 +1270,8 @@ var obiee = (function() {
 
 	/** Save XML back to the Webcat */
 	function saveXML(xml, path, successFunc, errFunc, acls) {
+		path = sanitiseForXML(path);
+		
 		soapMessage =  obieeSOAPHeader();
 		soapMessage += '<soapenv:Body><'+wsdl+':writeObjects><'+wsdl+':catalogObjects><'+wsdl+':catalogObject>';
 		soapMessage += '<![CDATA[<?xml version="1.0"?>' + xml + ']]>';
@@ -1291,6 +1316,8 @@ var obiee = (function() {
 
 	/** Load XML from a Webcat path */
 	function loadXML(path, successFunc, errFunc) {
+		path = sanitiseForXML(path);
+		
 		var soapMessage = obieeSOAPHeader();
 		soapMessage += '<soapenv:Body><'+wsdl+':readObjects><'+wsdl+':paths>';
 		soapMessage += path + '</'+wsdl+':paths><'+wsdl+':resolveLinks>FALSE</'+wsdl+':resolveLinks><'+wsdl+':errorMode>FullDetails</'+wsdl+':errorMode><'+wsdl+':returnOptions>ObjectAsString</'+wsdl+':returnOptions>';
