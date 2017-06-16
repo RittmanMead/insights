@@ -13,9 +13,9 @@ app.controller('loginForm', function($scope, $timeout, Global, UIConfig) {
 	// Navigate to vis builder or viewer depending on RM app permissions
 	function navigateOnLogin() {
 		obiee.setRMPermissions(function() {
-			if (obiee.hasRMRole('view'))
+			if (obiee.hasRMRole('view')) {
 				Global.navigate('/insights/app/states/portal');
-			else {
+			} else {
 				$scope.error = 'Cannot login due to insufficient web app privileges';
 				$scope.$apply();
 			}
@@ -36,9 +36,9 @@ app.controller('loginForm', function($scope, $timeout, Global, UIConfig) {
 		// Automatically login if SSO configured on OBIEE
 		$.ajax({url: '/analytics', type: 'GET'}).done(function() {
 			var sessionId = $.getCookie('ORA_BIPS_NQID');
-			if (sessionId)
+			if (sessionId) {
 				navigateOnLogin();
-			else {
+			} else {
 				Global.fadeIn();
 				$scope.$apply();
 			}

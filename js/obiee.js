@@ -89,7 +89,7 @@ var obiee = (function() {
 		xml = xml.replace(/&shy;/g, '');
 		return xml;
 	}
-	
+
 	/** Sanitise string - replace special characters with their safe SOAP XML equivalents. */
 	function sanitiseForXML(str) {
 		str = str.replace(/&/g, '&amp;');
@@ -402,7 +402,7 @@ var obiee = (function() {
 		biQuery = biQuery || ""; // Set to null if unspecified
 		var override = errorFunc ? true : false;
 
-		// Escape special characters	
+		// Escape special characters
 		lsql = sanitiseForXML(lsql);
 
 		var soapMessage =  obieeSOAPHeader();
@@ -444,6 +444,11 @@ var obiee = (function() {
 					var key = 'Column' + j;
 					if (key in outputData[i]) {
 						outputData[i] = renameProperty(outputData[i], key, criterium.Name);
+						if (wsdl == 'v8') {  // Workaround for 11g not bringing decimals back
+							if ($.inArray(criterium.DataType, ['numeric', 'double']) > -1) {
+								outputData[i][criterium.Name] = outputData[i][criterium.Name] / 1000000000;
+							}
+						}
 					} else {
 						outputData[i][key] = null;
 					}
@@ -461,8 +466,18 @@ var obiee = (function() {
 
 		lsql += biQuery.Criteria.map(function(d) {
 			var col = parsePresVar(d.Code);
-			if (d.DataType == 'numeric' && InsightsConfig.NumericToDouble)
+
+			if (d.DataType == 'numeric' && InsightsConfig.NumericToDouble) {
 				col = 'CAST(' + d.Code + ' AS DOUBLE)';
+			}
+
+			// Workaround for 11g only which doesn't bring back decimals
+			if (wsdl == 'v8') {
+				if ($.inArray(d.DataType, ['numeric', 'double']) > -1) {
+					col = col + ' * 1000000000';
+				}
+			}
+
 			return col;
 		}).join(',\n');
 		lsql += '\nFROM "' + biQuery.SubjectArea + '"';
@@ -798,7 +813,7 @@ var obiee = (function() {
 	*/
 	obiee.getWebcatItem = function(path, successFunc, errFunc) {
 		path = sanitiseForXML(path);
-		
+
 		var soapMessage = obieeSOAPHeader();
 		soapMessage += '<soapenv:Body><'+wsdl+':getItemInfo>';
 		soapMessage += '<'+wsdl+':path>' + path + '</'+wsdl+':path>';
@@ -822,7 +837,7 @@ var obiee = (function() {
 	*/
 	obiee.deleteWebcatItem = function(path, successFunc, errFunc) {
 		path = sanitiseForXML(path);
-		
+
 		var soapMessage = obieeSOAPHeader();
 		soapMessage += '<soapenv:Body><'+wsdl+':removeFolder>';
 		soapMessage += '<'+wsdl+':path>' + path + '</'+wsdl+':path>';
@@ -845,7 +860,7 @@ var obiee = (function() {
 	*/
 	obiee.createWebcatFolder = function(path, successFunc, errFunc) {
 		path = sanitiseForXML(path);
-		
+
 		var soapMessage = obieeSOAPHeader()
 		soapMessage += '<soapenv:Body><'+wsdl+':createFolder>';
 		soapMessage += '<'+wsdl+':path>' + path + '</'+wsdl+':path>';
@@ -872,7 +887,7 @@ var obiee = (function() {
 	obiee.copyWebcatItem = function(srcPath, destPath, successFunc, errFunc) {
 		srcPath = sanitiseForXML(srcPath);
 		destPath = sanitiseForXML(destPath);
-		
+
 		var soapMessage = obieeSOAPHeader()
 		soapMessage += '<soapenv:Body><'+wsdl+':copyItem>';
 		soapMessage += '<'+wsdl+':pathSrc>' + srcPath + '</'+wsdl+':pathSrc>';
@@ -899,7 +914,7 @@ var obiee = (function() {
 	obiee.moveWebcatItem = function(srcPath, destPath, successFunc, errFunc) {
 		srcPath = sanitiseForXML(srcPath);
 		destPath = sanitiseForXML(destPath);
-		
+
 		var soapMessage = obieeSOAPHeader()
 		soapMessage += '<soapenv:Body><'+wsdl+':moveItem>';
 		soapMessage += '<'+wsdl+':pathSrc>' + srcPath + '</'+wsdl+':pathSrc>';
@@ -1271,7 +1286,7 @@ var obiee = (function() {
 	/** Save XML back to the Webcat */
 	function saveXML(xml, path, successFunc, errFunc, acls) {
 		path = sanitiseForXML(path);
-		
+
 		soapMessage =  obieeSOAPHeader();
 		soapMessage += '<soapenv:Body><'+wsdl+':writeObjects><'+wsdl+':catalogObjects><'+wsdl+':catalogObject>';
 		soapMessage += '<![CDATA[<?xml version="1.0"?>' + xml + ']]>';
@@ -1317,7 +1332,7 @@ var obiee = (function() {
 	/** Load XML from a Webcat path */
 	function loadXML(path, successFunc, errFunc) {
 		path = sanitiseForXML(path);
-		
+
 		var soapMessage = obieeSOAPHeader();
 		soapMessage += '<soapenv:Body><'+wsdl+':readObjects><'+wsdl+':paths>';
 		soapMessage += path + '</'+wsdl+':paths><'+wsdl+':resolveLinks>FALSE</'+wsdl+':resolveLinks><'+wsdl+':errorMode>FullDetails</'+wsdl+':errorMode><'+wsdl+':returnOptions>ObjectAsString</'+wsdl+':returnOptions>';
@@ -1677,7 +1692,6 @@ var obiee = (function() {
 
 						var biQuery = obiee.applyToColumnSets({}, visObj.Plugin, function(item, dataset) {
 							if (dataset) {
-								// console.log(visObj.Query[dataset]);
 								return new obiee.BIQuery(visObj.Query[dataset].Criteria, visObj.Query[dataset].Filters, visObj.Query[dataset].Sort);
 							} else {
 								return new obiee.BIQuery(visObj.Query.Criteria, visObj.Query.Filters, visObj.Query.Sort);
@@ -3059,7 +3073,6 @@ var obiee = (function() {
 			    }
 			}
 
-			// console.log(this.Name, this.DataType);
 			switch(this.DataType) {
 			    case 'double': formatted = numFormat(formatString, value); break;
 			    case 'integer': formatted = numFormat(formatString, value); break;
@@ -4705,8 +4718,9 @@ var obiee = (function() {
 
 	/** Stores BI server and session variables on page load based on the user's session. */
 	obiee.BIVariables = {};
-	if (sessionStorage.obieeSessionId)
+	if (sessionStorage.obieeSessionId) {
 		obiee.fetchVariables();
+	}
 
 	/* ------ END OF PAGE INITIALISATION ------ */
 
