@@ -184,11 +184,10 @@ var obiee = (function() {
 	*/
 	obiee.getUsername = function (successFunc, errFunc) {
 		var soapMessage = obieeSOAPHeader();
-		soapMessage += '<soapenv:Body><'+wsdl+':getCurUser><'+wsdl+':sessionID>' + sessionStorage.obieeSessionId + '</'+wsdl+':sessionID></'+wsdl+':getCurUser>';
-		soapMessage += '</soapenv:Body></soapenv:Envelope>'
-
+		soapMessage += '<soapenv:Body><'+wsdl+':getSessionEnvironment><'+wsdl+':sessionID>' + sessionStorage.obieeSessionId + '</'+wsdl+':sessionID></'+wsdl+':getSessionEnvironment>';
+		soapMessage += '</soapenv:Body></soapenv:Envelope>';
 		wsCall('nQSessionService', soapMessage, function(response) {
-			username = response.Body.getCurUserResult['return'].text;
+			username = response.Body.getSessionEnvironmentResult['return'].userName;
 			successFunc(username);
 		}, errFunc);
 	}
@@ -4675,8 +4674,9 @@ var obiee = (function() {
 		*/
 		this.createFromACL = function(acl) {
 			var permObj = this;
-			if ($.isPlainObject(acl.accessControlTokens))
+			if ($.isPlainObject(acl.accessControlTokens)) {
 				acl.accessControlTokens = [acl.accessControlTokens];
+			}
 
 			appRoles = acl.accessControlTokens.filter(function(token) {
 				if (token.account) {
@@ -4692,8 +4692,9 @@ var obiee = (function() {
 			})[0].Value;
 
 			appRoles.forEach(function(appRole) {
-				if ($.inArray(appRole.account.name, userRoles) > -1)
+				if ($.inArray(appRole.account.name, userRoles) > -1) {
 					permObj.updatePerms(+appRole.permissionMask);
+				}
 			});
 
 			user = acl.accessControlTokens.filter(function(token) {
@@ -4703,8 +4704,10 @@ var obiee = (function() {
 					return false;
 				}
 			});
-			if (user.length > 0)
+
+			if (user.length > 0) {
 				permObj.updatePerms(+user[0].permissionMask);
+			}
 
 			this.updateMask();
 		};
