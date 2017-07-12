@@ -1312,10 +1312,11 @@ app.directive('editColumn', ['UIConfig', 'Global', function(UIConfig, Global) {
 		},
 		link: function(scope, element, attrs) {
 			scope.editType = 'Properties';
-			if (scope.newMode)
+			if (scope.newMode) {
 				scope.column = new obiee.BIColumn('', '');
-			else
+			} else {
 				scope.origColumn = angular.copy(scope.column);
+			}
 
 			scope.locales = Object.keys(rmvpp.locales);
 			scope.error = '';
@@ -1330,7 +1331,6 @@ app.directive('editColumn', ['UIConfig', 'Global', function(UIConfig, Global) {
 					scope.column.Name = scope.origColumn.Name;
 					scope.column.DataFormat = scope.origColumn.DataFormat;
 				}
-
 				scope.error = '';
 			}
 
@@ -1352,8 +1352,9 @@ app.directive('editColumn', ['UIConfig', 'Global', function(UIConfig, Global) {
 								newCol.DataFormat = newCol.getDefaultFormat();
 							}
 
-							if (newCol.DataFormat == '%s')
+							if (newCol.DataFormat == '%s') {
 								newCol.DataFormat = newCol.getDefaultFormat();
+							}
 
 							scope.metadata[scope.inSubjectArea].addColumn(newCol);
 							scope.$emit('addColumn', newCol); // Add new column to the visualisation
@@ -1392,13 +1393,13 @@ app.directive('editColumn', ['UIConfig', 'Global', function(UIConfig, Global) {
 
 			scope.formatHelp = function() {
 				var section;
-				if (scope.column.DataType == 'varchar')
+				if (scope.column.DataType == 'varchar') {
 					section = 'string';
-				else if ($.inArray(scope.column.DataType, ['double', 'integer']) > -1)
+				} else if ($.inArray(scope.column.DataType, ['double', 'integer']) > -1) {
 					section = 'number';
-				else if (scope.column.DataType == 'date')
+				} else if (scope.column.DataType == 'date') {
 					section = 'date';
-
+				}
 				window.open('/insights/docs/data-formats.html#' + section);
 			}
 
@@ -1418,13 +1419,15 @@ app.directive('editColumn', ['UIConfig', 'Global', function(UIConfig, Global) {
 			});
 
 			scope.addRepVar = function() {
-				if (scope.repVar)
+				if (scope.repVar) {
 					scope.column.Code += ' VALUEOF("' + scope.repVar + '")';
+				}
 			}
 
 			scope.addSessionVar = function() {
-				if (scope.sessionVar)
+				if (scope.sessionVar) {
 					scope.column.Code += ' VALUEOF(NQ_SESSION."' + scope.sessionVar + '")';
+				}
 			}
 
 			scope.selectCode = function() {
@@ -1440,7 +1443,7 @@ app.directive('editColumn', ['UIConfig', 'Global', function(UIConfig, Global) {
 						} else
 							scope.column.Code += ' ' + func.Syntax;
 					}
-				})
+				});
 			}
 		},
 		templateUrl: '/insights/app/directives/templates/edit/editColumn.html'
