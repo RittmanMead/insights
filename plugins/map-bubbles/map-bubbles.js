@@ -130,6 +130,13 @@
             desc: 'Defines whether each data series has its own scale, or if the is a single common scale across all series.'
 		},
         {
+			targetProperty:"varyGroups",
+            label: "Vary Colour Groups",
+            inputType: "checkbox",
+            inputOptions: { "defaultValue": true },
+            desc: 'Splits measure into groups if vary by colour is populated. When unselected, the vary column will only be used for colour, not changing the granularity.'
+		},
+        {
 			targetProperty:"legend",
             label: "Show Legend",
             inputType: "checkbox",
@@ -229,7 +236,7 @@
         // Restructure data frame if vary by colour being used
 		if (varyColour) {
 			var pivotData = rmvpp.pivotData(data, columnMap, 'vary', 'desc', 'measure', ['lng', 'lat'], true);
-            data = pivotData.data;
+            if (config.varyGroups) { data = pivotData.data; }
 			var measureNames = pivotData.colNames;
 			var legendTitle = columnMap.vary.Name;
 		} else {
@@ -292,11 +299,11 @@
 
 		// Make legend a measure selector
         if (config.legend) {
-            if (config.styleType == 'Series Picker') {
+            if (config.styleType == 'Series Picker' && config.varyGroups) {
                 d3.select(container).selectAll('.legendContainer .key')
         			.on('click', function(d, i) {
         				tooltip.hide();
-        				renderMapObjs(map, markers, i);
+                        renderMapObjs(map, markers, i);
         			})
         			.style('cursor','pointer');
             }
@@ -428,6 +435,8 @@
             function getColour(d) {
                 if (columnMap.measure.length == 0) {
                     return colour('None');
+                } else if (!config.varyGroups && varyColour) {
+                    return colour(d.vary);
                 } else if (config.styleType == 'Series Picker') {
                     return colour(d.measure[measureIdx].name);
                 } else {
@@ -520,8 +529,10 @@
             function addMouseActions(elements) {
                 elements.style('cursor', 'pointer')
                 .on('mouseover', function(d, i) {
-                    if (d3.select(container).selectAll('circle.selected')[0].length > 0)
+                    if (d3.select(container).selectAll('circle.selected')[0].length > 0) {
                         deselectMarkers();
+                    }
+
                     highlightMarker(i);
                     rmvpp.createTrigger(pluginName, columnMap, container, 'hoverBubble', data[i]); // Trigger event
                     displayTooltip(data[i], d3.event, i);
@@ -602,7 +613,9 @@
 			}
 
 			function displayTooltip(d, event, idx) {
-                if (columnMap.measure.length > 0) {
+                if (varyColour && !config.varyGroups) {
+                    tooltip.displayFull(['desc', 'vary'], columnMap, d, event, true);
+                } else if (columnMap.measure.length > 0) {
                     tooltip.displayList(d, 'desc', 'measure', columnMap, event, colour, d.measure[measureIdx].name, true);
                 } else {
                     tooltip.displayHTML('<b>' + d.desc + '</b>', event, true);
@@ -612,7 +625,6 @@
 
             function posTooltip(event) {
                 var offset = rmvpp.getOffset(event, tooltip.Container);
-
 				var tooltipWidth = $(tooltip.Element[0]).width();
 				var tooltipHeight = $(tooltip.Element[0]).height();
                 tooltip.Element.style('left', offset.X - 5 + 'px');

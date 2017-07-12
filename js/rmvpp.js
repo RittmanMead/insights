@@ -1040,10 +1040,11 @@ var rmvpp = (function(rmvpp) {
 
 				// Generate mini legend and values
 				elements.append('div').classed('legend', true).style('background', function(d) {
-					if (typeof(colourScale) == 'string')
+					if (typeof(colourScale) == 'string') {
 						return d[colourScale];
-					else
+					} else {
 						return colourScale(d.name);
+                    }
 				});
 				elements.append('span')
 					.text(function(d, i) {
@@ -1062,8 +1063,9 @@ var rmvpp = (function(rmvpp) {
 
 			var measureType = rmvpp.convertMeasure(columnMap[measures[0]][0].Measure); // Assume all have the same aggregation type
 			var total = columnMap[measures[0]][0].format(d3[measureType](allValues));
-            if (measures.length > 1) // Show a total if there's more than one measure
+            if (measures.length > 1) {  // Show a total if there's more than one measure
                 list.append('li').append('b').text(total);
+            }
 
 			if (!overridePos) {
 				var offset = rmvpp.getOffset(event, this.Container);
@@ -1078,7 +1080,7 @@ var rmvpp = (function(rmvpp) {
 			* @param {object} datum Datum containing the information to display.
 			* @param {event} event Mouse event fired when displaying the tooltip.
         */
-		this.displayFull = function(tooltipCols, columnMap, datum, event) {
+		this.displayFull = function(tooltipCols, columnMap, datum, event, overridePos) {
 			$(this.Element[0]).empty().stop().fadeIn(200); // Display tooltip
 			var offset = rmvpp.getOffset(event, this.Container);
 
@@ -1094,8 +1096,10 @@ var rmvpp = (function(rmvpp) {
                 }
 			});
 
-			var offset = rmvpp.getOffset(event, this.Container);
-			this.position(offset.X, offset.Y);
+            if (!overridePos) {
+                var offset = rmvpp.getOffset(event, this.Container);
+    			this.position(offset.X, offset.Y);
+            }
 		};
 
 		/**
