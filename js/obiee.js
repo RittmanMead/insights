@@ -3126,7 +3126,7 @@ var obiee = (function() {
 					column.SortKey = columnInfo.hasSortKey;
 					if (column.DataType != 'timestamp' && column.DataType != columnInfo.dataType) {  // Timestamp not returned as a data type from this function
 						column.DataType = columnInfo.dataType;
-						column.DataFormat = columnInfo.getDefaultFormat();
+						column.DataFormat = column.getDefaultFormat();
 					}
 					successFunc(columnInfo);
 				}
