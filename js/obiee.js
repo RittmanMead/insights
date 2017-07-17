@@ -438,6 +438,7 @@ var obiee = (function() {
 		if (typeof(outputData) === 'undefined') {
 			outputData = [];
 		} else {
+			outputData = outputData.filter(function(d) { return d; });
 			for (var i=0; i < outputData.length; i++) {
 				biQuery.Criteria.forEach(function(criterium, j) {
 					var key = 'Column' + j;
