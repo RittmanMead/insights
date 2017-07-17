@@ -2467,6 +2467,8 @@ app.directive('filterPicklist', ['$q', '$timeout', function($q, $timeout) {
 					} else {
 						text = scope.filter.Value.length + ' Selected';
 					}
+				} else if (scope.filter.Value) {
+					text = scope.filter.Value;
 				} else {
 					text = '';
 				}
