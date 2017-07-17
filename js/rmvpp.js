@@ -1770,7 +1770,7 @@ var rmvpp = (function(rmvpp) {
         }
         // Filters for valid longitude and latitude values
         return data.filter(function(d) {
-            return (+d[lat] >= -90.0 && +d[lat] <= 90.0 && +d[lng] >= -90.0 && +d[lng] <= 90.0);
+            return (+d[lat] >= -90.0 && +d[lat] <= 90.0 && +d[lng] >= -180.0 && +d[lng] <= 180.0);
         });
     }
 
