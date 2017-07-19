@@ -178,6 +178,16 @@ app.controller('dbView', function($scope, $mdToast, Global, UIConfig, Metadata, 
 		});
 	}
 
+	// Opens the webcat for loading a dashboard
+	$scope.openWebcat = function() {
+		Global.webcatExplorer(Global.webcatPath, function(path) {
+			if (path) {
+				$scope.path = path;
+				$scope.loadPage();
+			}
+		});
+	}
+
 	function init() {
 		// If the page is OK
 		if (!$scope.error) {
@@ -198,12 +208,7 @@ app.controller('dbView', function($scope, $mdToast, Global, UIConfig, Metadata, 
 				}, false, false, false, true);
 			} else {
 				Global.fadeIn();
-				Global.webcatExplorer(Global.webcatPath, function(path) {
-					if (path) {
-						$scope.path = path;
-						$scope.loadPage();
-					}
-				});
+				$scope.openWebcat();
 			}
 		} else {
 			Global.fadeIn();

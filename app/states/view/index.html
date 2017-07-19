@@ -142,6 +142,7 @@
             <div class="topPane panel fixed" ng-class="showPane ? 'showLeft' : ''" style="text-align: center" ng-if="!hidePanes">
                 <md-content md-theme="dark" layout="row">
                     <section flex="85" layout="row" layout-align="center center">
+                        <mat-button flat label-pos="bottom" icon="folder-open" label="Open Dashboard" ng-click="openWebcat()"></mat-button>
                         <mat-button flat label-pos="bottom" icon="file-image-o" label="Export to PNG" ng-click="exportToPNG()"></mat-button>
                         <mat-button flat label-pos="bottom" icon="file-pdf-o" label="Export to PDF" ng-click="exportToPDF()"></mat-button>
                         <mat-button flat label-pos="bottom" icon="file-excel-o" label="Export to XLSX" ng-click="exportToXLSX()"></mat-button>
