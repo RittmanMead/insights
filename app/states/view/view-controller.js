@@ -164,6 +164,9 @@ app.controller('dbView', function($scope, $mdToast, Global, UIConfig, Metadata, 
 			$scope.db = {};
 			$scope.$apply();
 
+			// Resets the DB first load parameter so dashboard prompts aren't executed unnecessarily
+			$scope.$broadcast('resetFirstDBLoad');
+
 			dbObj.Container = $('#rm-DBContainer');
 			$scope.db = dbObj;
 			$scope.error = '';

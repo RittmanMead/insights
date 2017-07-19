@@ -1733,6 +1733,11 @@ app.directive('dashboardPage', ['Global', function(Global) {
 				loadDB(callback, errFunc);
 			});
 
+			// Resets the DB so it is like how it was before execution
+			scope.$on('resetFirstDBLoad', function(event, callback, errFunc) {
+				scope.firstLoad = true;
+			});
+
 			function resetDB(dbObj) {
 				scope.db = new obiee.BIDashboardPage(); // Reset dashboard
 				scope.$apply();
