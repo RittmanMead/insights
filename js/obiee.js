@@ -215,11 +215,40 @@ var obiee = (function() {
 			var results = response.Body.getGroupsResult || {account: []};
 			if (results.account) {
 				results.account.forEach(function(r) {
-					if (r.accountType == '4')
+					if (r.accountType == '4') {
 						appRoles.push({id: r.name, name: r.displayName});
+					}
 				});
 			}
-			successFunc(appRoles);
+
+			// When using custom SQL providers to get roles and groups, this will return an empty array
+			// as the `getGroups` method will not work properly.
+			// A workaround has been implemented to use the roles in the session variable `ROLES` which
+			// had the correct application roles for the user.
+			if (appRoles.length == 0) {
+				function roleNames() {
+					var roles = [];
+					if (obiee.BIVariables.Session) {
+						roles = obiee.BIVariables.Session.filter(function(f) { return f.Name == 'ROLES'; });
+						if (roles.length > 0) {
+							roles = roles[0].Value;
+							roles = roles.map(function(r) { return { id: r, name: r }; });
+						}
+					}
+					return roles;
+				}
+
+				appRoles = roleNames();
+				if (appRoles.length > 0) {
+					successFunc(appRoles);
+				} else {
+					obiee.fetchVariables(function() {
+						successFunc(roleNames());
+					});
+				}
+			} else {
+				successFunc(appRoles);
+			}
 		}, errFunc);
 	}
 
@@ -2853,7 +2882,7 @@ var obiee = (function() {
 	}
 
 	/** Fetches and cleans variables, then stores them in `obiee.BIVariables` */
-	obiee.fetchVariables = function() {
+	obiee.fetchVariables = function(callback) {
 		obiee.BIVariables = {
 			Session : [],
 			Repository : [],
@@ -2879,9 +2908,10 @@ var obiee = (function() {
 					obiee.BIVariables['Repository'].push(variable);
 				}
 			});
+			if (callback) { callback(); }
 		}, query, function(err) {
-			if (err.faultstring.indexOf('Invalid session ID') > -1)
-				obiee.logoff();
+			if (err.faultstring.indexOf('Invalid session ID') > -1) { obiee.logoff(); }
+			if (callback) { callback(); }
 		});
 	}
 
