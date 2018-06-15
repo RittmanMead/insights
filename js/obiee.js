@@ -54,11 +54,17 @@ var obiee = (function() {
 						obiee.logoff(function() { // Logoff and navigate to homepage
 							window.location.href = '/insights';
 						});
-					} else {
+
+					} else if (/getGroups operation is not supported/.exec(response.Body.Fault.faultstring)) { // getGroups was deprecated in 12.2.1.3. It is a part of workaround. The other part is in getAppRoles
+						successFunc(response);
+					}
+					else {
 						console.log(response.Body.Fault);
 						throw 'OBIEE execution error. See above for details.';
 					}
-				} else {
+				} else if (/getGroups operation is not supported/.exec(response.Body.Fault.faultstring)) { // getGroups was deprecated in 12.2.1.3. It is a part of workaround. The other part is in getAppRoles
+					successFunc(response);
+				}else {
 					errorFunc(response.Body.Fault);
 				}
 			} else
@@ -197,7 +203,7 @@ var obiee = (function() {
 		var soapMessage = obieeSOAPHeader();
 		soapMessage += '<soapenv:Body><'+wsdl+':getGroups><'+wsdl+':member><'+wsdl+':name>';
 		soapMessage += sessionStorage.obieeUser + '</'+wsdl+':name></'+wsdl+':member>';
-        soapMessage += '<'+wsdl+':expandGroups>False</'+wsdl+':expandGroups>';
+        	soapMessage += '<'+wsdl+':expandGroups>False</'+wsdl+':expandGroups>';
 		soapMessage += '<'+wsdl+':sessionID>' + sessionStorage.obieeSessionId + '</'+wsdl+':sessionID>';
 		soapMessage += '</'+wsdl+':getGroups></soapenv:Body></soapenv:Envelope>';
 
@@ -210,7 +216,34 @@ var obiee = (function() {
 						appRoles.push({id: r.name, name: r.displayName});
 				});
 			}
-			successFunc(appRoles);
+
+		if (appRoles.length == 0) {
+			function roleNames() {
+				var roles = [];
+				if (obiee.BIVariables.Session) {
+					roles = obiee.BIVariables.Session.filter(function(f) { return f.Name == 'ROLES'; });
+					if (roles.length > 0) {
+						roles = roles[0].Value;
+						roles = roles.map(function(r) { return { id: r, name: r }; });
+					}
+				}
+				return roles;
+			}
+
+ 			appRoles = roleNames();
+			if (appRoles.length > 0) {
+				successFunc(appRoles);
+			} else {
+				obiee.fetchVariables(function() {
+					successFunc(roleNames());
+					});
+				}
+                        } else {
+                                successFunc(appRoles);
+                        }
+
+
+	
 		}, errFunc);
 	}
 
@@ -2713,7 +2746,7 @@ var obiee = (function() {
 	}
 
 	/** Fetches and cleans variables, then stores them in `obiee.BIVariables` */
-	obiee.fetchVariables = function() {
+	obiee.fetchVariables = function(callback) {
 		obiee.BIVariables = {
 			Session : [],
 			Repository : [],
@@ -2738,7 +2771,11 @@ var obiee = (function() {
 					var variable = new obiee.BIVariable(r.Name, 'Repository', r.Value);
 					obiee.BIVariables['Repository'].push(variable);
 				}
+
 			});
+            if (callback!==undefined){
+                callback();
+            }
 		}, query, function(err) {
 			if (err.faultstring.indexOf('Invalid session ID') > -1)
 				obiee.logoff();
